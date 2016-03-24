@@ -10,7 +10,11 @@ $password = stripslashes($password);
 $_SESSION["username"] = mysqli_real_escape_string($link, $_SESSION["username"]);
 $password = mysqli_real_escape_string($link,$password);
 $username = $_SESSION["username"];
-$sql = "SELECT * FROM $tbl_name WHERE BINARY username = '$username' AND BINARY password = '$password'";
+$sql = "
+SELECT *
+FROM $tbl_name
+WHERE BINARY username = '$username' AND BINARY password = '$password'
+";
 $result = mysqli_query($link, $sql);
 $count = mysqli_num_rows($result);
 $_SESSION["connected"] = false;

@@ -5,7 +5,7 @@ $tbl_name = "login";
 $id = $_SESSION["id"];
 // This SQL statement selects ALL from the table
 $sql = "
-SELECT `username`,`type` 
+SELECT `username`,`type`
 FROM $tbl_name
 WHERE login_id='$id'
 ";
@@ -18,7 +18,7 @@ if ($result = mysqli_query($link, $sql)){
         $tempArray = array();
 
         // Loop through each row in the result set.
-        while($row = $result->fetch_object()){
+        while($row = mysqli_fetch_object($result)){
                 // Add each row into our results array
                 $tempArray = $row;
             array_push($resultArray, $tempArray);

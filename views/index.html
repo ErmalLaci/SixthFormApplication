@@ -49,51 +49,27 @@
             <div class="mdl-layout__tab-panel" id="apply">
                 <section class="section--center mdl-grid mdl-grid--no-spacing mdl-shadow--2dp formsection">
                     <form name="ApplicationForm" action="../db/apply.php" method="post" style="width: 100%">
-                        <div class="mdl-grid">
-                            <div class="mdl-cell mdl-cell--8-col">
-                                <div class="mdl-grid">
-                                    <div class="mdl-cell mdl-cell--4-col">First Name:</div>
-                                    <div class="mdl-cell mdl-cell--4-col">
-                                        <input type="text" name="applyFname" class="forminput">
-                                    </div>
-                                </div>
-                                <div class="mdl-grid">
-                                    <div class="mdl-cell mdl-cell--4-col">Surname:</div>
-                                    <div class="mdl-cell mdl-cell--4-col">
-                                        <input type="text" name="applySname" class="forminput">
-                                    </div>
-                                </div>
-                                <div class="mdl-grid">
-                                    <div class="mdl-cell mdl-cell--4-col">Password:</div>
-                                    <div class="mdl-cell mdl-cell--4-col">
-                                        <input type="password" name="applyPassword" class="forminput">
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
                         <!-- Collapsible form -->
                         <div class="mdl-grid">
                             <div class="mdl-cell mdl-cell--4-col">
                                 <button type="button" class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab collapsebutton" onclick="switchDisplay('0');">
                                     <i class="material-icons" id="collapsebutton0">add</i>
                                 </button>
-                                Main form
+                                Your Details
                             </div>
                         </div>
                         <div class="mdl-grid">
-                            <div class="collapse mdl-cell mdl-cell--8-col">
+                            <div class="collapse mdl-cell mdl-cell--12-col" id="applicantDetails">
+                              <!-- ex
                                 <div class="mdl-grid">
-                                    <div class="mdl-cell mdl-cell--4-col">Email:</div>
-                                    <div class="mdl-cell mdl-cell--4-col">
+                                    <div class="mdl-cell mdl-cell-4-col">Email:</div>
+                                    <div class="mdl-cell mdl-cell-4-col">
                                         <input type="text" name="applyEmail" class="forminput">
                                     </div>
                                 </div>
-                                <div class="mdl-grid">
-                                    <div class="mdl-cell mdl-cell--4-col">Mobile Number:</div>
-                                    <div class="mdl-cell mdl-cell--4-col">
-                                        <input type="text" name="applyMobile" class="forminput">
-                                    </div>
-                                </div>
+                              ex -->
+
+
                             </div>
                         </div>
                         <div class="mdl-grid">
@@ -101,17 +77,19 @@
                                 <button type="button" class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab collapsebutton" onclick="switchDisplay('1');">
                                     <i class="material-icons" id="collapsebutton1">add</i>
                                 </button>
-                                Secondary form
+                                Grades and selected course
                             </div>
                         </div>
                         <div class="mdl-grid">
-                            <div class="collapse mdl-cell mdl-cell--8-col">
+                            <div class="collapse mdl-cell mdl-cell--8-col" id="applicantGradesCourse">
+                              <!--  grades
                                 <div class="mdl-grid">
-                                    <div class="mdl-cell mdl-cell--4-col">Telephone Number:</div>
-                                    <div class="mdl-cell mdl-cell--4-col">
+                                    <div class="mdl-cell mdl-cell-4-col">Telephone Number:</div>
+                                    <div class="mdl-cell mdl-cell-4-col">
                                         <input type="text" name="applyTel" class="forminput">
                                     </div>
                                 </div>
+                                grades end -->
                             </div>
                         </div>
                         <div class="mdl-grid">
@@ -176,6 +154,7 @@
         </div>
         <script src="../scripts/loginpage/material.min.js"></script>
         <script src="../scripts/sendEmail.js"></script>
+        <script src="../scripts/loadApplicationForm.js"></script>
         <script type="text/javascript">
             var elements = document.getElementsByClassName("collapse");
             // collapse all sections
@@ -195,7 +174,7 @@
                 }
                 return false;
             }
-            
+
             function showResetPassword(){
                 var Reset = document.getElementById("resetPasswordDiv");
                 if (Reset.style.display == "none") {

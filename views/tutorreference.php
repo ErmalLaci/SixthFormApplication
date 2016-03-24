@@ -1,26 +1,28 @@
 <?php
-$id = $_GET["id"];
+session_start();
 require "../db/connect.php";
 
-$length = 20;
-$teacherAuthenticator = substr(str_shuffle("0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"), 0, $length);
+$id = isset($_GET["id"]) ? $_GET["id"] : "";
 
-//isset($_GET["id"]) ? $_GET["id"] : "";
-if ($id = ""){
+if (!is_numeric($id)){
   header ("Location: ./index.html");
 }
+
+
 $sql = "
 SELECT fname, sname, gcsetaken1, gcsetaken2, gcsetaken3, gcsetaken4, gcsetaken5, gcsetaken6, gcsetaken6, gcsetaken7, gcsetaken8, gcsetaken9, gcsetaken10, gcsetaken11, gcsetaken12, gcsetaken13
 FROM applicant
-WHERE applicant_id='$id'
+WHERE applicant_id = '$id'
 ";
+//echo $sql;
 
-$result = mysqli_query($link, $sql) or die(my_sql_error());
-if (mysqli_num_rows($result) == 0){
-  header ("Location: ./index.html");
-} else {
-  echo "success";
+$result = mysqli_query($link, $sql);
+$count = mysqli_num_rows($result);
+if ($count == 0){
+//  header ("Location: ./index.html");
 }
+
+$_SESSION["studentid"] = $id;
 ?>
 <!doctype html>
 <html lang="en">
@@ -53,7 +55,16 @@ if (mysqli_num_rows($result) == 0){
     <main class="mdl-layout__content" style="background-color: white;">
       <br>
       <section class="section--center mdl-grid mdl-grid--no-spacing mdl-shadow--2dp formsection">
-        <form name="TutorReferenceForm" action="#" method="post" style="width: 100%">
+        <form name="TutorReferenceForm" action="../db/sendTutorRef.php" method="post" style="width: 100%">
+          <div class="mdl-grid">
+            <div class="mdl-cell mdl-cell--6-col">
+              <button type="button" class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab collapsebutton" onclick="switchDisplay();">
+                <i class="material-icons" id="collapsebutton">add</i>
+              </button>
+              Show students qualifications
+            </div>
+          </div>
+          <div id="displayStudentsGrades"></div>
           <div class="mdl-grid">
             <div class="mdl-cell mdl-cell--12-col">
               Tutor Reference
@@ -64,7 +75,7 @@ if (mysqli_num_rows($result) == 0){
                 <div class="mdl-cell mdl-cell--12-col" style="margin-top: 0;">
                   <!-- Floating Multiline Textfield -->
                   <div class="mdl-textfield mdl-js-textfield" style="width: 100%;">
-                    <textarea class="mdl-textfield__input" type="text" rows="8" id="studentsAchievements"></textarea>
+                    <textarea class="mdl-textfield__input" type="text" rows="8" id="studentsAchievements" name="studentsAchievements"></textarea>
                     <label class="mdl-textfield__label" for="studentsAchievements">Text lines...</label>
                   </div>
                 </div>
@@ -87,7 +98,7 @@ if (mysqli_num_rows($result) == 0){
                 </div>
                 <div class="mdl-cell mdl-cell--4-col">
                   <label class="mdl-radio mdl-js-radio mdl-js-ripple-effect" for="learningneeds-option-2">
-                    <input type="radio" id="learningneeds-option-2" class="mdl-radio__button" name="options-learningneeds" value="2">
+                    <input type="radio" id="learningneeds-option-2" class="mdl-radio__button" name="options-learningneeds" value="0">
                     <span class="mdl-radio__label">No</span>
                   </label>
                 </div>
@@ -96,7 +107,7 @@ if (mysqli_num_rows($result) == 0){
                 <div class="mdl-cell--12-col">
                   <!-- Floating Multiline Textfield -->
                   <div class="mdl-textfield mdl-js-textfield" style="width: 100%;">
-                    <textarea class="mdl-textfield__input" type="text" rows="3" id="learningneedsdetails"></textarea>
+                    <textarea class="mdl-textfield__input" type="text" rows="3" id="learningneedsdetails" name="learningNeedsDetails"></textarea>
                     <label class="mdl-textfield__label" for="learningneeds-details">If yes, please provide details</label>
                   </div>
                 </div>
@@ -117,7 +128,7 @@ if (mysqli_num_rows($result) == 0){
                 </div>
                 <div class="mdl-cell mdl-cell--4-col">
                   <label class="mdl-radio mdl-js-radio mdl-js-ripple-effect" for="learningsupport-option-2">
-                    <input type="radio" id="learningsupport-option-2" class="mdl-radio__button" name="options-learningsupport" value="2">
+                    <input type="radio" id="learningsupport-option-2" class="mdl-radio__button" name="options-learningsupport">
                     <span class="mdl-radio__label">No</span>
                   </label>
                 </div>
@@ -126,7 +137,7 @@ if (mysqli_num_rows($result) == 0){
                 <div class="mdl-cell--12-col">
                   <!-- Floating Multiline Textfield -->
                   <div class="mdl-textfield mdl-js-textfield" style="width: 100%;">
-                    <textarea class="mdl-textfield__input" type="text" rows="3" id="learningsupport-details"></textarea>
+                    <textarea class="mdl-textfield__input" type="text" rows="3" id="learningsupport-details" name="learningSupportDetails"></textarea>
                     <label class="mdl-textfield__label" for="learningsupport-details">If yes, please provide details</label>
                   </div>
                 </div>
@@ -147,7 +158,7 @@ if (mysqli_num_rows($result) == 0){
                 </div>
                 <div class="mdl-cell mdl-cell--4-col">
                   <label class="mdl-radio mdl-js-radio mdl-js-ripple-effect" for="statemented-option-2">
-                    <input type="radio" id="statemented-option-2" class="mdl-radio__button" name="options-statemented" value="2">
+                    <input type="radio" id="statemented-option-2" class="mdl-radio__button" name="options-statemented" value="0">
                     <span class="mdl-radio__label">No</span>
                   </label>
                 </div>
@@ -156,7 +167,7 @@ if (mysqli_num_rows($result) == 0){
                 <div class="mdl-cell--12-col">
                   <!-- Floating Multiline Textfield -->
                   <div class="mdl-textfield mdl-js-textfield" style="width: 100%;">
-                    <textarea class="mdl-textfield__input" type="text" rows="3" id="statemented-details"></textarea>
+                    <textarea class="mdl-textfield__input" type="text" rows="3" id="statemented-details" name="statementedDetails"></textarea>
                     <label class="mdl-textfield__label" for="statemented-details">If yes, please provide details</label>
                   </div>
                 </div>
@@ -177,7 +188,7 @@ if (mysqli_num_rows($result) == 0){
                 </div>
                 <div class="mdl-cell mdl-cell--4-col">
                   <label class="mdl-radio mdl-js-radio mdl-js-ripple-effect" for="specialconsideration-option-2">
-                    <input type="radio" id="specialconsideration-option-2" class="mdl-radio__button" name="options-specialconsideration" value="2">
+                    <input type="radio" id="specialconsideration-option-2" class="mdl-radio__button" name="options-specialconsideration" value="0">
                     <span class="mdl-radio__label">No</span>
                   </label>
                 </div>
@@ -186,7 +197,7 @@ if (mysqli_num_rows($result) == 0){
                 <div class="mdl-cell--12-col">
                   <!-- Floating Multiline Textfield -->
                   <div class="mdl-textfield mdl-js-textfield" style="width: 100%;">
-                    <textarea class="mdl-textfield__input" type="text" rows="3" id="specialconsideration-details"></textarea>
+                    <textarea class="mdl-textfield__input" type="text" rows="3" id="specialconsideration-details" name="specialConsiderationDetails"></textarea>
                     <label class="mdl-textfield__label" for="specialconsideration-details">Extra time, scribe, transcript, reader, word processor etc. - please provide as much detail as possible</label>
                   </div>
                 </div>
@@ -207,7 +218,7 @@ if (mysqli_num_rows($result) == 0){
                 </div>
                 <div class="mdl-cell mdl-cell--4-col">
                   <label class="mdl-radio mdl-js-radio mdl-js-ripple-effect" for="freeschoolmeals-option-2">
-                    <input type="radio" id="freeschoolmeals-option-2" class="mdl-radio__button" name="options-freeschoolmeals" value="2">
+                    <input type="radio" id="freeschoolmeals-option-2" class="mdl-radio__button" name="options-freeschoolmeals" value="0">
                     <span class="mdl-radio__label">No</span>
                   </label>
                 </div>
@@ -218,14 +229,14 @@ if (mysqli_num_rows($result) == 0){
                 <div class="mdl-cell--6-col" style="margin-left:25px;">
                   <!-- Simple Textfield -->
                   <div class="mdl-textfield mdl-js-textfield">
-                    <input class="mdl-textfield__input" type="text" id="tutorFirstName">
+                    <input class="mdl-textfield__input" type="text" id="tutorFirstName" name="tutorFirstName">
                     <label class="mdl-textfield__label" for="tutorFirstName">Tutor First Name</label>
                   </div>
                 </div>
                 <div class="mdl-cell--6-col" style="margin-left:25px;">
                   <!-- Simple Textfield -->
                   <div class="mdl-textfield mdl-js-textfield">
-                    <input class="mdl-textfield__input" type="text" id="tutorSurname">
+                    <input class="mdl-textfield__input" type="text" id="tutorSurname" name="tutorSurname">
                     <label class="mdl-textfield__label" for="tutorSurname">Tutor Surname</label>
                   </div>
                 </div>
@@ -245,7 +256,7 @@ if (mysqli_num_rows($result) == 0){
                 </div>
                 <div class="mdl-cell mdl-cell--4-col">
                   <label class="mdl-radio mdl-js-radio mdl-js-ripple-effect" for="predictedoractualgrades-option-2">
-                    <input type="radio" id="predictedoractualgrades-option-2" class="mdl-radio__button" name="options-predictedoractualgrades" value="2">
+                    <input type="radio" id="predictedoractualgrades-option-2" class="mdl-radio__button" name="options-predictedoractualgrades" value="0">
                     <span class="mdl-radio__label">Predicted</span>
                   </label>
                 </div>
@@ -267,36 +278,19 @@ if (mysqli_num_rows($result) == 0){
     </main>
     </div>
     <script src="../scripts/loginpage/material.min.js"></script>
-    <script src="../scripts/sendEmail.js"></script>
+    <script src="../scripts/loadTutorRef.js"></script>
     <script type="text/javascript">
-      var elements = document.getElementsByClassName("collapse");
-      // collapse all sections
-      for (var i = 0; i < elements.length; i++) {
-        elements[i].style.display = "none";
-      }
-
-      //collapse or expand depending on state
-      function switchDisplay(i) {
-
-        if (elements[i].style.display == "none") {
-          elements[i].style.display = "block";
-          document.getElementById("collapsebutton" + i).innerHTML = "remove";
-        } else {
-          elements[i].style.display = "none";
-          document.getElementById("collapsebutton" + i).innerHTML = "add";
+        //collapse or expand depending on state
+        function switchDisplay() {
+            if (document.getElementById("displayStudentsGrades").style.display == "block") {
+              document.getElementById("displayStudentsGrades").style.display = "none";
+              document.getElementById("collapsebutton").innerHTML = "add";
+            } else {
+              document.getElementById("displayStudentsGrades").style.display = "block";
+              document.getElementById("collapsebutton").innerHTML = "remove";
+            }
+            return false;
         }
-        return false;
-      }
-
-      function showResetPassword() {
-        var Reset = document.getElementById("resetPasswordDiv");
-        if (Reset.style.display == "none") {
-          Reset.style.display = "block";
-        } else {
-          Reset.style.display = "none";
-        }
-        return false;
-      }
     </script>
 </body>
 

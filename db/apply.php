@@ -1,19 +1,16 @@
 <?php
 
-$password = isset($_POST["applyPassword"]) ? $_POST["applyPassword"] : "";
-echo "$password";
-$fname = isset($_POST["applyFname"]) ? $_POST["applyFname"] : "";
-echo "$fname";
-$sname = isset($_POST["applySname"]) ? $_POST["applySname"] : "";
-echo "$sname";
 $username = substr("$fname",0,1) . $sname;
-echo "$username";
+$length = 20;
+$tutorAuthenticator = substr(str_shuffle("0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"), 0, $length);;
+$password = substr(str_shuffle("0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"), 0, $length);;
+
 require "../db/connect.php";
 
 $sql = "SELECT login_id FROM login WHERE BINARY username = '$username'";
 $result = mysqli_query($link, $sql);
 $count = mysqli_num_rows($result);
-    
+
 if ($count > 0){
     $row = mysqli_fetch_assoc($result);
     $username = $username . strval($row["login_id"]);

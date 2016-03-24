@@ -13,7 +13,7 @@ if ($result = mysqli_query($link, $sql)){
         $tempArray = array();
 
         // Loop through each row in the result set
-        while($row = $result->fetch_object()){
+        while($row = mysqli_fetch_object($result)){
                 // Add each row into our results array
                 $tempArray = $row;
             array_push($resultArray, $tempArray);
