@@ -28,7 +28,7 @@ $(document).ready(function () {
 
                     var addedHTML = "";
                     for (i = 0; i < amountofdata; i++) {
-                        addedHTML += "<div class='mdl-grid'><div class='mdl-cell mdl-cell-8-col'><div class='mdl-textfield mdl-js-textfield'><input class='mdl-textfield__input' type='text' name='input" + i + "' id='input" + i + "'><label class='mdl-textfield__label' for=''input" + i + "'>" + inputData[i].display + "</label></div></div></div>";
+                        addedHTML += "<div class='mdl-grid'><div class='mdl-cell mdl-cell--8-col'><div class='mdl-textfield mdl-js-textfield applicationInputs'><input class='mdl-textfield__input' type='text' name='input" + i + "' id='input" + i + "'><label class='mdl-textfield__label' for=''input" + i + "'>" + inputData[i].display + "</label></div></div></div>";
                     }
                     document.getElementById("applicantDetails").innerHTML = addedHTML;
                     console.log("Retrieved XML successfully");

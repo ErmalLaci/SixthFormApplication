@@ -53,6 +53,19 @@ $sname = $row["sname"];
 $username = substr("$fname",0,1) . $sname;
 
 $sql = "
+SELECT login_id
+FROM login
+WHERE username='$username'
+";
+
+$result = mysqli_query($link, $sql);
+$count = mysqli_num_rows($result);
+if ($count > 0){
+  $row = mysqli_fetch_assoc($result);
+  $username .= $row["login_id"];
+}
+
+$sql = "
 INSERT INTO login (username, password, type)
 VALUES ('$username', '$password', 'applicant')
 ";
@@ -71,7 +84,7 @@ $id = $row["login_id"];
 
 $sql = "
 UPDATE applicant
-SET login_id='$id'
+SET login_id='$id',tutorauthenticator='$tutorAuthenticator'
 WHERE applicant_id='$last_id'
 ";
 //echo $sql;
@@ -101,16 +114,31 @@ $headers .= "Return-Path: laciermal98@gmail.com\r\n";
 $headers .= "CC: undefinedhawk@live.co.uk\r\n";
 $headers .= "BCC: laciermal98@gmail.com\r\n";
 //send the email
-$mail_sent = mail($to, $subject, $message, $headers );
+$mail_sent = mail($to, $subject, $message, $headers);
 
 echo $mail_sent ? "Mail sent" : "Mail failed";
 
+
+
 $to = $row["email"];
+
+$sql = "
+SELECT username
+FROM login
+INNER JOIN applicant
+ON applicant.login_id=login.login_id
+WHERE applicant_id='$last_id'
+";
+echo $sql;
+$result = mysqli_query($link, $sql) or die(mysql_error());
+$row = mysqli_fetch_assoc($result);
+echo $row["username"];
+
 //echo $to;
 //define the subject of the email
 $subject = 'Highdown school application';
 //define the message to be sent. Each line should be separated with \n
-$message = "Hello, " . $fname . " " . $sname . ". We received your application to Highdown School.\n\nYour username is: " . $tutorAuthenticator . "\n\nYour password is: " . $password . ". We recommend you change this once you log in however.";
+$message = "Hello, " . $fname . " " . $sname . ". We received your application to Highdown School.\n\nYour username is: " . $row["username"] . "\n\nYour password is: " . $password . ". We recommend you change this once you log in however.";
 //define the headers we want passed. Note that they are separated with \r\n
 $headers = "From: laciermal98@gmail.com\r\n";
 $headers .= "Reply-To: laciermal98@gmail.com\r\n";
@@ -118,7 +146,7 @@ $headers .= "Return-Path: laciermal98@gmail.com\r\n";
 $headers .= "CC: undefinedhawk@live.co.uk\r\n";
 $headers .= "BCC: laciermal98@gmail.com\r\n";
 //send the email
-$mail_sent = mail($to, $subject, $message, $headers );
+$mail_sent = mail($to, $subject, $message, $headers);
 
 echo $mail_sent ? "Mail sent" : "Mail failed";
 
