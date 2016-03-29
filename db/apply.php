@@ -52,18 +52,24 @@ $fname = $row["fname"];
 $sname = $row["sname"];
 $username = substr("$fname",0,1) . $sname;
 
-$sql = "
-SELECT login_id
-FROM login
-WHERE username='$username'
-";
+$usedUsernames = 1;
+$testUsername = $username;
+do {
+  $sql = "
+  SELECT login_id
+  FROM login
+  WHERE username='$testUsername'
+  ";
 
-$result = mysqli_query($link, $sql);
-$count = mysqli_num_rows($result);
-if ($count > 0){
-  $row = mysqli_fetch_assoc($result);
-  $username .= $row["login_id"];
-}
+  $result = mysqli_query($link, $sql);
+  $count = mysqli_num_rows($result);
+  if ($count > 0){
+    $usedUsernames++;
+    $testUsername = $username . $usedUsernames;
+  }
+} while ($count > 0);
+
+$username = $testUsername;
 
 $sql = "
 INSERT INTO login (username, password, type)
