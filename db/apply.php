@@ -6,16 +6,57 @@ $password = substr(str_shuffle("0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKL
 
 require "./connect.php";
 
-$sql = "
-INSERT INTO `applicant` () VALUES ()
-";
-//echo $sql;
+$gradeid = array();
 
-mysqli_query($link, $sql) or die(mysql_error());
+for ($readGrades = 0; $readGrades < 13; $i++){
+    $inputname = "subject-" . $readGrades . "-input";
+    $subject = isset($_POST[$inputname]) ? $_POST[$inputname] : "";
+    $inputname = "exam_board-" . $readGrades . "-input";
+    $examboard = isset($_POST[$inputname]) ? $_POST[$inputname] : "";
+    $inputname = "predicted_grade-" . $readGrades . "-input";
+    $predictedgrade = isset($_POST[$inputname]) ? $_POST[$inputname] : "";
+    $inputname = "mock_result-" . $readGrades . "-input";
+    $mockresult = isset($_POST[$inputname]) ? $_POST[$inputname] : "";
+    $inputname = "actual_result-" . $readGrades . "-input";
+    $actualresult = isset($_POST[$inputname]) ? $_POST[$inputname] : "";
+    $inputname = "year_taken-" . $readGrades . "-input";
+    $yeartaken = isset($_POST[$inputname]) ? $_POST[$inputname] : "";
+    if ($subject == ""||$examboard == ""||$predictedgrade == ""||$mockresult == ""||$yeartaken == ""){
+        $sql = "
+        SELECT subject_id FROM `subject` 
+        WHERE name='$subject' AND exam_board='$examboard'
+        ";
+
+        $result = mysqli_query($link, $sql);
+        $row = mysqli_fetch_array($result);
+        echo $sql;
+        echo $row[0];
+
+        $sql = "
+        INSERT INTO `grades`(`subject_id`, `predicted_grade`, `mock_result`, `actual_result`, `year_taken`)
+        VALUES ('$row[0]', '$predictedgrade', '$mockresult', '$actualresult', '$yeartaken')
+        ";
+    
+        mysqli_query($link, $sql) or die(mysqli_error($link));
+        $gradeid[$readGrades] = mysqli_insert_id($link);
+    } else {
+        $gradeid[$readGrades] = "NULL";
+    }
+    
+}
+
+
+
+
+$sql = "
+INSERT INTO `applicant` (gcsetaken1, gcsetaken2, gcsetaken3, gcsetaken4, gcsetaken5, gcsetaken6, gcsetaken7, gcsetaken8, gcsetaken9, gcsetaken10, gcsetaken11, gcsetaken12, gcsetaken13, selectedcourses_id) VALUES ($gradeid[0], $gradeid[1], $gradeid[2], $gradeid[3], $gradeid[4], $gradeid[5], $gradeid[6], $gradeid[7], $gradeid[8], $gradeid[9], $gradeid[10],$gradeid[11], $gradeid[12], )
+";
+
+mysqli_query($link, $sql) or die(mysqli_error($link));
 
 $last_id = mysqli_insert_id($link);
-
-//echo $last_id;
+echo 'g';
+echo $last_id;
 
 $sql = "
 SELECT name
@@ -24,10 +65,10 @@ FROM storedinformation
 //echo $sql;
 
 $result = mysqli_query($link, $sql);
-$i = 0;
+$readInputs= 0;
 while ($row = mysqli_fetch_assoc($result)){
   $name = $row["name"];
-  $inputNumber = "input" . $i;
+  $inputNumber = "input" . $readInputs;
   $input = isset($_POST[$inputNumber]) ? $_POST[$inputNumber] : "";
   $sql = "
   UPDATE applicant
@@ -36,7 +77,7 @@ while ($row = mysqli_fetch_assoc($result)){
   ";
   echo $sql;
   mysqli_query($link, $sql);
-  $i++;
+  $readInputs++;
 }
 
 $sql = "
@@ -157,6 +198,5 @@ $mail_sent = mail($to, $subject, $message, $headers);
 echo $mail_sent ? "Mail sent" : "Mail failed";
 
 //echo "account created";
-
 
 ?>

@@ -2,188 +2,283 @@
 <html lang="en">
 
 <head>
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="description" content="A front-end template that helps you build fast, modern mobile web apps.">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Highdown Sixth Form Online Application</title>
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-  <link href="https://fonts.googleapis.com/css?family=Roboto:regular,bold,italic,thin,light,bolditalic,black,medium&amp;lang=en" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-  <link rel="stylesheet" href="../style/loginpage/material.min.css">
-  <link rel="stylesheet" href="../style/textpage/styles.css">
-  <link rel="stylesheet" href="../style/stylesheet.css">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="A front-end template that helps you build fast, modern mobile web apps.">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Highdown Sixth Form Online Application</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <link href="https://fonts.googleapis.com/css?family=Roboto:regular,bold,italic,thin,light,bolditalic,black,medium&amp;lang=en" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="../style/loginpage/material.min.css">
+    <link rel="stylesheet" href="../style/textpage/styles.css">
+    <link rel="stylesheet" href="../style/stylesheet.css">
+
 </head>
 
 <body class="mdl-demo mdl-color--grey-100 mdl-color-text--grey-700 mdl-base">
-  <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
-    <header class="mdl-layout__header mdl-layout__header--scroll mdl-color--primary">
-      <div class="mdl-layout--large-screen-only mdl-layout__header-row">
-      </div>
-      <div class="mdl-layout--large-screen-only mdl-layout__header-row">
-        <h3>Highdown Sixth Form Online Application</h3>
-      </div>
-      <div class="mdl-layout--large-screen-only mdl-layout__header-row">
-      </div>
-      <div class="mdl-layout__tab-bar mdl-js-ripple-effect mdl-color--primary-dark">
-        <a href="#home" class="mdl-layout__tab is-active">Home</a>
-        <a href="#apply" class="mdl-layout__tab">Apply</a>
-        <a href="#login" class="mdl-layout__tab">Login</a>
-      </div>
-    </header>
-    <main class="mdl-layout__content" style="background-color: white;">
-      <div class="mdl-layout__tab-panel is-active" id="home">
-        <section class="section--center mdl-grid mdl-grid--no-spacing mdl-shadow--2dp formsection">
-          <div class="mdl-grid">
-            <div class="mdl-cell mdl-cell--12-col">Why come to highdown sixth form?</div>
-          </div>
-          <div class="mdl-grid">
-            <div class="mdl-cell mdl-cell--12-col">
-              Welcome to Highdown School Sixth Form Centre.
-              <br> Thank you for your interest in Highdown School Sixth Form Centre.
-              <br> Whether you are already a Highdowner in Year 11 or a student from another local or international school, you will be assured of personal attention to ensure we match the best curriculum offer to your skills and ambitions. We offer an extensive
-              range of academic and technical (vocational) courses backed by strong academic monitoring and pastoral support.
+    <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
+        <header class="mdl-layout__header mdl-layout__header--scroll mdl-color--primary">
+            <div class="mdl-layout--large-screen-only mdl-layout__header-row">
             </div>
-          </div>
-        </section>
-      </div>
-      <div class="mdl-layout__tab-panel" id="apply">
-        <section class="section--center mdl-grid mdl-grid--no-spacing mdl-shadow--2dp formsection">
-          <form name="ApplicationForm" action="../db/apply.php" method="post" style="width: 100%">
-            <!-- Collapsible form -->
-            <div class="mdl-grid">
-              <div class="mdl-cell mdl-cell--4-col">
-                <button type="button" class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab collapsebutton" onclick="switchDisplay('0');">
-                  <i class="material-icons" id="collapsebutton0">add</i>
-                </button>
-                Your Details
-              </div>
+            <div class="mdl-layout--large-screen-only mdl-layout__header-row">
+                <h3>Highdown Sixth Form Online Application</h3>
             </div>
-            <div class="mdl-grid">
-              <div class="collapse mdl-cell mdl-cell--12-col" id="applicantDetails">
-                <!-- ex
+            <div class="mdl-layout--large-screen-only mdl-layout__header-row">
+            </div>
+            <div class="mdl-layout__tab-bar mdl-js-ripple-effect mdl-color--primary-dark">
+                <a href="#home" class="mdl-layout__tab is-active">Home</a>
+                <a href="#apply" class="mdl-layout__tab">Apply</a>
+                <a href="#login" class="mdl-layout__tab">Login</a>
+            </div>
+        </header>
+        <main class="mdl-layout__content" style="background-color: white;">
+            <div class="mdl-layout__tab-panel is-active" id="home">
+                <section class="section--center mdl-grid mdl-grid--no-spacing mdl-shadow--2dp formsection">
+                    <div class="mdl-grid">
+                        <div class="mdl-cell mdl-cell--12-col">Why come to highdown sixth form?</div>
+                    </div>
+                    <div class="mdl-grid">
+                        <div class="mdl-cell mdl-cell--12-col">
+                            Welcome to Highdown School Sixth Form Centre.
+                            <br> Thank you for your interest in Highdown School Sixth Form Centre.
+                            <br> Whether you are already a Highdowner in Year 11 or a student from another local or international school, you will be assured of personal attention to ensure we match the best curriculum offer to your skills and ambitions. We offer an extensive range of academic and technical (vocational) courses backed by strong academic monitoring and pastoral support.
+                        </div>
+                    </div>
+                </section>
+            </div>
+            <div class="mdl-layout__tab-panel" id="apply">
+                <section class="section--center mdl-grid mdl-grid--no-spacing mdl-shadow--2dp formsection">
+                    <form name="ApplicationForm" action="../db/apply.php" method="post" style="width: 100%">
+                        <!-- Collapsible form -->
+                        <div class="mdl-grid">
+                            <div class="mdl-cell mdl-cell--4-col">
+                                <button type="button" class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab collapsebutton" onclick="switchDisplay('0');">
+                                    <i class="material-icons" id="collapsebutton0">add</i>
+                                </button>
+                                Your Details
+                            </div>
+                        </div>
+                        <div class="mdl-grid">
+                            <div class="collapse mdl-cell mdl-cell--12-col" id="applicantDetails">
+                            </div>
+                        </div>
+                        <div class="mdl-grid">
+                            <div class="mdl-cell mdl-cell--4-col">
+                                <button type="button" class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab collapsebutton" onclick="switchDisplay('1');">
+                                    <i class="material-icons" id="collapsebutton1">add</i>
+                                </button>
+                                Grades
+                            </div>
+                        </div>
+                        <div class="mdl-grid">
+                            <div class="collapse mdl-cell mdl-cell--12-col" id="applicantGradesCourse">
+                                <table class="mdl-data-table mdl-js-data-table">
+                                    <thead>
+                                        <tr>
+                                            <th class="mdl-data-table__cell--non-numeric">Subject</th>
+                                            <th class="mdl-data-table__cell--non-numeric">Exam Board</th>
+                                            <th class="mdl-data-table__cell--non-numeric">Predicted Grade</th>
+                                            <th class="mdl-data-table__cell--non-numeric">Mock Result</th>
+                                            <th class="mdl-data-table__cell--non-numeric">Actual Result</th>
+                                            <th class="mdl-data-table__cell--non-numeric">Year Taken</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="gradesTable">
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="mdl-grid">
+                            <div class="mdl-cell mdl-cell--6-col">
+                                <button type="button" class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab collapsebutton" onclick="switchDisplay('2');">
+                                    <i class="material-icons" id="collapsebutton2">add</i>
+                                </button>
+                                Choose your course (One subject is a reserve)
+                            </div>
+                        </div>
+                        <div class="mdl-grid">
+                            <div class="collapse mdl-cell mdl-cell--12-col">
                                 <div class="mdl-grid">
-                                    <div class="mdl-cell mdl-cell-4-col">Email:</div>
-                                    <div class="mdl-cell mdl-cell-4-col">
-                                        <input type="text" name="applyEmail" class="forminput">
+                                    <div class="mdl-cell mdl-cell--6-col">
+                                        <table class="mdl-data-table mdl-js-data-table">
+                                            <thead>
+                                                <tr>
+                                                    <th class="mdl-data-table__cell--non-numeric">Block A</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="blockA-table">
+
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <div class="mdl-cell mdl-cell--6-col">
+                                        <table class="mdl-data-table mdl-js-data-table">
+                                            <thead>
+                                                <tr>
+                                                    <th class="mdl-data-table__cell--non-numeric">Block B</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="blockB-table">
+
+                                            </tbody>
+                                        </table>
                                     </div>
                                 </div>
-                              ex -->
-              </div>
-            </div>
-            <div class="mdl-grid">
-              <div class="mdl-cell mdl-cell--4-col">
-                <button type="button" class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab collapsebutton" onclick="switchDisplay('1');">
-                  <i class="material-icons" id="collapsebutton1">add</i>
-                </button>
-                Grades and selected course
-              </div>
-            </div>
-            <div class="mdl-grid">
-              <div class="collapse mdl-cell mdl-cell--8-col" id="applicantGradesCourse">
-                <!--  grades
                                 <div class="mdl-grid">
-                                    <div class="mdl-cell mdl-cell-4-col">Telephone Number:</div>
-                                    <div class="mdl-cell mdl-cell-4-col">
-                                        <input type="text" name="applyTel" class="forminput">
+                                    <div class="mdl-cell mdl-cell--6-col">
+                                        <table class="mdl-data-table mdl-js-data-table">
+                                            <thead>
+                                                <tr>
+                                                    <th class="mdl-data-table__cell--non-numeric">Block C</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="blockC-table">
+
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <div class="mdl-cell mdl-cell--6-col">
+                                        <table class="mdl-data-table mdl-js-data-table">
+                                            <thead>
+                                                <tr>
+                                                    <th class="mdl-data-table__cell--non-numeric">Block D</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="blockD-table">
+
+                                            </tbody>
+                                        </table>
                                     </div>
                                 </div>
-                                grades end -->
-              </div>
-            </div>
-            <div class="mdl-grid">
-              <div class="mdl-cell mdl-cell--2-col">
-                <!-- Raised button with ripple -->
-                <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" type="submit">
-                  Apply
-                </button>
-              </div>
-            </div>
-          </form>
-        </section>
-      </div>
-      <div class="mdl-layout__tab-panel" id="login">
+                                <div class="mdl-grid">
+                                    <div class="mdl-cell mdl-cell--6-col">
+                                        <table class="mdl-data-table mdl-js-data-table">
+                                            <thead>
+                                                <tr>
+                                                    <th class="mdl-data-table__cell--non-numeric">Block E</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="blockE-table">
 
-        <section class="section--center mdl-grid mdl-grid--no-spacing mdl-shadow--2dp formsection">
-          <form name="UserLogin" action="../db/userlogin.php" method="post" style="width: 100%;">
-            <div class="mdl-grid">
-              <div class="mdl-cell mdl-cell--2-col">Username:</div>
-              <div class="mdl-cell mdl-cell--4-col">
-                <input type="text" name="usernamelogin" class="forminput">
-              </div>
-            </div>
-            <div class="mdl-grid">
-              <div class="mdl-cell mdl-cell--2-col">Password:</div>
-              <div class="mdl-cell mdl-cell--4-col">
-                <input type="password" name="passwordlogin" class="forminput">
-              </div>
-            </div>
-            <div class="mdl-grid">
-              <div class="mdl-cell mdl-cell--2-col">
-                <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" type="submit">
-                  Login
-                </button>
-              </div>
-              <div class="mdl-cell mdl-cell--2-col">
-                <div class="mdl-cell mdl-cell--2-col">
-                  <button type="button" class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab collapsebutton" onclick="showResetPassword();">
-                    <i class="material-icons">build</i>
-                  </button>
-                </div>
-              </div>
-            </div>
-          </form>
-          <div class="mdl-grid" style="width: 100%; display: none;" id="resetPasswordDiv">
-            <div class="mdl-cell mdl-cell--2-col">
-              <div>
-                <label for="email">Email:</label>
-                <input type="text" id="resetpassemail" />
-                <input type="submit" id="resetPassBtn" value="Reset Password" />
-                <br>
-                <div id="displayResetEmailError" style="color:red;"></div>
-              </div>
-            </div>
-          </div>
-        </section>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <div class="mdl-cell mdl-cell--6-col">
+                                        <table class="mdl-data-table mdl-js-data-table">
+                                            <thead>
+                                                <tr>
+                                                    <th class="mdl-data-table__cell--non-numeric">Level 2</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="level2-table">
 
-      </div>
-      <section class="section--footer mdl-color--white mdl-grid">
-      </section>
-    </main>
-  </div>
-  <script src="../scripts/loginpage/material.min.js"></script>
-  <script src="../scripts/sendEmail.js"></script>
-  <script src="../scripts/loadApplicationForm.js"></script>
-  <script type="text/javascript">
-    var elements = document.getElementsByClassName("collapse");
-    // collapse all sections
-    for (var i = 0; i < elements.length; i++) {
-      elements[i].style.display = "none";
-    }
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mdl-grid">
+                            <div class="mdl-cell mdl-cell--2-col">
+                                <!-- Raised button with ripple -->
+                                <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" type="submit">
+                                    Apply
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </section>
+            </div>
+            <div class="mdl-layout__tab-panel" id="login">
 
-    //collapse or expand depending on state
-    function switchDisplay(i) {
+                <section class="section--center mdl-grid mdl-grid--no-spacing mdl-shadow--2dp formsection">
+                    <form name="UserLogin" action="../db/userlogin.php" method="post" style="width: 100%;">
+                        <div class="mdl-grid">
+                            <div class="mdl-cell mdl-cell--2-col">Username:</div>
+                            <div class="mdl-cell mdl-cell--4-col">
+                                <input type="text" name="usernamelogin" class="forminput">
+                            </div>
+                        </div>
+                        <div class="mdl-grid">
+                            <div class="mdl-cell mdl-cell--2-col">Password:</div>
+                            <div class="mdl-cell mdl-cell--4-col">
+                                <input type="password" name="passwordlogin" class="forminput">
+                            </div>
+                        </div>
+                        <div class="mdl-grid">
+                            <div class="mdl-cell mdl-cell--2-col">
+                                <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" type="submit">
+                                    Login
+                                </button>
+                            </div>
+                            <div class="mdl-cell mdl-cell--2-col">
+                                <div class="mdl-cell mdl-cell--2-col">
+                                    <button type="button" class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab collapsebutton" onclick="showResetPassword();">
+                                        <i class="material-icons">build</i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                    <div class="mdl-grid" style="width: 100%; display: none;" id="resetPasswordDiv">
+                        <div class="mdl-cell mdl-cell--2-col">
+                            <div>
+                                <label for="email">Email:</label>
+                                <input type="text" id="resetpassemail" />
+                                <input type="submit" id="resetPassBtn" value="Reset Password" />
+                                <br>
+                                <div id="displayResetEmailError" style="color:red;"></div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
 
-      if (elements[i].style.display == "none") {
-        elements[i].style.display = "block";
-        document.getElementById("collapsebutton" + i).innerHTML = "remove";
-      } else {
-        elements[i].style.display = "none";
-        document.getElementById("collapsebutton" + i).innerHTML = "add";
-      }
-      return false;
-    }
+            </div>
+            <section class="section--footer mdl-color--white mdl-grid">
+            </section>
+        </main>
+    </div>
+    <script src="../scripts/loginpage/material.min.js"></script>
+    <script src="../scripts/sendEmail.js"></script>
+    <script src="../scripts/loadApplicationForm.js"></script>
+    <script type="text/javascript">
+        var elements = document.getElementsByClassName("collapse");
+        // collapse all sections
+        for (var i = 0; i < elements.length; i++) {
+            elements[i].style.display = "none";
+        }
 
-    function showResetPassword() {
-      var Reset = document.getElementById("resetPasswordDiv");
-      if (Reset.style.display == "none") {
-        Reset.style.display = "block";
-      } else {
-        Reset.style.display = "none";
-      }
-      return false;
-    }
-  </script>
+        //collapse or expand depending on state
+        function switchDisplay(i) {
+
+            if (elements[i].style.display == "none") {
+                elements[i].style.display = "block";
+                document.getElementById("collapsebutton" + i).innerHTML = "remove";
+            } else {
+                elements[i].style.display = "none";
+                document.getElementById("collapsebutton" + i).innerHTML = "add";
+            }
+            return false;
+        }
+
+        function showResetPassword() {
+            var Reset = document.getElementById("resetPasswordDiv");
+            if (Reset.style.display == "none") {
+                Reset.style.display = "block";
+            } else {
+                Reset.style.display = "none";
+            }
+            return false;
+        }
+
+        addHTML = "";
+
+        for (var z = 0; i < 13; i++) {
+            addHTML += "<tr><td class='mdl-data-table__cell--non-numeric'><div class='mdl-textfield gcse_inputs'><input class='mdl-textfield__input' type='text' id='subject-" + i + "-input' name='subject-" + i + "-input'></div></td><td class='mdl-data-table__cell--non-numeric'><div class='mdl-textfield mdl-js-textfield gcse_inputs'><input class='mdl-textfield__input' type='text' id='exam_board-" + i + "-input' name='exam_board-" + i + "-input'></div></td><td class='mdl-data-table__cell--non-numeric'><div class='mdl-textfield mdl-js-textfield gcse_inputs'><input class='mdl-textfield__input' type='text' id='predicted_grade-" + i + "-input' name='predicted_grade-" + i + "-input'></div></td><td class='mdl-data-table__cell--non-numeric'><div class='mdl-textfield mdl-js-textfield'><input class='mdl-textfield__input' type='text' id='mock_result-" + i + "-input' name='mock_result-" + i + "-input'></div></td><td class='mdl-data-table__cell--non-numeric'><div class='mdl-textfield mdl-js-textfield gcse_inputs'><input class='mdl-textfield__input' type='text' id='actual_result-" + i + "-input' name='actual_result-" + i + "-input'></div></td><td class='mdl-data-table__cell--non-numeric'><div class='mdl-textfield mdl-js-textfield gcse_inputs'><input class='mdl-textfield__input' type='text' id='year_taken-" + i + "-input' name='year_taken-" + i + "-input'></div></td></tr>"
+        }
+        document.getElementById("gradesTable").innerHTML = addHTML;
+    </script>
 </body>
 
 </html>
