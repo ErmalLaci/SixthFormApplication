@@ -117,18 +117,18 @@ $(document).ready(function () {
 
                         if (inputData[i].level == "A Level") {
                             if (inputData[i].block == "A") {
-                                blockAHTML += "<tr><td class='mdl-data-table__cell--non-numeric'><label class='mdl-radio mdl-js-radio mdl-js-ripple-effect' for='option-" + inputData[i].name + " '><input type='radio' id='option-" + inputData[i].name + " ' class='mdl-radio__button' name='blockA-options' value='1' checked></label><span class='mdl-radio__label'>" + inputData[i].name + "</span></td></tr>";
+                                blockAHTML += "<tr><td class='mdl-data-table__cell--non-numeric'><input type='radio' name='blockA-options' value='" + inputData[i].name + "'>" + inputData[i].name + "</td></tr>";
                             } else if (inputData[i].block == "B") {
-                                blockBHTML += "<tr><td class='mdl-data-table__cell--non-numeric'><label class='mdl-radio mdl-js-radio mdl-js-ripple-effect' for='option-" + inputData[i].name + " '><input type='radio' id='option-" + inputData[i].name + " ' class='mdl-radio__button' name='blockB-options' value='1' checked></label><span class='mdl-radio__label'>" + inputData[i].name + "</span></td></tr>";
+                                blockBHTML += "<tr><td class='mdl-data-table__cell--non-numeric'><input type='radio' name='blockB-options' value='" + inputData[i].name + "'>" + inputData[i].name + "</td></tr>";
                             } else if (inputData[i].block == "C") {
-                                blockCHTML += "<tr><td class='mdl-data-table__cell--non-numeric'><label class='mdl-radio mdl-js-radio mdl-js-ripple-effect' for='option-" + inputData[i].name + " '><input type='radio' id='option-" + inputData[i].name + " ' class='mdl-radio__button' name='blockC-options' value='1' checked></label><span class='mdl-radio__label'>" + inputData[i].name + "</span></td></tr>";
+                                blockCHTML += "<tr><td class='mdl-data-table__cell--non-numeric'><input type='radio' name='blockC-options' value='" + inputData[i].name + "'>" + inputData[i].name + "</td></tr>";
                             } else if (inputData[i].block == "D") {
-                                blockDHTML += "<tr><td class='mdl-data-table__cell--non-numeric'><label class='mdl-radio mdl-js-radio mdl-js-ripple-effect' for='option-" + inputData[i].name + " '><input type='radio' id='option-" + inputData[i].name + " ' class='mdl-radio__button' name='blockD-options' value='1' checked></label><span class='mdl-radio__label'>" + inputData[i].name + "</span></td></tr>";
+                                blockDHTML += "<tr><td class='mdl-data-table__cell--non-numeric'><input type='radio' name='blockD-options' value='" + inputData[i].name + "'>" + inputData[i].name + "</td></tr>";
                             } else if (inputData[i].block == "E") {
-                                blockEHTML += "<tr><td class='mdl-data-table__cell--non-numeric'><label class='mdl-radio mdl-js-radio mdl-js-ripple-effect' for='option-" + inputData[i].name + " '><input type='radio' id='option-" + inputData[i].name + " ' class='mdl-radio__button' name='blockE-options' value='1' checked></label><span class='mdl-radio__label'>" + inputData[i].name + "</span></td></tr>";
+                                blockEHTML += "<tr><td class='mdl-data-table__cell--non-numeric'><input type='radio' name='blockE-options' value='" + inputData[i].name + "'>" + inputData[i].name + "</td></tr>";
                             }
                         } else if (inputData[i].level == "Level 2") {
-                            level2HTML += "<tr><td class='mdl-data-table__cell--non-numeric'><label class='mdl-radio mdl-js-radio mdl-js-ripple-effect' for='option-" + inputData[i].name + " '><input type='radio' id='option-" + inputData[i].name + " ' class='mdl-radio__button' name='level2-options' value='1' checked></label><span class='mdl-radio__label'>" + inputData[i].name + "</span></td></tr>";
+                            level2HTML += "<tr><td class='mdl-data-table__cell--non-numeric'><input type='radio' name='level2-options' value='" + inputData[i].name + "'>" + inputData[i].name + "</td></tr>";
                         }
                     }
                     document.getElementById("blockA-table").innerHTML = blockAHTML;

@@ -177,6 +177,16 @@
                                         </table>
                                     </div>
                                 </div>
+                                <div class="mdl-grid">
+                                    <div class="mdl-cell mdl-cell--12-col">
+                                        <center>
+                                            <div class="mdl-textfield mdl-js-textfield" style="width:80%;">
+                                                <textarea class="mdl-textfield__input" type="text" rows="8" id="courses_reasons-input" name="courses_reasons-input"></textarea>
+                                                <label class="mdl-textfield__label" for="courses_reasons-input">Why do you want to study this course?</label>
+                                            </div>
+                                        </center>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                         <div class="mdl-grid">
@@ -274,8 +284,8 @@
 
         addHTML = "";
 
-        for (var z = 0; i < 13; i++) {
-            addHTML += "<tr><td class='mdl-data-table__cell--non-numeric'><div class='mdl-textfield gcse_inputs'><input class='mdl-textfield__input' type='text' id='subject-" + i + "-input' name='subject-" + i + "-input'></div></td><td class='mdl-data-table__cell--non-numeric'><div class='mdl-textfield mdl-js-textfield gcse_inputs'><input class='mdl-textfield__input' type='text' id='exam_board-" + i + "-input' name='exam_board-" + i + "-input'></div></td><td class='mdl-data-table__cell--non-numeric'><div class='mdl-textfield mdl-js-textfield gcse_inputs'><input class='mdl-textfield__input' type='text' id='predicted_grade-" + i + "-input' name='predicted_grade-" + i + "-input'></div></td><td class='mdl-data-table__cell--non-numeric'><div class='mdl-textfield mdl-js-textfield'><input class='mdl-textfield__input' type='text' id='mock_result-" + i + "-input' name='mock_result-" + i + "-input'></div></td><td class='mdl-data-table__cell--non-numeric'><div class='mdl-textfield mdl-js-textfield gcse_inputs'><input class='mdl-textfield__input' type='text' id='actual_result-" + i + "-input' name='actual_result-" + i + "-input'></div></td><td class='mdl-data-table__cell--non-numeric'><div class='mdl-textfield mdl-js-textfield gcse_inputs'><input class='mdl-textfield__input' type='text' id='year_taken-" + i + "-input' name='year_taken-" + i + "-input'></div></td></tr>"
+        for (var z = 0; z < 13; z++) {
+            addHTML += "<tr><td class='mdl-data-table__cell--non-numeric'><div class='mdl-textfield gcse_inputs'><input class='mdl-textfield__input' type='text' id='subject-" + z + "-input' name='subject-" + z + "-input'></div></td><td class='mdl-data-table__cell--non-numeric'><div class='mdl-textfield mdl-js-textfield gcse_inputs'><input class='mdl-textfield__input' type='text' id='exam_board-" + z + "-input' name='exam_board-" + z + "-input'></div></td><td class='mdl-data-table__cell--non-numeric'><div class='mdl-textfield mdl-js-textfield gcse_inputs'><input class='mdl-textfield__input' type='text' id='predicted_grade-" + z + "-input' name='predicted_grade-" + z + "-input'></div></td><td class='mdl-data-table__cell--non-numeric'><div class='mdl-textfield mdl-js-textfield'><input class='mdl-textfield__input' type='text' id='mock_result-" + z + "-input' name='mock_result-" + z + "-input'></div></td><td class='mdl-data-table__cell--non-numeric'><div class='mdl-textfield mdl-js-textfield gcse_inputs'><input class='mdl-textfield__input' type='text' id='actual_result-" + z + "-input' name='actual_result-" + z + "-input'></div></td><td class='mdl-data-table__cell--non-numeric'><div class='mdl-textfield mdl-js-textfield gcse_inputs'><input class='mdl-textfield__input' type='text' id='year_taken-" + z + "-input' name='year_taken-" + z + "-input'></div></td></tr>"
         }
         document.getElementById("gradesTable").innerHTML = addHTML;
     </script>

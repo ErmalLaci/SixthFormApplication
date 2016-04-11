@@ -3,12 +3,12 @@
 $length = 20;
 $tutorAuthenticator = substr(str_shuffle("0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"), 0, $length);;
 $password = substr(str_shuffle("0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"), 0, $length);;
-
+$errorcheck 
 require "./connect.php";
 
 $gradeid = array();
 
-for ($readGrades = 0; $readGrades < 13; $i++){
+for ($readGrades = 0; $readGrades < 13; $readGrades++){
     $inputname = "subject-" . $readGrades . "-input";
     $subject = isset($_POST[$inputname]) ? $_POST[$inputname] : "";
     $inputname = "exam_board-" . $readGrades . "-input";
@@ -22,36 +22,127 @@ for ($readGrades = 0; $readGrades < 13; $i++){
     $inputname = "year_taken-" . $readGrades . "-input";
     $yeartaken = isset($_POST[$inputname]) ? $_POST[$inputname] : "";
     if ($subject == ""||$examboard == ""||$predictedgrade == ""||$mockresult == ""||$yeartaken == ""){
+        $gradeid[$readGrades] = "NULL";
+    } else {
         $sql = "
         SELECT subject_id FROM `subject` 
         WHERE name='$subject' AND exam_board='$examboard'
         ";
 
         $result = mysqli_query($link, $sql);
-        $row = mysqli_fetch_array($result);
-        echo $sql;
-        echo $row[0];
-
+        $row = mysqli_fetch_assoc($result);
+        //echo $sql;
+        $subjectidsql = $row["subject_id"];
         $sql = "
         INSERT INTO `grades`(`subject_id`, `predicted_grade`, `mock_result`, `actual_result`, `year_taken`)
-        VALUES ('$row[0]', '$predictedgrade', '$mockresult', '$actualresult', '$yeartaken')
+        VALUES ('$subjectidsql', '$predictedgrade', '$mockresult', '$actualresult', '$yeartaken')
         ";
     
         mysqli_query($link, $sql) or die(mysqli_error($link));
         $gradeid[$readGrades] = mysqli_insert_id($link);
-    } else {
-        $gradeid[$readGrades] = "NULL";
+        //echo $gradeid[$readGrades];
     }
     
 }
 
+if (isset($_POST["blockA-options"])){
+    $blockA = $_POST["blockA-options"];
+    $sql = "
+    SELECT `sixthformsubject_id` 
+    FROM `sixth form subject`
+    WHERE name = '$blockA' AND block = 'A'
+    ";
+    $result = mysqli_query($link, $sql);
+    $row = mysqli_fetch_array($result);
+    $blockAid = $row[0];
+} else {
+    $blockAid = "NULL";
+}
+if (isset($_POST["blockB-options"])){
+    $blockB = $_POST["blockB-options"];
+    $sql = "
+    SELECT `sixthformsubject_id` 
+    FROM `sixth form subject`
+    WHERE name = '$blockB' AND block = 'B'
+    ";
+    $result = mysqli_query($link, $sql);
+    $row = mysqli_fetch_array($result);
+    $blockBid = $row[0];
+} else {
+    $blockBid = "NULL";
+}
+if (isset($_POST["blockC-options"])){
+    $blockC = $_POST["blockC-options"];
+    $sql = "
+    SELECT `sixthformsubject_id` 
+    FROM `sixth form subject`
+    WHERE name = '$blockC' AND block = 'C'
+    ";
+    $result = mysqli_query($link, $sql);
+    $row = mysqli_fetch_array($result);
+    $blockCid = $row[0];
+} else {
+    $blockCid = "NULL";
+}
+if (isset($_POST["blockD-options"])){
+    $blockD = $_POST["blockD-options"];
+    $sql = "
+    SELECT `sixthformsubject_id` 
+    FROM `sixth form subject`
+    WHERE name = '$blockD' AND block = 'D'
+    ";
+    $result = mysqli_query($link, $sql);
+    $row = mysqli_fetch_array($result);
+    $blockDid = $row[0];
+} else {
+    $blockDid = "NULL";
+}
+if (isset($_POST["blockE-options"])){
+    $blockE = $_POST["blockE-options"];
+    $sql = "
+    SELECT `sixthformsubject_id` 
+    FROM `sixth form subject`
+    WHERE name = '$blockE' AND block = 'E'
+    ";
+    $result = mysqli_query($link, $sql);
+    $row = mysqli_fetch_array($result);
+    $blockEid = $row[0];
+} else {
+    $blockEid = "NULL";
+}
+if (isset($_POST["level2-options"])){
+    $level2 = $_POST["level2-options"];
+    $sql = "
+    SELECT `sixthformsubject_id` 
+    FROM `sixth form subject`
+    WHERE name = '$level2' AND level = 'Level 2'
+    ";
+    $result = mysqli_query($link, $sql);
+    $row = mysqli_fetch_array($result);
+    $level2id = $row[0];
+} else {
+    $level2id = "NULL";
+}
 
-
+$reasons = isset($_POST["courses_reasons-input"]) ? $_POST["courses_reasons-input"] : "";
 
 $sql = "
-INSERT INTO `applicant` (gcsetaken1, gcsetaken2, gcsetaken3, gcsetaken4, gcsetaken5, gcsetaken6, gcsetaken7, gcsetaken8, gcsetaken9, gcsetaken10, gcsetaken11, gcsetaken12, gcsetaken13, selectedcourses_id) VALUES ($gradeid[0], $gradeid[1], $gradeid[2], $gradeid[3], $gradeid[4], $gradeid[5], $gradeid[6], $gradeid[7], $gradeid[8], $gradeid[9], $gradeid[10],$gradeid[11], $gradeid[12], )
+INSERT INTO `selected courses`(`block_a`, `block_b`, `block_c`, `block_d`, `block_e`, `level2_block`, `courses_reasons`) 
+VALUES($blockAid, $blockBid, $blockCid, $blockDid, $blockEid, $level2id, '$reasons')
 ";
 
+echo $sql;
+
+mysqli_query($link, $sql) or die(mysqli_error($link));
+
+$selectedcourseid = mysqli_insert_id($link);
+
+echo "course id: " . $selectedcourseid;
+
+$sql = "
+INSERT INTO `applicant` (gcsetaken1, gcsetaken2, gcsetaken3, gcsetaken4, gcsetaken5, gcsetaken6, gcsetaken7, gcsetaken8, gcsetaken9, gcsetaken10, gcsetaken11, gcsetaken12, gcsetaken13, selectedcourses_id) VALUES ($gradeid[0], $gradeid[1], $gradeid[2], $gradeid[3], $gradeid[4], $gradeid[5], $gradeid[6], $gradeid[7], $gradeid[8], $gradeid[9], $gradeid[10],$gradeid[11], $gradeid[12], $selectedcourseid)
+";
+echo $sql;
 mysqli_query($link, $sql) or die(mysqli_error($link));
 
 $last_id = mysqli_insert_id($link);
