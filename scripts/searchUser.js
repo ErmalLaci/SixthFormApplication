@@ -1,18 +1,19 @@
 $(document).ready(function () {
     $("#searchUserBtn").click(function () {
-        var username = $(this).closest(".mdl-textfield").find("#seach-username-input").val();
-        var id = $(this).closest(".mdl-textfield").find("input:search-id-input").val();
-        console.log(username);
-        console.log(id);
+        var username = $("#search-username-input").val();
+        var id = $("#search-id-input").val();
+        //console.log(username);
+        //console.log(id);
         $.post("../db/searchUser.php", {
             id: id,
             username: username
         }, function (result) {
-            result = result.split(",");
-            $("#displayLoginId").val(result);
-            $("#displayUsername").val(result);
-            $("#displayPassword").val(result);
-            $("#displayType").val(result);
+            resultArray = [];
+            resultArray = result.split(",");
+            console.log(resultArray[1]);
+            $("#displayLoginId").text("ID " + resultArray[0]);
+            $("#displayUsername").text("Username: " + resultArray[1]);
+            $("#displayType").text("Type: " + resultArray[2]);
         });
     });
 });

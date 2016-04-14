@@ -1,49 +1,11 @@
 <?php
 
 $length = 20;
-$tutorAuthenticator = substr(str_shuffle("0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"), 0, $length);;
-$password = substr(str_shuffle("0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"), 0, $length);;
-$errorcheck 
+$tutorAuthenticator = substr(str_shuffle("0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"), 0, $length);
+$password = substr(str_shuffle("0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"), 0, $length);
+$errorcheck = "";
 require "./connect.php";
 
-$gradeid = array();
-
-for ($readGrades = 0; $readGrades < 13; $readGrades++){
-    $inputname = "subject-" . $readGrades . "-input";
-    $subject = isset($_POST[$inputname]) ? $_POST[$inputname] : "";
-    $inputname = "exam_board-" . $readGrades . "-input";
-    $examboard = isset($_POST[$inputname]) ? $_POST[$inputname] : "";
-    $inputname = "predicted_grade-" . $readGrades . "-input";
-    $predictedgrade = isset($_POST[$inputname]) ? $_POST[$inputname] : "";
-    $inputname = "mock_result-" . $readGrades . "-input";
-    $mockresult = isset($_POST[$inputname]) ? $_POST[$inputname] : "";
-    $inputname = "actual_result-" . $readGrades . "-input";
-    $actualresult = isset($_POST[$inputname]) ? $_POST[$inputname] : "";
-    $inputname = "year_taken-" . $readGrades . "-input";
-    $yeartaken = isset($_POST[$inputname]) ? $_POST[$inputname] : "";
-    if ($subject == ""||$examboard == ""||$predictedgrade == ""||$mockresult == ""||$yeartaken == ""){
-        $gradeid[$readGrades] = "NULL";
-    } else {
-        $sql = "
-        SELECT subject_id FROM `subject` 
-        WHERE name='$subject' AND exam_board='$examboard'
-        ";
-
-        $result = mysqli_query($link, $sql);
-        $row = mysqli_fetch_assoc($result);
-        //echo $sql;
-        $subjectidsql = $row["subject_id"];
-        $sql = "
-        INSERT INTO `grades`(`subject_id`, `predicted_grade`, `mock_result`, `actual_result`, `year_taken`)
-        VALUES ('$subjectidsql', '$predictedgrade', '$mockresult', '$actualresult', '$yeartaken')
-        ";
-    
-        mysqli_query($link, $sql) or die(mysqli_error($link));
-        $gradeid[$readGrades] = mysqli_insert_id($link);
-        //echo $gradeid[$readGrades];
-    }
-    
-}
 
 if (isset($_POST["blockA-options"])){
     $blockA = $_POST["blockA-options"];
@@ -140,12 +102,48 @@ $selectedcourseid = mysqli_insert_id($link);
 echo "course id: " . $selectedcourseid;
 
 $sql = "
-INSERT INTO `applicant` (gcsetaken1, gcsetaken2, gcsetaken3, gcsetaken4, gcsetaken5, gcsetaken6, gcsetaken7, gcsetaken8, gcsetaken9, gcsetaken10, gcsetaken11, gcsetaken12, gcsetaken13, selectedcourses_id) VALUES ($gradeid[0], $gradeid[1], $gradeid[2], $gradeid[3], $gradeid[4], $gradeid[5], $gradeid[6], $gradeid[7], $gradeid[8], $gradeid[9], $gradeid[10],$gradeid[11], $gradeid[12], $selectedcourseid)
+INSERT INTO `applicant` (selectedcourses_id) VALUES ($selectedcourseid)
 ";
 echo $sql;
 mysqli_query($link, $sql) or die(mysqli_error($link));
 
 $last_id = mysqli_insert_id($link);
+
+for ($readGrades = 0; $readGrades < 13; $readGrades++){
+    $inputname = "subject-" . $readGrades . "-input";
+    $subject = isset($_POST[$inputname]) ? $_POST[$inputname] : "";
+    $inputname = "exam_board-" . $readGrades . "-input";
+    $examboard = isset($_POST[$inputname]) ? $_POST[$inputname] : "";
+    $inputname = "predicted_grade-" . $readGrades . "-input";
+    $predictedgrade = isset($_POST[$inputname]) ? $_POST[$inputname] : "";
+    $inputname = "mock_result-" . $readGrades . "-input";
+    $mockresult = isset($_POST[$inputname]) ? $_POST[$inputname] : "";
+    $inputname = "actual_result-" . $readGrades . "-input";
+    $actualresult = isset($_POST[$inputname]) ? $_POST[$inputname] : "";
+    $inputname = "year_taken-" . $readGrades . "-input";
+    $yeartaken = isset($_POST[$inputname]) ? $_POST[$inputname] : "";
+    if ($subject == ""||$examboard == ""||$predictedgrade == ""||$mockresult == ""||$yeartaken == ""){
+        
+    } else {
+        $sql = "
+        SELECT subject_id FROM `subject` 
+        WHERE name='$subject' AND exam_board='$examboard'
+        ";
+
+        $result = mysqli_query($link, $sql);
+        $row = mysqli_fetch_assoc($result);
+        //echo $sql;
+        $subjectidsql = $row["subject_id"];
+        $sql = "
+        INSERT INTO `grades`(`subject_id`, `predicted_grade`, `mock_result`, `actual_result`, `year_taken`, `applicant_id`)
+        VALUES ('$subjectidsql', '$predictedgrade', '$mockresult', '$actualresult', '$yeartaken', '$last_id')
+        ";
+    
+        mysqli_query($link, $sql) or die(mysqli_error($link));
+    }
+    
+}
+
 echo 'g';
 echo $last_id;
 

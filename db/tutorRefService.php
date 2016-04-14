@@ -16,81 +16,8 @@ WHERE applicant_id = '$id';
 $sql = "
 SELECT subject.name, subject.exam_board, grades.predicted_grade, grades.mock_result, grades.actual_result, grades.year_taken
 FROM `grades`
-INNER JOIN applicant ON applicant.gcsetaken1 = grades.grade_id
 INNER JOIN subject ON grades.subject_id = subject.subject_id
-WHERE applicant.applicant_id = '$id'
-UNION
-SELECT subject.name, subject.exam_board, grades.predicted_grade, grades.mock_result, grades.actual_result, grades.year_taken
-FROM `grades`
-INNER JOIN applicant ON applicant.gcsetaken2 = grades.grade_id
-INNER JOIN subject ON grades.subject_id = subject.subject_id
-WHERE applicant.applicant_id = '$id'
-UNION
-SELECT subject.name, subject.exam_board, grades.predicted_grade, grades.mock_result, grades.actual_result, grades.year_taken
-FROM `grades`
-INNER JOIN applicant ON applicant.gcsetaken3 = grades.grade_id
-INNER JOIN subject ON grades.subject_id = subject.subject_id
-WHERE applicant.applicant_id = '$id'
-UNION
-SELECT subject.name, subject.exam_board, grades.predicted_grade, grades.mock_result, grades.actual_result, grades.year_taken
-FROM `grades`
-INNER JOIN applicant ON applicant.gcsetaken4 = grades.grade_id
-INNER JOIN subject ON grades.subject_id = subject.subject_id
-WHERE applicant.applicant_id = $id
-UNION
-SELECT subject.name, subject.exam_board, grades.predicted_grade, grades.mock_result, grades.actual_result, grades.year_taken
-FROM `grades`
-INNER JOIN applicant ON applicant.gcsetaken5 = grades.grade_id
-INNER JOIN subject ON grades.subject_id = subject.subject_id
-WHERE applicant.applicant_id = $id
-UNION
-SELECT subject.name, subject.exam_board, grades.predicted_grade, grades.mock_result, grades.actual_result, grades.year_taken
-FROM `grades`
-INNER JOIN applicant ON applicant.gcsetaken6 = grades.grade_id
-INNER JOIN subject ON grades.subject_id = subject.subject_id
-WHERE applicant.applicant_id = $id
-UNION
-SELECT subject.name, subject.exam_board, grades.predicted_grade, grades.mock_result, grades.actual_result, grades.year_taken
-FROM `grades`
-INNER JOIN applicant ON applicant.gcsetaken7 = grades.grade_id
-INNER JOIN subject ON grades.subject_id = subject.subject_id
-WHERE applicant.applicant_id = $id
-UNION
-SELECT subject.name, subject.exam_board, grades.predicted_grade, grades.mock_result, grades.actual_result, grades.year_taken
-FROM `grades`
-INNER JOIN applicant ON applicant.gcsetaken8 = grades.grade_id
-INNER JOIN subject ON grades.subject_id = subject.subject_id
-WHERE applicant.applicant_id = $id
-UNION
-SELECT subject.name, subject.exam_board, grades.predicted_grade, grades.mock_result, grades.actual_result, grades.year_taken
-FROM `grades`
-INNER JOIN applicant ON applicant.gcsetaken9 = grades.grade_id
-INNER JOIN subject ON grades.subject_id = subject.subject_id
-WHERE applicant.applicant_id = $id
-UNION
-SELECT subject.name, subject.exam_board, grades.predicted_grade, grades.mock_result, grades.actual_result, grades.year_taken
-FROM `grades`
-INNER JOIN applicant ON applicant.gcsetaken10 = grades.grade_id
-INNER JOIN subject ON grades.subject_id = subject.subject_id
-WHERE applicant.applicant_id = $id
-UNION
-SELECT subject.name, subject.exam_board, grades.predicted_grade, grades.mock_result, grades.actual_result, grades.year_taken
-FROM `grades`
-INNER JOIN applicant ON applicant.gcsetaken11 = grades.grade_id
-INNER JOIN subject ON grades.subject_id = subject.subject_id
-WHERE applicant.applicant_id = $id
-UNION
-SELECT subject.name, subject.exam_board, grades.predicted_grade, grades.mock_result, grades.actual_result, grades.year_taken
-FROM `grades`
-INNER JOIN applicant ON applicant.gcsetaken12 = grades.grade_id
-INNER JOIN subject ON grades.subject_id = subject.subject_id
-WHERE applicant.applicant_id = $id
-UNION
-SELECT subject.name, subject.exam_board, grades.predicted_grade, grades.mock_result, grades.actual_result, grades.year_taken
-FROM `grades`
-INNER JOIN applicant ON applicant.gcsetaken13 = grades.grade_id
-INNER JOIN subject ON grades.subject_id = subject.subject_id
-WHERE applicant.applicant_id = $id;
+WHERE grades.applicant_id = '$id'
 ";
 
 // Check if there are results

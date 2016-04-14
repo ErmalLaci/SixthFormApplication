@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 10, 2016 at 03:34 AM
+-- Generation Time: Apr 14, 2016 at 06:41 PM
 -- Server version: 10.1.9-MariaDB
 -- PHP Version: 5.6.15
 
@@ -32,36 +32,31 @@ CREATE TABLE `applicant` (
   `fname` varchar(25) NOT NULL,
   `sname` varchar(25) NOT NULL,
   `email` varchar(50) NOT NULL,
-  `gcsetaken13` int(11) DEFAULT NULL,
-  `gcsetaken12` int(11) DEFAULT NULL,
-  `gcsetaken11` int(11) DEFAULT NULL,
-  `gcsetaken10` int(11) DEFAULT NULL,
-  `gcsetaken9` int(11) DEFAULT NULL,
-  `gcsetaken8` int(11) DEFAULT NULL,
-  `gcsetaken7` int(11) DEFAULT NULL,
-  `gcsetaken6` int(11) DEFAULT NULL,
-  `gcsetaken5` int(11) DEFAULT NULL,
-  `gcsetaken4` int(11) DEFAULT NULL,
-  `gcsetaken3` int(11) DEFAULT NULL,
-  `gcsetaken2` int(11) DEFAULT NULL,
-  `gcsetaken1` int(11) DEFAULT NULL,
   `gender` enum('male','female') NOT NULL,
   `uln` varchar(10) NOT NULL,
   `uci` varchar(13) NOT NULL,
+  `addressline1` varchar(30) NOT NULL,
+  `addressline2` varchar(30) NOT NULL,
   `postcode` varchar(7) NOT NULL,
   `telnumber` varchar(11) NOT NULL,
   `mobilenumber` varchar(11) NOT NULL,
   `year11school` varchar(25) NOT NULL,
+  `schooladdressline1` varchar(30) NOT NULL,
+  `schooladdressline2` varchar(30) NOT NULL,
   `year11schoolpostcode` varchar(7) NOT NULL,
   `year11completed` year(4) NOT NULL,
   `highdownstudent` bit(1) NOT NULL,
   `parentcarerfname` varchar(25) NOT NULL,
   `parentcarersname` varchar(25) NOT NULL,
+  `parentcareraddressline1` varchar(30) NOT NULL,
+  `parentcareraddressline2` varchar(30) NOT NULL,
   `parentcarerpostcode` varchar(7) NOT NULL,
   `parentcarertelnumber` varchar(11) NOT NULL,
   `parentcarermobilenumber` varchar(11) NOT NULL,
   `contact2fname` varchar(25) NOT NULL,
   `contact2sname` varchar(25) NOT NULL,
+  `contact2addressline1` varchar(30) NOT NULL,
+  `contact2addressline2` varchar(30) NOT NULL,
   `contact2postcode` varchar(7) NOT NULL,
   `contact2telnumber` varchar(11) NOT NULL,
   `contact2mobilenumber` varchar(11) NOT NULL,
@@ -86,15 +81,17 @@ CREATE TABLE `applicant` (
   `snameoftutor` varchar(25) NOT NULL,
   `predictedoractualqualifications` bit(1) NOT NULL,
   `tutorauthenticator` varchar(20) NOT NULL,
-  `selectedcourses_id` int(11) NOT NULL
+  `selectedcourses_id` int(11) NOT NULL,
+  `accepted` bit(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `applicant`
 --
 
-INSERT INTO `applicant` (`login_id`, `applicant_id`, `fname`, `sname`, `email`, `gcsetaken13`, `gcsetaken12`, `gcsetaken11`, `gcsetaken10`, `gcsetaken9`, `gcsetaken8`, `gcsetaken7`, `gcsetaken6`, `gcsetaken5`, `gcsetaken4`, `gcsetaken3`, `gcsetaken2`, `gcsetaken1`, `gender`, `uln`, `uci`, `postcode`, `telnumber`, `mobilenumber`, `year11school`, `year11schoolpostcode`, `year11completed`, `highdownstudent`, `parentcarerfname`, `parentcarersname`, `parentcarerpostcode`, `parentcarertelnumber`, `parentcarermobilenumber`, `contact2fname`, `contact2sname`, `contact2postcode`, `contact2telnumber`, `contact2mobilenumber`, `studentcourseinterest`, `entryrequirementsknown`, `specialrequirements`, `interviewnotes`, `subjectchoice`, `enrichment`, `tutoremail`, `studentachievements`, `learningneeds`, `learningneedsdetails`, `learningsupport`, `learningsupportdetails`, `statemented`, `statementeddetails`, `specialconsiderations`, `specialconsiderationsdetails`, `freeschoolmeals`, `fnameoftutor`, `snameoftutor`, `predictedoractualqualifications`, `tutorauthenticator`, `selectedcourses_id`) VALUES
-(NULL, 14, '', '', 'email', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, 1, NULL, 'male', '', '', '', '', '', '', '', 0000, b'0', '', '', '', '', '', '', '', '', '', '', b'0', b'0', '', '', 0, '', '', '', b'0', '', b'0', '', b'0', '', b'0', '', b'0', '', '', b'0', '', 1);
+INSERT INTO `applicant` (`login_id`, `applicant_id`, `fname`, `sname`, `email`, `gender`, `uln`, `uci`, `addressline1`, `addressline2`, `postcode`, `telnumber`, `mobilenumber`, `year11school`, `schooladdressline1`, `schooladdressline2`, `year11schoolpostcode`, `year11completed`, `highdownstudent`, `parentcarerfname`, `parentcarersname`, `parentcareraddressline1`, `parentcareraddressline2`, `parentcarerpostcode`, `parentcarertelnumber`, `parentcarermobilenumber`, `contact2fname`, `contact2sname`, `contact2addressline1`, `contact2addressline2`, `contact2postcode`, `contact2telnumber`, `contact2mobilenumber`, `studentcourseinterest`, `entryrequirementsknown`, `specialrequirements`, `interviewnotes`, `subjectchoice`, `enrichment`, `tutoremail`, `studentachievements`, `learningneeds`, `learningneedsdetails`, `learningsupport`, `learningsupportdetails`, `statemented`, `statementeddetails`, `specialconsiderations`, `specialconsiderationsdetails`, `freeschoolmeals`, `fnameoftutor`, `snameoftutor`, `predictedoractualqualifications`, `tutorauthenticator`, `selectedcourses_id`, `accepted`) VALUES
+(3, 1, 'Ermal', 'Laci', 'laciermal98@gmail.com', 'male', '', '', '', '', '', '', '', '', '', '', '', 2014, b'1', '', '', '', '', '', '', '', '', '', '', '', '', '', '', b'1', b'0', '', '', 0, '', 'undefinedhawk@googlemail.com', '', b'0', '', b'0', '', b'0', '', b'0', '', b'0', '', '', b'1', '7Rge46fiCLEp8AuVYB3N', 1, b'0'),
+(4, 2, 'Erion', 'Laci', 'undefinedhawk@live.co.uk', 'male', '', '', '', '', '', '', '', '', '', '', '', 2014, b'1', '', '', '', '', '', '', '', '', '', '', '', '', '', '', b'0', b'0', '', '', 0, '', 'laciermal98@gmail.com', '', b'0', '', b'0', '', b'0', '', b'0', '', b'0', '', '', b'0', 'oim2nxB7HfjOEe85gUFh', 2, b'0');
 
 -- --------------------------------------------------------
 
@@ -108,15 +105,19 @@ CREATE TABLE `grades` (
   `predicted_grade` enum('A*','A','B','C','D','E','F','G','U') NOT NULL,
   `mock_result` enum('A*','A','B','C','D','E','F','G','U') NOT NULL,
   `actual_result` enum('A*','A','B','C','D','E','F','G','U') NOT NULL,
-  `year_taken` year(4) NOT NULL
+  `year_taken` year(4) NOT NULL,
+  `applicant_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `grades`
 --
 
-INSERT INTO `grades` (`grade_id`, `subject_id`, `predicted_grade`, `mock_result`, `actual_result`, `year_taken`) VALUES
-(1, 1, 'A', 'A*', 'A', 2015);
+INSERT INTO `grades` (`grade_id`, `subject_id`, `predicted_grade`, `mock_result`, `actual_result`, `year_taken`, `applicant_id`) VALUES
+(1, 1, 'A', 'A', 'A', 2015, 1),
+(2, 2, 'A*', 'B', 'C', 2015, 1),
+(3, 1, 'B', 'C', 'D', 2015, 2),
+(4, 2, 'A', 'A', 'A', 2015, 2);
 
 -- --------------------------------------------------------
 
@@ -130,6 +131,15 @@ CREATE TABLE `login` (
   `password` varchar(25) NOT NULL,
   `type` enum('admin','teacher','applicant') DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `login`
+--
+
+INSERT INTO `login` (`login_id`, `username`, `password`, `type`) VALUES
+(2, 'admin', 'adminpass', 'admin'),
+(3, 'ELaci', 'vjA0WXmydgFTLf1xM8JN', 'applicant'),
+(4, 'ELaci2', 'PLBU7Wh9EAZ6bweQoiap', 'applicant');
 
 -- --------------------------------------------------------
 
@@ -167,6 +177,7 @@ CREATE TABLE `selected courses` (
   `block_c` int(11) DEFAULT NULL,
   `block_d` int(11) DEFAULT NULL,
   `block_e` int(11) DEFAULT NULL,
+  `level2_block` int(11) DEFAULT NULL,
   `courses_reasons` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -174,8 +185,9 @@ CREATE TABLE `selected courses` (
 -- Dumping data for table `selected courses`
 --
 
-INSERT INTO `selected courses` (`selectedcourse_id`, `block_a`, `block_b`, `block_c`, `block_d`, `block_e`, `courses_reasons`) VALUES
-(1, 1, 2, 3, 4, 5, 'love it');
+INSERT INTO `selected courses` (`selectedcourse_id`, `block_a`, `block_b`, `block_c`, `block_d`, `block_e`, `level2_block`, `courses_reasons`) VALUES
+(1, 1, 3, 8, 9, 12, NULL, 'Want'),
+(2, 2, 4, 7, 9, 12, NULL, 've');
 
 -- --------------------------------------------------------
 
@@ -187,7 +199,7 @@ CREATE TABLE `sixth form subject` (
   `sixthformsubject_id` int(11) NOT NULL,
   `name` varchar(25) DEFAULT NULL,
   `level` enum('A Level','Level 2') DEFAULT NULL,
-  `block` set('A','B','C','D','E') DEFAULT NULL
+  `block` enum('A','B','C','D','E') DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -195,15 +207,20 @@ CREATE TABLE `sixth form subject` (
 --
 
 INSERT INTO `sixth form subject` (`sixthformsubject_id`, `name`, `level`, `block`) VALUES
-(1, 'maths', 'A Level', 'A'),
-(2, 'computing', 'A Level', 'B'),
-(3, 'physics', 'A Level', 'C'),
-(4, 'economics', 'A Level', 'D'),
-(5, 'english', 'A Level', 'E'),
-(6, 'biology', 'A Level', 'A'),
-(7, 'chemistry', 'A Level', 'B'),
-(8, 'government politics', 'A Level', 'C'),
-(9, 'maths', 'Level 2', NULL);
+(1, 'Maths', 'A Level', 'A'),
+(2, 'English', 'A Level', 'A'),
+(3, 'Physics', 'A Level', 'B'),
+(4, 'Biology', 'A Level', 'B'),
+(5, 'Government Politics', 'A Level', 'B'),
+(6, 'Sociology', 'A Level', 'B'),
+(7, 'Physics', 'A Level', 'C'),
+(8, 'Computing', 'A Level', 'C'),
+(9, 'ICT', 'A Level', 'D'),
+(10, 'Computing', 'A Level', 'D'),
+(11, 'Further Maths', 'A Level', 'E'),
+(12, 'Art', 'A Level', 'E'),
+(13, 'Maths', 'Level 2', NULL),
+(14, 'English', 'Level 2', NULL);
 
 -- --------------------------------------------------------
 
@@ -214,40 +231,49 @@ INSERT INTO `sixth form subject` (`sixthformsubject_id`, `name`, `level`, `block
 CREATE TABLE `storedinformation` (
   `dataid` int(11) NOT NULL,
   `name` varchar(25) NOT NULL,
-  `type` enum('VARCHAR','ENUM','SET','INT','TEXT','BIT','YEAR') NOT NULL,
+  `type` enum('VARCHAR','ENUM','INT','TEXT','BIT','YEAR') NOT NULL,
   `length` varchar(50) NOT NULL,
-  `display` varchar(60) NOT NULL
+  `display` varchar(60) NOT NULL,
+  `validate` enum('postcode','email','numeric','name','none') NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `storedinformation`
 --
 
-INSERT INTO `storedinformation` (`dataid`, `name`, `type`, `length`, `display`) VALUES
-(12, 'fname', 'VARCHAR', '25', 'First Name:'),
-(13, 'sname', 'VARCHAR', '25', 'Surname:'),
-(14, 'email', 'VARCHAR', '25', 'Email:'),
-(15, 'gender', 'ENUM', 'male,female', 'Gender:'),
-(17, 'uln', 'VARCHAR', '10', 'Unique Learner Number:'),
-(18, 'uci', 'VARCHAR', '13', 'Unique Candidate Identifier:'),
-(19, 'postcode', 'VARCHAR', '7', 'Postcode:'),
-(20, 'telnumber', 'VARCHAR', '11', 'Telephone Number:'),
-(21, 'mobilenumber', 'VARCHAR', '11', 'Mobile Number:'),
-(22, 'year11completed', 'YEAR', '2014-2016', 'Year in which you will complete (or have completed) Year 11:'),
-(23, 'year11school', 'VARCHAR', '25', 'School attended in Year 11:'),
-(24, 'year11schoolpostcode', 'VARCHAR', '7', 'Year 11 School Postcode:'),
-(25, 'highdownstudent', 'BIT', '1', 'Have you previously been a student at Highdown School?'),
-(26, 'parentcarerfname', 'VARCHAR', '25', 'First Name Of Parent/Carer:'),
-(27, 'parentcarersname', 'VARCHAR', '25', 'Surname Of Parent/Carer:'),
-(28, 'parentcarerpostcode', 'VARCHAR', '7', 'Parent/Carer Postcode:'),
-(29, 'parentcarertelnumber', 'VARCHAR', '11', 'Parent/Carer Telephone Number:'),
-(30, 'parentcarermobilenumber', 'VARCHAR', '11', 'Parent/Carer Mobile Number:'),
-(31, 'contact2fname', 'VARCHAR', '25', 'Emergency Contact 2 First Name:'),
-(32, 'contact2sname', 'VARCHAR', '25', 'Emergency Contact 2 Surname:'),
-(33, 'contact2postcode', 'VARCHAR', '7', 'Emergency Contact 2 Postcode:'),
-(34, 'contact2telnumber', 'VARCHAR', '11', 'Emergency Contact 2 Telephone Number:'),
-(35, 'contact2mobilenumber', 'VARCHAR', '11', 'Emergency Contact 2 Mobile Number:'),
-(36, 'tutoremail', 'VARCHAR', '25', 'Tutor Email:');
+INSERT INTO `storedinformation` (`dataid`, `name`, `type`, `length`, `display`, `validate`) VALUES
+(12, 'fname', 'VARCHAR', '25', 'First Name:', 'name'),
+(13, 'sname', 'VARCHAR', '25', 'Surname:', 'name'),
+(14, 'email', 'VARCHAR', '25', 'Email:', 'email'),
+(15, 'gender', 'ENUM', 'male,female', 'Gender:', 'none'),
+(17, 'uln', 'VARCHAR', '10', 'Unique Learner Number:', 'numeric'),
+(18, 'uci', 'VARCHAR', '13', 'Unique Candidate Identifier:', 'numeric'),
+(19, 'addressline1', 'VARCHAR', '30', 'Address:', 'none'),
+(20, 'addressline2', 'VARCHAR', '30', 'Address line 2:', 'none'),
+(21, 'postcode', 'VARCHAR', '7', 'Postcode:', 'postcode'),
+(22, 'telnumber', 'VARCHAR', '11', 'Telephone Number:', 'numeric'),
+(23, 'mobilenumber', 'VARCHAR', '11', 'Mobile Number:', 'numeric'),
+(24, 'year11completed', 'YEAR', '2014-2016', 'Year in which you will complete (or have completed) Year 11:', 'none'),
+(25, 'year11school', 'VARCHAR', '25', 'School attended in Year 11:', 'none'),
+(26, 'schooladdressline1', 'VARCHAR', '30', 'Year 11 School Address:', 'none'),
+(27, 'schooladdressline2', 'VARCHAR', '30', 'Year 11 School Address line 2:', 'none'),
+(28, 'year11schoolpostcode', 'VARCHAR', '7', 'Year 11 School Postcode:', 'postcode'),
+(29, 'highdownstudent', 'BIT', '1', 'Have you previously been a student at Highdown School?', 'none'),
+(30, 'parentcarerfname', 'VARCHAR', '25', 'First Name Of Parent/Carer:', 'name'),
+(31, 'parentcarersname', 'VARCHAR', '25', 'Surname Of Parent/Carer:', 'name'),
+(32, 'parentcareraddressline1', 'VARCHAR', '30', 'Parent/Carer Address:', 'none'),
+(33, 'parentcareraddressline2', 'VARCHAR', '30', 'Parent/Carer Address line 2:', 'none'),
+(34, 'parentcarerpostcode', 'VARCHAR', '7', 'Parent/Carer Postcode:', 'postcode'),
+(35, 'parentcarertelnumber', 'VARCHAR', '11', 'Parent/Carer Telephone Number:', 'numeric'),
+(36, 'parentcarermobilenumber', 'VARCHAR', '11', 'Parent/Carer Mobile Number:', 'numeric'),
+(37, 'contact2fname', 'VARCHAR', '25', 'Emergency Contact 2 First Name:', 'none'),
+(38, 'contact2sname', 'VARCHAR', '25', 'Emergency Contact 2 Surname:', 'name'),
+(39, 'contact2addressline1', 'VARCHAR', '30', 'Emergency contact 2 Address:', 'none'),
+(40, 'contact2addressline2', 'VARCHAR', '30', 'Emergency contact 2 Address line 2:', 'none'),
+(41, 'contact2postcode', 'VARCHAR', '7', 'Emergency Contact 2 Postcode:', 'postcode'),
+(42, 'contact2telnumber', 'VARCHAR', '11', 'Emergency Contact 2 Telephone Number:', 'numeric'),
+(43, 'contact2mobilenumber', 'VARCHAR', '11', 'Emergency Contact 2 Mobile Number:', 'numeric'),
+(44, 'tutoremail', 'VARCHAR', '25', 'Tutor Email:', 'email');
 
 -- --------------------------------------------------------
 
@@ -323,27 +349,15 @@ ALTER TABLE `applicant`
   ADD PRIMARY KEY (`applicant_id`),
   ADD UNIQUE KEY `email` (`email`),
   ADD UNIQUE KEY `selectedcourses_id` (`selectedcourses_id`),
-  ADD KEY `applicant` (`login_id`),
-  ADD KEY `gcsetaken13` (`gcsetaken13`),
-  ADD KEY `gcsetaken12` (`gcsetaken12`),
-  ADD KEY `gcsetaken11` (`gcsetaken11`),
-  ADD KEY `gcsetaken10` (`gcsetaken10`),
-  ADD KEY `gcsetaken9` (`gcsetaken9`),
-  ADD KEY `gcsetaken8` (`gcsetaken8`),
-  ADD KEY `gcsetaken7` (`gcsetaken7`),
-  ADD KEY `gcsetaken6` (`gcsetaken6`),
-  ADD KEY `gcsetaken5` (`gcsetaken5`),
-  ADD KEY `gcsetaken4` (`gcsetaken4`),
-  ADD KEY `gcsetaken3` (`gcsetaken3`),
-  ADD KEY `gcsetaken2` (`gcsetaken2`),
-  ADD KEY `gcsetaken1` (`gcsetaken1`);
+  ADD KEY `applicant` (`login_id`);
 
 --
 -- Indexes for table `grades`
 --
 ALTER TABLE `grades`
   ADD PRIMARY KEY (`grade_id`),
-  ADD KEY `subject_id` (`subject_id`);
+  ADD KEY `subject_id` (`subject_id`),
+  ADD KEY `applicant_id` (`applicant_id`);
 
 --
 -- Indexes for table `login`
@@ -369,11 +383,12 @@ ALTER TABLE `recipient`
 --
 ALTER TABLE `selected courses`
   ADD PRIMARY KEY (`selectedcourse_id`),
-  ADD UNIQUE KEY `block_a` (`block_a`),
-  ADD UNIQUE KEY `block_b` (`block_b`),
-  ADD UNIQUE KEY `block_c` (`block_c`),
-  ADD UNIQUE KEY `block_d` (`block_d`),
-  ADD UNIQUE KEY `block_e` (`block_e`);
+  ADD KEY `level2_block` (`level2_block`),
+  ADD KEY `block_a` (`block_a`) USING BTREE,
+  ADD KEY `block_b` (`block_b`) USING BTREE,
+  ADD KEY `block_c` (`block_c`) USING BTREE,
+  ADD KEY `block_d` (`block_d`) USING BTREE,
+  ADD KEY `block_e` (`block_e`) USING BTREE;
 
 --
 -- Indexes for table `sixth form subject`
@@ -409,17 +424,17 @@ ALTER TABLE `teacher`
 -- AUTO_INCREMENT for table `applicant`
 --
 ALTER TABLE `applicant`
-  MODIFY `applicant_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `applicant_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 --
 -- AUTO_INCREMENT for table `grades`
 --
 ALTER TABLE `grades`
-  MODIFY `grade_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `grade_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 --
 -- AUTO_INCREMENT for table `login`
 --
 ALTER TABLE `login`
-  MODIFY `login_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `login_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 --
 -- AUTO_INCREMENT for table `news`
 --
@@ -429,17 +444,17 @@ ALTER TABLE `news`
 -- AUTO_INCREMENT for table `selected courses`
 --
 ALTER TABLE `selected courses`
-  MODIFY `selectedcourse_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `selectedcourse_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 --
 -- AUTO_INCREMENT for table `sixth form subject`
 --
 ALTER TABLE `sixth form subject`
-  MODIFY `sixthformsubject_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `sixthformsubject_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 --
 -- AUTO_INCREMENT for table `storedinformation`
 --
 ALTER TABLE `storedinformation`
-  MODIFY `dataid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
+  MODIFY `dataid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=45;
 --
 -- AUTO_INCREMENT for table `subject`
 --
@@ -459,20 +474,7 @@ ALTER TABLE `teacher`
 --
 ALTER TABLE `applicant`
   ADD CONSTRAINT `applicant_ibfk_1` FOREIGN KEY (`login_id`) REFERENCES `login` (`login_id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `applicant_ibfk_10` FOREIGN KEY (`gcsetaken6`) REFERENCES `grades` (`grade_id`),
-  ADD CONSTRAINT `applicant_ibfk_11` FOREIGN KEY (`gcsetaken5`) REFERENCES `grades` (`grade_id`),
-  ADD CONSTRAINT `applicant_ibfk_12` FOREIGN KEY (`gcsetaken4`) REFERENCES `grades` (`grade_id`),
-  ADD CONSTRAINT `applicant_ibfk_13` FOREIGN KEY (`gcsetaken3`) REFERENCES `grades` (`grade_id`),
-  ADD CONSTRAINT `applicant_ibfk_14` FOREIGN KEY (`gcsetaken2`) REFERENCES `grades` (`grade_id`),
-  ADD CONSTRAINT `applicant_ibfk_15` FOREIGN KEY (`gcsetaken1`) REFERENCES `grades` (`grade_id`),
-  ADD CONSTRAINT `applicant_ibfk_16` FOREIGN KEY (`selectedcourses_id`) REFERENCES `selected courses` (`selectedcourse_id`),
-  ADD CONSTRAINT `applicant_ibfk_3` FOREIGN KEY (`gcsetaken13`) REFERENCES `grades` (`grade_id`),
-  ADD CONSTRAINT `applicant_ibfk_4` FOREIGN KEY (`gcsetaken12`) REFERENCES `grades` (`grade_id`),
-  ADD CONSTRAINT `applicant_ibfk_5` FOREIGN KEY (`gcsetaken11`) REFERENCES `grades` (`grade_id`),
-  ADD CONSTRAINT `applicant_ibfk_6` FOREIGN KEY (`gcsetaken10`) REFERENCES `grades` (`grade_id`),
-  ADD CONSTRAINT `applicant_ibfk_7` FOREIGN KEY (`gcsetaken9`) REFERENCES `grades` (`grade_id`),
-  ADD CONSTRAINT `applicant_ibfk_8` FOREIGN KEY (`gcsetaken8`) REFERENCES `grades` (`grade_id`),
-  ADD CONSTRAINT `applicant_ibfk_9` FOREIGN KEY (`gcsetaken7`) REFERENCES `grades` (`grade_id`);
+  ADD CONSTRAINT `applicant_ibfk_2` FOREIGN KEY (`selectedcourses_id`) REFERENCES `selected courses` (`selectedcourse_id`);
 
 --
 -- Constraints for table `grades`
@@ -495,7 +497,8 @@ ALTER TABLE `selected courses`
   ADD CONSTRAINT `selected courses_ibfk_2` FOREIGN KEY (`block_b`) REFERENCES `sixth form subject` (`sixthformsubject_id`),
   ADD CONSTRAINT `selected courses_ibfk_3` FOREIGN KEY (`block_c`) REFERENCES `sixth form subject` (`sixthformsubject_id`),
   ADD CONSTRAINT `selected courses_ibfk_4` FOREIGN KEY (`block_d`) REFERENCES `sixth form subject` (`sixthformsubject_id`),
-  ADD CONSTRAINT `selected courses_ibfk_5` FOREIGN KEY (`block_e`) REFERENCES `sixth form subject` (`sixthformsubject_id`);
+  ADD CONSTRAINT `selected courses_ibfk_5` FOREIGN KEY (`block_e`) REFERENCES `sixth form subject` (`sixthformsubject_id`),
+  ADD CONSTRAINT `selected courses_ibfk_6` FOREIGN KEY (`level2_block`) REFERENCES `sixth form subject` (`sixthformsubject_id`);
 
 --
 -- Constraints for table `teacher`

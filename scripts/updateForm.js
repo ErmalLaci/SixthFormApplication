@@ -8,6 +8,7 @@ $(document).ready(function () {
         var type = [];
         var length = [];
 
+
         for (i = 0; i < dataNum; i++) {
             name[i] = $("#name" + i).val();
             console.log(name[i]);

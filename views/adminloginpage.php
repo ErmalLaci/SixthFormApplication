@@ -55,7 +55,7 @@
                 <div class="mdl-grid">
                     <div class="mdl-cell mdl-cell--12-col">
                         <div class="mdl-grid" id="user-search">
-                            <div class="mdl-cell mdl-cell--4-col" style="padding-top: 20px;">Search for user:</div>
+                            <div class="mdl-cell mdl-cell--4-col" style="padding-top: 20px;">Search for a user:</div>
                             <div class="mdl-cell mdl-cell--2-col">
                                 <div class="mdl-textfield mdl-js-textfield">
                                     <input class="mdl-textfield__input" type="text" pattern="-?[0-9]*(\.[0-9]+)?" id="search-id-input">
@@ -78,16 +78,37 @@
                     </div>
                 </div>
                 <div class="mdl-grid">
-                    <div class="mdl-cell mdl-cell-2-col" id="displayLoginId"></div>
-                    <div class="mdl-cell mdl-cell-4-col" id="displayUsername"></div>
-                    <div class="mdl-cell mdl-cell-4-col" id="displayPassword"></div>
-                    <div class="mdl-cell mdl-cell-4-col" id="displayType"></div>
+                    <div class="mdl-cell mdl-cell--12-col" style="border-style: outset;">
+                        <div class="mdl-grid">
+                            <div class="mdl-cell mdl-cell--4-col">Display User</div>
+                        </div>
+                        <div class="mdl-grid">
+                            <div class="mdl-cell mdl-cell--4-col" id="displayLoginId"></div>
+                            <div class="mdl-cell mdl-cell--4-col" id="displayUsername"></div>
+                            <div class="mdl-cell mdl-cell--4-col" id="displayType"></div>
+                        </div>
+                    </div>
                 </div>
                 <!-- User search -->
+                <!-- Applicant search -->
+                <div class="mdl-grid">
+                    <div class="mdl-cell mdl-cell--12-col" style="border-style: outset;">
+                        <div class="mdl-grid">
+                            <div class="mdl-cell mdl-cell--8-col">
+                                Applicants
+                            </div>
+                        </div>
+                        <div id="applicantDisplay">
+
+                        </div>
+                    </div>
+                </div>
+                <!-- Applicant search -->
             </main>
         </div>
         <script src="../scripts/loginpage/material.min.js"></script>
         <script src="../scripts/loadUserData.js"></script>
+        <script src="../scripts/loadApplicants.js"></script>
         <script src="../scripts/searchUser.js"></script>
     </body>
 

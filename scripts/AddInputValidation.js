@@ -1,28 +1,50 @@
 function ValidateInput() {
-    var Type = "";
+    var Type = document.getElementById("addInputType").value;
     var Error = "";
     var noError = true;
-    Type = document.getElementById("addInputType").value;
-    if (Type != "") {
-        console.log(Type);
-        Type = Type.toUpperCase();
-        if (!(Type == "VARCHAR" || Type == "INT" || Type == "TEXT" || Type == "DATE" || Type == "BOOLEAN" || Type == "ENUM" || Type == "BIT" || Type == "YEAR")) {
-            Error += "This type doesn't exist. ";
-        }
-    } else {
-        Error += "You must input a type. ";
-    }
+    var Name = document.getElementById("addInputName").value;
+    var Length = document.getElementById("addInputLength").value;
 
-    if (document.getElementById("addInputName").value == "") {
+    if (Name == "") {
         Error += "You must input a name. ";
     }
 
-    if (document.getElementById("addInputLength").value == "") {
-        //Error += "You must input a length. ";
+    if (Type == "VARCHAR") {
+        if (Length == "") {
+            Error += "You must input a length. ";
+        }
+        if (typeof Length == "number") {
+            Error += "The length of a varchar must be a number. "
+        }
+    } else if (Type == "INT") {
+        if (Length == "") {
+            Error += "You must input a length. ";
+        }
+        if (typeof Length == "number") {
+            Error += "The length of a varchar must be a number. "
+        }
+    } else if (Type == "TEXT") {
+        if (Length != "") {
+            Error += "You must not input a length. ";
+        }
+    } else if (Type == "ENUM") {
+        if (!(Length.includes(","))) {
+            Error += "You must input options. ";
+        }
+    } else if (Type == "BIT") {
+        if (Length != "") {
+            Error += "You must not input a length. ";
+        }
+    } else if (Type == "YEAR") {
+        if (!(Length.includes("-"))) {
+            Error += "You must input a time frame. ";
+        }
     }
-    console.log(Error)
+
+
     if (Error != "") {
-        alert(Error);
+        document.getElementById("errorDisplay").innerHTML = Error;
+        //alert(Error);
         noError = false;
     }
     console.log(noError);

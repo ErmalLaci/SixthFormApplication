@@ -26,8 +26,8 @@ $(document).ready(function () {
 
                     console.log(GCSEdata[0].name);
 
-                    for (i = 0; i < GCSEdata.length; i++){
-                      document.getElementById("displayStudentsGrades").innerHTML += "<div class='mdl-grid'><div class='mdl-cell mdl-cell--8-col'>Subject: " + GCSEdata[i].name + " | Exam board: " + GCSEdata[i].exam_board + " | Predicted Grade: " + GCSEdata[i].predicted_grade + " | Mock result: " + GCSEdata[i].mock_result + " | Actual result: " + GCSEdata[i].actual_result + " | Year exam was taken: " + GCSEdata[i].year_taken +  "</div>";
+                    for (i = 0; i < GCSEdata.length; i++) {
+                        document.getElementById("displayStudentsGrades").innerHTML += "<div class='mdl-grid'><div class='mdl-cell mdl-cell--8-col'>Subject: " + GCSEdata[i].name + " | Exam board: " + GCSEdata[i].exam_board + " | Predicted Grade: " + GCSEdata[i].predicted_grade + " | Mock result: " + GCSEdata[i].mock_result + " | Actual result: " + GCSEdata[i].actual_result + " | Year exam was taken: " + GCSEdata[i].year_taken + "</div>";
                     }
                     //console.log(studentdata[0]);
 

@@ -23,7 +23,7 @@ $(document).ready(function () {
                     //var fixedResponse = res.replace(/\\'/g, "'");
 
                     var studentdata = JSON.parse(res);
-                    
+
                     var username = studentdata[0].username;
                     console.log(username);
                     var type = studentdata[0].type;
@@ -31,7 +31,7 @@ $(document).ready(function () {
 
                     document.getElementById("display-usertype").innerHTML = type;
                     document.getElementById("displayusername").innerHTML = username;
-                    
+
                     console.log("Retrieved XML successfully");
                 } else {
                     console.log("Check the AJAX Request URL, because it's returning null.");
