@@ -242,7 +242,8 @@ $to = $row["tutoremail"];
 //define the subject of the email
 $subject = 'Tutor Reference';
 //define the message to be sent. Each line should be separated with \n
-$message = "Hello, " . $fname . " " . $sname . " recently applied to highdown and set this as their tutors email.\n\nYour teacher authenticator code is: $tutorAuthenticator.";
+$message = "Hello, " . $fname . " " . $sname . " recently applied to highdown and set this as their tutors email.\n\nYour teacher authenticator code is: $tutorAuthenticator. Please visit the following link to complete your tutor reference: 
+<a href='http://localhost/SixthFormApplication/views/tutorreference.php?id=$lastid'>http://localhost/SixthFormApplication/views/tutorreference.php?id=$lastid</a>";
 //define the headers we want passed. Note that they are separated with \r\n
 $headers = "From: laciermal98@gmail.com\r\n";
 $headers .= "Reply-To: laciermal98@gmail.com\r\n";
