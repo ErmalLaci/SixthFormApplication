@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 14, 2016 at 06:41 PM
+-- Generation Time: Apr 22, 2016 at 08:46 AM
 -- Server version: 10.1.9-MariaDB
 -- PHP Version: 5.6.15
 
@@ -90,7 +90,7 @@ CREATE TABLE `applicant` (
 --
 
 INSERT INTO `applicant` (`login_id`, `applicant_id`, `fname`, `sname`, `email`, `gender`, `uln`, `uci`, `addressline1`, `addressline2`, `postcode`, `telnumber`, `mobilenumber`, `year11school`, `schooladdressline1`, `schooladdressline2`, `year11schoolpostcode`, `year11completed`, `highdownstudent`, `parentcarerfname`, `parentcarersname`, `parentcareraddressline1`, `parentcareraddressline2`, `parentcarerpostcode`, `parentcarertelnumber`, `parentcarermobilenumber`, `contact2fname`, `contact2sname`, `contact2addressline1`, `contact2addressline2`, `contact2postcode`, `contact2telnumber`, `contact2mobilenumber`, `studentcourseinterest`, `entryrequirementsknown`, `specialrequirements`, `interviewnotes`, `subjectchoice`, `enrichment`, `tutoremail`, `studentachievements`, `learningneeds`, `learningneedsdetails`, `learningsupport`, `learningsupportdetails`, `statemented`, `statementeddetails`, `specialconsiderations`, `specialconsiderationsdetails`, `freeschoolmeals`, `fnameoftutor`, `snameoftutor`, `predictedoractualqualifications`, `tutorauthenticator`, `selectedcourses_id`, `accepted`) VALUES
-(3, 1, 'Ermal', 'Laci', 'laciermal98@gmail.com', 'male', '', '', '', '', '', '', '', '', '', '', '', 2014, b'1', '', '', '', '', '', '', '', '', '', '', '', '', '', '', b'1', b'0', '', '', 0, '', 'undefinedhawk@googlemail.com', '', b'0', '', b'0', '', b'0', '', b'0', '', b'0', '', '', b'1', '7Rge46fiCLEp8AuVYB3N', 1, b'0'),
+(3, 1, 'Ermal', 'Laci', 'laciermal98@gmail.com', 'male', '', '', '', '', '', '', '', '', '', '', '', 2014, b'1', '', '', '', '', '', '', '', '', '', '', '', '', '', '', b'1', b'0', '', '', 0, '', 'undefinedhawk@googlemail.com', 'loads', b'0', '', b'0', '', b'0', '', b'0', '', b'0', '', '', b'1', '7Rge46fiCLEp8AuVYB3N', 1, b'0'),
 (4, 2, 'Erion', 'Laci', 'undefinedhawk@live.co.uk', 'male', '', '', '', '', '', '', '', '', '', '', '', 2014, b'1', '', '', '', '', '', '', '', '', '', '', '', '', '', '', b'0', b'0', '', '', 0, '', 'laciermal98@gmail.com', '', b'0', '', b'0', '', b'0', '', b'0', '', b'0', '', '', b'0', 'oim2nxB7HfjOEe85gUFh', 2, b'0');
 
 -- --------------------------------------------------------
