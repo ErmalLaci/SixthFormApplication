@@ -22,7 +22,7 @@ if ($username == ""){
     }
 } elseif ($id == ""){
     $sql = "
-    SELECT *
+    SELECT login_id, username, type
     FROM `login`
     WHERE username='$username'
     ";
@@ -33,7 +33,7 @@ if ($username == ""){
     echo $row["type"];
 } else {
     $sql = "
-    SELECT *
+    SELECT login_id, username, type
     FROM `login`
     WHERE username='$username'
     ";

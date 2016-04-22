@@ -8,7 +8,7 @@ $id = $_SESSION["id"];
 $sql = "
 SELECT information, nameofinformation
 FROM `news`
-JOIN recipient
+INNER JOIN recipient
 ON news.news_id=recipient.news_id
 WHERE login_id='$id'
 ";

@@ -17,13 +17,11 @@ WHERE BINARY username = '$username' AND BINARY password = '$password'
 ";
 $result = mysqli_query($link, $sql);
 $count = mysqli_num_rows($result);
-$_SESSION["connected"] = false;
 $_SESSION["type"] = "";
 if ($count == 1){
     $row = mysqli_fetch_assoc($result);
     $_SESSION["id"] = $row["login_id"];
     $_SESSION["type"] = $row["type"];
-    $_SESSION["connected"] = true;
     if ($row["type"] == "admin"){
         header ("Location: ../views/adminloginpage.php");
     } elseif ($row["type"] == "applicant"){

@@ -38,7 +38,7 @@ for ($x = 1; $x < count($inputNames); $x++){
 
 
 
-$sql .= ", `studentachievements`, `learningneeds`, `learningneedsdetails`, `learningsupport`, `learningsupportdetails`, `statemented`, `statementeddetails`, `specialconsiderations`, `specialconsiderationsdetails`, `freeschoolmeals`, `fnameoftutor`, `snameoftutor`, `predictedoractualqualifications`, `entryrequirementsknown`, `specialrequirements`, `interviewnotes`, `subjectchoice`, `enrichment`, `accepted`, `applicant_id`  From applicant";
+$sql .= ", `studentcourseinterest`, `entryrequirementsknown`, `specialrequirements`, `interviewnotes`, `enrichment`, `studentachievements`, `learningneeds`, `learningneedsdetails`, `learningsupport`, `learningsupportdetails`, `statemented`, `statementeddetails`, `specialconsiderations`, `specialconsiderationsdetails`, `freeschoolmeals`, `fnameoftutor`, `snameoftutor`, `predictedoractualqualifications`, `entryrequirementsknown`, `specialrequirements`, `interviewnotes`, `enrichment`, `accepted`, `applicant_id`  From applicant";
 $result = mysqli_query($link, $sql) or die(mysqli_error($link));
 ?>
     <!doctype html>
@@ -183,6 +183,27 @@ $result = mysqli_query($link, $sql) or die(mysqli_error($link));
                                     $predictedoractualqualifications1 = "checked";
                                     $predictedoractualqualifications2 = "";
                                 }
+                                if ($row["studentcourseinterest"] == 0){
+                                    $studentcourseinterest = "";
+                                    $studentcourseinterest= "checked";
+                                } else {
+                                    $studentcourseinterest = "checked";
+                                    $studentcourseinterest = "";
+                                }
+                                if ($row["entryrequirementsknown"] == 0){
+                                    $entryrequirementsknown = "";
+                                    $entryrequirementsknown= "checked";
+                                } else {
+                                    $entryrequirementsknown = "checked";
+                                    $entryrequirementsknown = "";
+                                }
+                                if ($row["accepted"] == 0){
+                                    $accepted = "";
+                                    $accepted = "checked";
+                                } else {
+                                    $accepted = "checked";
+                                    $accepted = "";
+                                }
 
                                 $addedHTML .= "
                                 <div class='mdl-grid' id='" . $row['fname'] . " " . $row['sname'] . "'>
@@ -205,14 +226,28 @@ $result = mysqli_query($link, $sql) or die(mysqli_error($link));
                                         //Split the options variable at the comma to get each option in the table
                                         $options = explode(",", $inputLengths[$i]);
                                         //If the type is enum then create a dropdown mdl-textfield__input
-                                        $addedHTML .= "<div class='mdl-grid'><div class='mdl-cell mdl-cell--2-col'>" . $inputDisplays[$i] . "</div><div class='mdl-cell mdl-cell--4-col'><select class='input-enum' name='applicant" . $x . "input" . $i . "'>";
+                                        $addedHTML .= "<div class='mdl-grid'><div class='mdl-cell mdl-cell--2-col'>" . $inputDisplays[$i] . "</div><div class='mdl-cell mdl-cell--4-col'><select class='input-enum' name='applicant" . $x . "input" . $i . "' id='applicant" . $x . "input" . $i . "'>";
                                         for ($y = 0; $y < count($options); $y++) { //loops for each option
                                             $addedHTML .= ":<option value='" . $options[$y] . "'>" . strtoupper($options[$y]) . "</option>"; //creates an option in the dropdown for each valid answer
                                         }
                                         $addedHTML .= "</select></div></div>";
                                     } else if ($inputTypes[$i] == "BIT") {
                                     //If the type is bit then it creates radio buttons as I use bits where 1 is true and 0 is false
-                                        $addedHTML .= "<div class='mdl-grid'><div class='mdl-cell mdl-cell--12-col'>" . $inputDisplays[$i] . "</div></div><div class='mdl-grid'><div class='mdl-cell mdl-cell--4-col'><label class='mdl-radio mdl-js-radio mdl-js-ripple-effect' for='radioButton" . $i . "-option-1'><input type='radio' id='radioButton" . $i . "-option-1' class='mdl-radio__button' name='applicant" . $x . "input" . $i . "' value='1' checked><span class='mdl-radio__label'>Yes</span></label></div><div class='mdl-cell mdl-cell--4-col'><label class='mdl-radio mdl-js-radio mdl-js-ripple-effect' for='radioButton" . $i . "-option-2'><input type='radio' id='radioButton" . $i . "-option-2' class='mdl-radio__button' name='options-learningneeds' value='0'><span class='mdl-radio__label'>No</span></label></div></div>";
+                                        if($row[$inputNames[$i]] == 1){
+                                          $input1 = "checked";
+                                          $input2 = "";
+                                        }else{
+                                          $input1 = "";
+                                          $input2 = "checked";
+                                        }
+
+                                        $addedHTML .= "<div class='mdl-grid'><div class='mdl-cell mdl-cell--12-col'>" . $inputDisplays[$i] . "</div></div><div class='mdl-grid'><div class='mdl-cell mdl-cell--4-col'>
+                                        <label class='mdl-radio mdl-js-radio mdl-js-ripple-effect' for='radioButton" . $i . "-option-1'>
+                                        <input type='radio' id='radioButton" . $i . "-option-1' class='mdl-radio__button' name='applicant" . $x . "input" . $i . "' value='1' $input1>
+                                        <span class='mdl-radio__label'>Yes</span></label></div><div class='mdl-cell mdl-cell--4-col'>
+                                        <label class='mdl-radio mdl-js-radio mdl-js-ripple-effect' for='radioButton" . $i . "-option-2'>
+                                        <input type='radio' id='radioButton" . $i . "-option-2' class='mdl-radio__button' name='applicant" . $x . "input" . $i . "' value='0' $input2>
+                                        <span class='mdl-radio__label'>No</span></label></div></div>";
                                     } else if ($inputTypes[$i] == "YEAR") {
                                         //If the type is year then create a dropdown
                                         //Split at the - as the length will hold the minimum and maximum years
@@ -221,7 +256,7 @@ $result = mysqli_query($link, $sql) or die(mysqli_error($link));
                                         $minYear = $options[0];
                                         $maxYear = $options[1];
                                         $currentYear = $minYear;
-                                        $addedHTML .= "<div class='mdl-grid'><div class='mdl-cell mdl-cell--6-col'>" . $inputDisplays[$i] . "</div><div class='mdl-cell mdl-cell--4-col'><select class='input-enum' name='applicant" . $x . "input" . $i . "'>";
+                                        $addedHTML .= "<div class='mdl-grid'><div class='mdl-cell mdl-cell--6-col'>" . $inputDisplays[$i] . "</div><div class='mdl-cell mdl-cell--4-col'><select class='input-enum' name='applicant" . $x . "input" . $i . "' id='applicant" . $x . "input" . $i . "'>";
                                         while ($maxYear >= $currentYear) { //Loop for each of the years available
                                             $addedHTML .= ":<option value='" . $currentYear . "'>" . $currentYear . "</option>";
                                             $currentYear += 1;
@@ -231,8 +266,8 @@ $result = mysqli_query($link, $sql) or die(mysqli_error($link));
                                 }
 
                                 $addedHTML .= "
-                                <div id='applicant" . $x . "TutorReference'>
-                                <div class='mdl-grid'>
+                        <div id='applicant" . $x . "TutorReference'>
+                          <div class='mdl-grid'>
                             <div class='mdl-cell mdl-cell--12-col'>
                                 Tutor Reference
                                 <div class='mdl-grid'>
@@ -274,7 +309,7 @@ $result = mysqli_query($link, $sql) or die(mysqli_error($link));
                                     <div class='mdl-cell--12-col'>
                                         <!-- Floating Multiline Textfield -->
                                         <div class='mdl-textfield mdl-js-textfield' style='width: 100%;'>
-                                            <textarea class='mdl-textfield__input' type='text' rows='3' id = 'applicant" . $x . "learningneedsdetails' name = 'applicant" . $x . "learningNeedsDetails'></textarea>
+                                            <textarea class='mdl-textfield__input' type='text' rows='3' id = 'applicant" . $x . "learningneeds-details' name = 'applicant" . $x . "learningNeedsDetails'></textarea>
                                             <label class='mdl-textfield__label' for = 'applicant" . $x . "learningneeds-details'>If yes, please provide details</label>
                                         </div>
                                     </div>
@@ -428,6 +463,87 @@ $result = mysqli_query($link, $sql) or die(mysqli_error($link));
                                         </label>
                                     </div>
                                 </div>
+                                <div class='mdl-grid'>
+                                    <div class='mdl-cell mdl-cell--8-col'>
+                                        Is the applicant interested in the course?
+                                    </div>
+                                </div>
+                                <div class='mdl-grid'>
+                                    <div class='mdl-cell mdl-cell--4-col'>
+                                        <label class='mdl-radio mdl-js-radio mdl-js-ripple-effect' for = 'applicant" . $x . "studentcourseinterest-option-1'>
+                                            <input type='radio' id = 'applicant" . $x . "studentcourseinterest-option-1' class='mdl-radio__button' name = 'applicant" . $x . "options-studentcourseinterest' value='1' $specialconsiderations1>
+                                            <span class='mdl-radio__label'>Yes</span>
+                                        </label>
+                                    </div>
+                                    <div class='mdl-cell mdl-cell--4-col'>
+                                        <label class='mdl-radio mdl-js-radio mdl-js-ripple-effect' for = 'applicant" . $x . "studentcourseinterest-option-2'>
+                                            <input type='radio' id = 'applicant" . $x . "studentcourseinterest-option-2' class='mdl-radio__button' name = 'applicant" . $x . "options-studentcourseinterest' value='0' $specialconsiderations2>
+                                            <span class='mdl-radio__label'>No</span>
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class='mdl-grid'>
+                                    <div class='mdl-cell mdl-cell--8-col'>
+                                        Does the applicant know the entry requirements for their course?
+                                    </div>
+                                </div>
+                                <div class='mdl-grid'>
+                                    <div class='mdl-cell mdl-cell--4-col'>
+                                        <label class='mdl-radio mdl-js-radio mdl-js-ripple-effect' for = 'applicant" . $x . "entryrequirementsknown-option-1'>
+                                            <input type='radio' id = 'applicant" . $x . "entryrequirementsknown-option-1' class='mdl-radio__button' name = 'applicant" . $x . "options-entryrequirementsknown' value='1' $specialconsiderations1>
+                                            <span class='mdl-radio__label'>Yes</span>
+                                        </label>
+                                    </div>
+                                    <div class='mdl-cell mdl-cell--4-col'>
+                                        <label class='mdl-radio mdl-js-radio mdl-js-ripple-effect' for = 'applicant" . $x . "entryrequirementsknown-option-2'>
+                                            <input type='radio' id = 'applicant" . $x . "entryrequirementsknown-option-2' class='mdl-radio__button' name = 'applicant" . $x . "options-entryrequirementsknown' value='0' $specialconsiderations2>
+                                            <span class='mdl-radio__label'>No</span>
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class='mdl-grid'>
+                                    <div class='mdl-cell--12-col'>
+                                        <div class='mdl-textfield mdl-js-textfield' style='width: 100%;'>
+                                            <textarea class='mdl-textfield__input' type='text' rows='3' id = 'applicant" . $x . "specialrequirements-details' name = 'applicant" . $x . "specialrequirementsDetails'></textarea>
+                                            <label class='mdl-textfield__label' for = 'applicant" . $x . "Does the applicant have any special requirements?</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class='mdl-grid'>
+                                    <div class='mdl-cell--12-col'>
+                                        <div class='mdl-textfield mdl-js-textfield' style='width: 100%;'>
+                                            <textarea class='mdl-textfield__input' type='text' rows='3' id = 'applicant" . $x . "interviewnotes-details' name = 'applicant" . $x . "interviewnotesDetails'></textarea>
+                                            <label class='mdl-textfield__label' for = 'applicant" . $x . "interviewnotes-details'>Interview Notes</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class='mdl-grid'>
+                                    <div class='mdl-cell--12-col'>
+                                        <div class='mdl-textfield mdl-js-textfield' style='width: 100%;'>
+                                            <textarea class='mdl-textfield__input' type='text' rows='3' id = 'applicant" . $x . "enrichment-details' name = 'applicant" . $x . "enrichmentDetails'></textarea>
+                                            <label class='mdl-textfield__label' for = 'applicant" . $x . "enrichment-details'>Enrichment</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class='mdl-grid'>
+                                    <div class='mdl-cell mdl-cell--8-col'>
+                                        Accepted?
+                                    </div>
+                                </div>
+                                <div class='mdl-grid'>
+                                    <div class='mdl-cell mdl-cell--4-col'>
+                                        <label class='mdl-radio mdl-js-radio mdl-js-ripple-effect' for = 'applicant" . $x . "accepted-option-1'>
+                                            <input type='radio' id = 'applicant" . $x . "accepted-option-1' class='mdl-radio__button' name = 'applicant" . $x . "options-accepted' value='1' $specialconsiderations1>
+                                            <span class='mdl-radio__label'>Yes</span>
+                                        </label>
+                                    </div>
+                                    <div class='mdl-cell mdl-cell--4-col'>
+                                        <label class='mdl-radio mdl-js-radio mdl-js-ripple-effect' for = 'applicant" . $x . "accepted-option-2'>
+                                            <input type='radio' id = 'applicant" . $x . "accepted-option-2' class='mdl-radio__button' name = 'applicant" . $x . "options-accepted' value='0' $specialconsiderations2>
+                                            <span class='mdl-radio__label'>No</span>
+                                        </label>
+                                    </div>
+                                </div>
                                 <!-- Input -->
 
                                 <div class='mdl-grid'>
@@ -443,11 +559,13 @@ $result = mysqli_query($link, $sql) or die(mysqli_error($link));
                                 </div></div></div></div>
                                 <div class='mdl-grid'>
                                     <div class='mdl-cell mdl-cell--4-col'>
-                                        <button class='mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent' onclick='sendApplicantInfoChanges(" . $row['applicant_id'] . ", " . $x . ", " . $count . ")'>
+                                        <button class='mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent' onclick='sendApplicantInfoChanges(" . $row['applicant_id'] . ", " . $x . ", " . $count . ");'>
                                             Submit changes
                                         </button>
                                     </div>
                                 </div>
+                                  </div>
+                                  </div>
                                 ";
                                 $x++;
                             }
@@ -455,7 +573,7 @@ $result = mysqli_query($link, $sql) or die(mysqli_error($link));
                             echo $addedHTML;
                             ?>
                         </div>
-
+                      </div>
                     </div>
                 </div>
                 <!-- Applicant search -->
