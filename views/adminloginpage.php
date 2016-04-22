@@ -19,6 +19,8 @@ $i = 0;
 
 $result = mysqli_query($link, $sql) or die(mysqli_error($link));
 
+$count = mysqli_num_rows($result);
+
 while ($row = mysqli_fetch_assoc($result)){
     $inputNames[$i] = $row["name"];
     $inputTypes[$i] = $row["type"];
@@ -33,6 +35,8 @@ $sql .= $inputNames[0];
 for ($x = 1; $x < count($inputNames); $x++){
     $sql .= ", `" . $inputNames[$x] . "`";
 }
+
+
 
 $sql .= ", `studentachievements`, `learningneeds`, `learningneedsdetails`, `learningsupport`, `learningsupportdetails`, `statemented`, `statementeddetails`, `specialconsiderations`, `specialconsiderationsdetails`, `freeschoolmeals`, `fnameoftutor`, `snameoftutor`, `predictedoractualqualifications`, `entryrequirementsknown`, `specialrequirements`, `interviewnotes`, `subjectchoice`, `enrichment`, `accepted`, `applicant_id`  From applicant";
 $result = mysqli_query($link, $sql) or die(mysqli_error($link));
@@ -179,7 +183,7 @@ $result = mysqli_query($link, $sql) or die(mysqli_error($link));
                                     $predictedoractualqualifications1 = "checked";
                                     $predictedoractualqualifications2 = "";
                                 }
-                                    
+
                                 $addedHTML .= "
                                 <div class='mdl-grid' id='" . $row['fname'] . " " . $row['sname'] . "'>
                                 <div class='mdl-cell mdl-cell--12-col'>
@@ -225,7 +229,7 @@ $result = mysqli_query($link, $sql) or die(mysqli_error($link));
                                     $addedHTML .= "</select></div></div>";
                                     }
                                 }
-                                
+
                                 $addedHTML .= "
                                 <div id='applicant" . $x . "TutorReference'>
                                 <div class='mdl-grid'>
@@ -437,21 +441,21 @@ $result = mysqli_query($link, $sql) or die(mysqli_error($link));
                             </div>
                         </div>
                                 </div></div></div></div>
+                                <div class='mdl-grid'>
+                                    <div class='mdl-cell mdl-cell--4-col'>
+                                        <button class='mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent' onclick='sendApplicantInfoChanges(" . $row['applicant_id'] . ", " . $x . ", " . $count . ")'>
+                                            Submit changes
+                                        </button>
+                                    </div>
+                                </div>
                                 ";
                                 $x++;
                             }
-                            
+
                             echo $addedHTML;
                             ?>
                         </div>
-                        <div class="mdl-grid">
-                            <div class="mdl-cell mdl-cell--4-col">
-                                <!-- Accent-colored raised button with ripple -->
-                                <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" id="submit-changes">
-                                    Submit changes
-                                </button>
-                            </div>
-                        </div>
+
                     </div>
                 </div>
                 <!-- Applicant search -->
