@@ -46,7 +46,6 @@ require "../db/checklogin.php";
                     <a class="mdl-navigation__link" href="./applicantloginpage.php"><i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">home</i>Home</a>
                     <a class="mdl-navigation__link" href="#"><i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">inbox</i>Inbox</a>
                     <a class="mdl-navigation__link" href="../db/logout.php"><i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">exit_to_app</i>Logout</a>
-
                 </nav>
             </div>
             <main class="mdl-layout__content mdl-color--grey-100">

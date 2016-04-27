@@ -50,7 +50,7 @@
         </div>
         <main class="mdl-layout__content mdl-color--grey-100">
             <div class="mdl-grid">
-                <!-- Student Info -->
+                <!-- Info -->
 
 
             </div>

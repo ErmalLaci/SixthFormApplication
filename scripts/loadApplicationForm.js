@@ -29,7 +29,11 @@ $(document).ready(function () {
                     for (i = 0; i < amountofdata; i++) { //Loop for every row selected
                         if (inputData[i].type == "VARCHAR") { //Check the type of data, depending on the type of data there will be a different display
                             //If type is varchar then create a textfield
-                            addedHTML += "<div class='mdl-grid'><div class='mdl-cell mdl-cell--8-col'><div class='mdl-textfield mdl-js-textfield applicationInputs'><input class='mdl-textfield__input input-varchar' type='text' name='input" + i + "' id='input" + i + "' maxlength='" + inputData[i].length + "'><label class='mdl-textfield__label' for=''input" + i + "'>" + inputData[i].display + "</label></div></div></div>";
+                            if (inputData[i].validate == "numeric"){
+                              addedHTML += "<div class='mdl-grid'><div class='mdl-cell mdl-cell--8-col'><div class='mdl-textfield mdl-js-textfield applicationInputs'><input class='mdl-textfield__input input-varchar " + inputData[i].validate + "' type='text' pattern='[0-9]*(\.[0-9]+)?' name='input" + i + "' id='input" + i + "' maxlength='" + inputData[i].length + "'><label class='mdl-textfield__label' for=''input" + i + "'>" + inputData[i].display + "</label><span class='mdl-textfield__error'>Input is not a number!</span></div></div></div>";
+                            } else {
+                              addedHTML += "<div class='mdl-grid'><div class='mdl-cell mdl-cell--8-col'><div class='mdl-textfield mdl-js-textfield applicationInputs'><input class='mdl-textfield__input input-varchar " + inputData[i].validate + "' type='text' name='input" + i + "' id='input" + i + "' maxlength='" + inputData[i].length + "'><label class='mdl-textfield__label' for=''input" + i + "'>" + inputData[i].display + "</label></div></div></div>";
+                            }
                             //The max length is limited to the length of the VARCHAR field
                             //The display is shown in the label
                         } else if (inputData[i].type == "ENUM") {

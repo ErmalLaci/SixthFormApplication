@@ -45,6 +45,7 @@ session_start();
             <nav class="demo-navigation mdl-navigation mdl-color--blue-grey-800">
                 <a class="mdl-navigation__link" href="./adminloginpage.php"><i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">home</i>Home</a>
                 <a class="mdl-navigation__link" href="#"><i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">inbox</i>Inbox</a>
+                <a class="mdl-navigation__link" href="./adminmanageaccounts.php"><i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">supervisor_account</i>Manage Admin/Teacher Accounts</a>
                 <a class="mdl-navigation__link" href="./admineditform.php"><i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">edit</i>Edit Form</a>
                 <a class="mdl-navigation__link" href="../db/logout.php"><i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">exit_to_app</i>Logout</a>
 

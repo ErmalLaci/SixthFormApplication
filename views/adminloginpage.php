@@ -82,6 +82,7 @@ $result = mysqli_query($link, $sql) or die(mysqli_error($link));
                 <nav class="demo-navigation mdl-navigation mdl-color--blue-grey-800">
                     <a class="mdl-navigation__link" href="#"><i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">home</i>Home</a>
                     <a class="mdl-navigation__link" href="./admininbox.php"><i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">inbox</i>Inbox</a>
+                    <a class="mdl-navigation__link" href="./adminmanageaccounts.php"><i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">supervisor_account</i>Manage Admin/Teacher Accounts</a>
                     <a class="mdl-navigation__link" href="./admineditform.php"><i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">edit</i>Edit Form</a>
                     <a class="mdl-navigation__link" href="../db/logout.php"><i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">exit_to_app</i>Logout</a>
 
@@ -132,8 +133,14 @@ $result = mysqli_query($link, $sql) or die(mysqli_error($link));
                 <div class="mdl-grid">
                     <div class="mdl-cell mdl-cell--12-col" style="border-style: outset;">
                         <div class="mdl-grid">
-                            <div class="mdl-cell mdl-cell--8-col">
+                            <div class="mdl-cell mdl-cell--4-col">
                                 Applicants
+                            </div>
+                            <div class="mdl-cell mdl-cell--8-col">
+                              <div class="mdl-textfield mdl-js-textfield">
+                                <input class="mdl-textfield__input" type="text" id="ApplicantSearch" onkeyup="SearchApplicants();">
+                                <label class="mdl-textfield__label" for="ApplicantSearch">Search for an applicant</label>
+                              </div>
                             </div>
                         </div>
                         <div id="applicantDisplay">
@@ -141,6 +148,307 @@ $result = mysqli_query($link, $sql) or die(mysqli_error($link));
                             $addedHTML = "";
                             $x = 0;
                             while($row = mysqli_fetch_array($result)){
+                              $getGrades = "
+                              SELECT subject.name, subject.exam_board, grades.predicted_grade, grades.mock_result, grades.actual_result, grades.year_taken
+                              FROM `grades`
+                              INNER JOIN subject ON grades.subject_id = subject.subject_id
+                              WHERE grades.applicant_id = '" . $row['applicant_id'] . "'
+                              ";
+                              $gotGrades = mysqli_query($link, $getGrades);
+                              $gradesHTML = "
+                              <div class='mdl-grid'>
+                                  <div class='mdl-cell mdl-cell--12-col'>
+                                      <table class='mdl-data-table mdl-js-data-table'>
+                                          <thead>
+                                              <tr>
+                                                  <th class='mdl-data-table__cell--non-numeric'>Subject</th>
+                                                  <th class='mdl-data-table__cell--non-numeric'>Exam Board</th>
+                                                  <th class='mdl-data-table__cell--non-numeric'>Predicted Grade</th>
+                                                  <th class='mdl-data-table__cell--non-numeric'>Mock Result</th>
+                                                  <th class='mdl-data-table__cell--non-numeric'>Actual Result</th>
+                                                  <th class='mdl-data-table__cell--non-numeric'>Year Taken</th>
+                                              </tr>
+                                          </thead>
+                                          <tbody>";
+
+                              $z = 0;
+                              while($gotGradesArray = mysqli_fetch_array($gotGrades)){
+                                /*echo $gotGradesArray["name"];
+                                echo $gotGradesArray["exam_board"];
+                                echo $gotGradesArray["predicted_grade"];
+                                echo $gotGradesArray["mock_result"];
+                                echo $gotGradesArray["actual_result"];
+                                echo $gotGradesArray["year_taken"];*/
+
+                                $gradesHTML .= "
+                                <tr>
+                                <td class='mdl-data-table__cell--non-numeric'>
+                                <input class='mdl-textfield__input' type='text' id='subject-" .  $z . "-applicant" . $x . "' name='subject-" .  $z. "-applicant" . $x . "' value='" . $gotGradesArray['name'] . "'>
+
+                                </td><td class='mdl-data-table__cell--non-numeric'>
+                                <input class='mdl-textfield__input' type='text' id='exam_board-" .  $z . "-applicant" . $x . "' name='exam_board-" .  $z. "-applicant" . $x . "' value='" . $gotGradesArray['exam_board'] . "'>
+
+                                </td><td class='mdl-data-table__cell--non-numeric'>
+                                <input class='mdl-textfield__input' type='text' id='predicted_grade-" .  $z . "-applicant" . $x . "' name='predicted_grade-" .  $z. "-applicant" . $x . "' value='" . $gotGradesArray['predicted_grade'] . "'>
+
+                                </td><td class='mdl-data-table__cell--non-numeric'>
+                                <input class='mdl-textfield__input' type='text' id='mock_result-" .  $z . "-applicant" . $x . "' name='mock_result-" .  $z. "-applicant" . $x . "' value='" . $gotGradesArray['mock_result'] . "'>
+
+                                </td><td class='mdl-data-table__cell--non-numeric'>
+                                <input class='mdl-textfield__input' type='text' id='actual_result-" .  $z . "-applicant" . $x . "' name='actual_result-" .  $z. "-applicant" . $x . "' value='" . $gotGradesArray['actual_result'] . "'>
+
+                                </td><td class='mdl-data-table__cell--non-numeric'>
+                                <input class='mdl-textfield__input' type='text' id='year_taken-" .  $z . "-applicant" . $x . "' name='year_taken-" .  $z. "-applicant" . $x . "' value='" . $gotGradesArray['year_taken'] . "'>
+                                </td>
+                                </tr>";
+
+                                $z++;
+                              }
+
+                              for ($emptyRowCreation = mysqli_num_rows($gotGrades); $emptyRowCreation < 13; $emptyRowCreation++){
+                                $gradesHTML .= "
+                                <tr>
+                                <td class='mdl-data-table__cell--non-numeric'>
+                                <input class='mdl-textfield__input' type='text' id='subject-" .  $emptyRowCreation. "-applicant" . $x . "' name='subject-" .  $emptyRowCreation. "-applicant" . $x . "'>
+                                </td><td class='mdl-data-table__cell--non-numeric'>
+                                <input class='mdl-textfield__input' type='text' id='exam_board-" .  $emptyRowCreation. "-applicant" . $x . "' name='exam_board-" .  $emptyRowCreation. "-applicant" . $x . "'>
+                                </td><td class='mdl-data-table__cell--non-numeric'>
+                                <input class='mdl-textfield__input' type='text' id='predicted_grade-" .  $emptyRowCreation. "-applicant" . $x . "' name='predicted_grade-" .  $emptyRowCreation. "-applicant" . $x . "'>
+                                </td><td class='mdl-data-table__cell--non-numeric'>
+                                <input class='mdl-textfield__input' type='text' id='mock_result-" .  $emptyRowCreation. "-applicant" . $x . "' name='mock_result-" .  $emptyRowCreation. "-applicant" . $x . "'>
+                                </td><td class='mdl-data-table__cell--non-numeric'>
+                                <input class='mdl-textfield__input' type='text' id='actual_result-" .  $emptyRowCreation. "-applicant" . $x . "' name='actual_result-" .  $emptyRowCreation. "-applicant" . $x . "'>
+                                </td><td class='mdl-data-table__cell--non-numeric'>
+                                <input class='mdl-textfield__input' type='text' id='year_taken-" .  $emptyRowCreation. "-applicant" . $x . "' name='year_taken-" .  $emptyRowCreation. "-applicant" . $x . "'>
+                                </td>
+                                </tr>";
+                              }
+                              $gradesHTML .= "</tbody></table></div></div>";
+                              //echo htmlentities($gradesHTML);
+
+                              $selectedcoursesHTML = "";
+                              $showCourses = "
+                              SELECT `sixthformsubject_id`, `name`,`level`,`block`
+                              FROM `sixth form subject`
+                              ";
+                              $shownCourses = mysqli_query($link, $showCourses);
+
+                              $blockAHTML = "";
+                              $blockBHTML = "";
+                              $blockCHTML = "";
+                              $blockDHTML = "";
+                              $blockEHTML = "";
+                              $level2HTML = "";
+
+                              while ($shownCoursesArray = mysqli_fetch_array($shownCourses)){
+                                  if ($shownCoursesArray["level"] == "A Level") {
+                                      if ($shownCoursesArray["block"] == "A") {
+                                          $blockAHTML .= "<tr><td class='mdl-data-table__cell--non-numeric'><input type='radio' id='" . $shownCoursesArray["name"] . $shownCoursesArray["block"] . $x . "' name='blockA-options-applicant" . $x . "' value='" . $shownCoursesArray["sixthformsubject_id"] . "'>" . $shownCoursesArray["name"] . "</td></tr>";
+                                      } else if ($shownCoursesArray["block"] == "B") {
+                                          $blockBHTML .= "<tr><td class='mdl-data-table__cell--non-numeric'><input type='radio' id='" . $shownCoursesArray["name"] . $shownCoursesArray["block"] . $x . "' name='blockB-options-applicant" . $x . "' value='" . $shownCoursesArray["sixthformsubject_id"] . "'>" . $shownCoursesArray["name"] . "</td></tr>";
+                                      } else if ($shownCoursesArray["block"] == "C") {
+                                          $blockCHTML .= "<tr><td class='mdl-data-table__cell--non-numeric'><input type='radio' id='" . $shownCoursesArray["name"] . $shownCoursesArray["block"] . $x . "' name='blockC-options-applicant" . $x . "' value='" . $shownCoursesArray["sixthformsubject_id"] . "'>" . $shownCoursesArray["name"] . "</td></tr>";
+                                      } else if ($shownCoursesArray["block"] == "D") {
+                                          $blockDHTML .= "<tr><td class='mdl-data-table__cell--non-numeric'><input type='radio' id='" . $shownCoursesArray["name"] . $shownCoursesArray["block"] . $x . "' name='blockD-options-applicant" . $x . "' value='" . $shownCoursesArray["sixthformsubject_id"] . "'>" . $shownCoursesArray["name"] . "</td></tr>";
+                                      } else if ($shownCoursesArray["block"] == "E") {
+                                          $blockEHTML .= "<tr><td class='mdl-data-table__cell--non-numeric'><input type='radio' id='" . $shownCoursesArray["name"] . $shownCoursesArray["block"] . $x . "' name='blockE-options-applicant" . $x . "' value='" . $shownCoursesArray["sixthformsubject_id"] . "'>" . $shownCoursesArray["name"] . "</td></tr>";
+                                      }
+                                  } else if ($shownCoursesArray["level"] == "Level 2") {
+                                      $level2HTML .= "<tr><td class='mdl-data-table__cell--non-numeric'><input type='radio' id='" . $shownCoursesArray["name"] . "level2' name='level2-options-applicant" . $x . "' value='" . $shownCoursesArray["sixthformsubject_id"] . "'>" . $shownCoursesArray["name"] . "</td></tr>";
+                                  }
+                              }
+
+                              $applicantsChoice = "
+                              SELECT name, level, block
+                              FROM `sixth form subject`
+                              INNER JOIN `selected courses`
+                              ON `selected courses`.block_a = `sixth form subject`.sixthformsubject_id
+                              INNER JOIN applicant
+                              ON `selected courses`.applicant_id = applicant.applicant_id
+                              WHERE applicant.applicant_id = " . $row['applicant_id'] . "
+                              UNION
+                              SELECT name, level, block
+                              FROM `sixth form subject`
+                              INNER JOIN `selected courses`
+                              ON `selected courses`.block_b = `sixth form subject`.sixthformsubject_id
+                              INNER JOIN applicant
+                              ON `selected courses`.applicant_id = applicant.applicant_id
+                              WHERE applicant.applicant_id = " . $row['applicant_id'] . "
+                              UNION
+                              SELECT name, level, block
+                              FROM `sixth form subject`
+                              INNER JOIN `selected courses`
+                              ON `selected courses`.block_c = `sixth form subject`.sixthformsubject_id
+                              INNER JOIN applicant
+                              ON `selected courses`.applicant_id = applicant.applicant_id
+                              WHERE applicant.applicant_id = " . $row['applicant_id'] . "
+                              UNION
+                              SELECT name, level, block
+                              FROM `sixth form subject`
+                              INNER JOIN `selected courses`
+                              ON `selected courses`.block_d = `sixth form subject`.sixthformsubject_id
+                              INNER JOIN applicant
+                              ON `selected courses`.applicant_id = applicant.applicant_id
+                              WHERE applicant.applicant_id = " . $row['applicant_id'] . "
+                              UNION
+                              SELECT name, level, block
+                              FROM `sixth form subject`
+                              INNER JOIN `selected courses`
+                              ON `selected courses`.block_e = `sixth form subject`.sixthformsubject_id
+                              INNER JOIN applicant
+                              ON `selected courses`.applicant_id = applicant.applicant_id
+                              WHERE applicant.applicant_id = " . $row['applicant_id'] . "
+                              UNION
+                              SELECT name, level, block
+                              FROM `sixth form subject`
+                              INNER JOIN `selected courses`
+                              ON `selected courses`.level2_block = `sixth form subject`.sixthformsubject_id
+                              INNER JOIN applicant
+                              ON `selected courses`.applicant_id = applicant.applicant_id
+                              WHERE applicant.applicant_id = " . $row['applicant_id'] . "
+                              ";
+                              //echo $applicantsChoice;
+                              $applicantsChoiceResult = mysqli_query($link, $applicantsChoice);
+                              $blockAChoice = "";
+                              $blockBChoice = "";
+                              $blockCChoice = "";
+                              $blockDChoice = "";
+                              $blockEChoice = "";
+                              $level2Choice = "";
+
+                              while ($applicantsChoiceArray = mysqli_fetch_array($applicantsChoiceResult)){
+                                if ($applicantsChoiceArray["level"] == "Level 2"){
+                                  $level2Choice = $applicantsChoiceArray["name"] . "level2";
+                                } else {
+                                  if($applicantsChoiceArray["block"] == "A"){
+                                    $blockAChoice = $applicantsChoiceArray["name"] . $applicantsChoiceArray["block"] . $x;
+                                  } else if($applicantsChoiceArray["block"] == "B"){
+                                    $blockBChoice = $applicantsChoiceArray["name"] . $applicantsChoiceArray["block"] . $x;
+                                  } else if($applicantsChoiceArray["block"] == "C"){
+                                    $blockCChoice = $applicantsChoiceArray["name"] . $applicantsChoiceArray["block"] . $x;
+                                  } else if($applicantsChoiceArray["block"] == "D"){
+                                    $blockDChoice = $applicantsChoiceArray["name"] . $applicantsChoiceArray["block"] . $x;
+                                  } else if($applicantsChoiceArray["block"] == "E"){
+                                    $blockEChoice = $applicantsChoiceArray["name"] . $applicantsChoiceArray["block"] . $x;
+                                  }
+                                }
+                              }
+                              $selectedcoursesHTML = "
+                              <div class='mdl-grid'>
+                                <div class='mdl-cell mdl-cell--12-col'>
+                                  <div class='mdl-grid'>
+                                    <div class='mdl-cell mdl-cell--6-col'>
+                                      <table class='mdl-data-table mdl-js-data-table' width='100%'>
+                                        <thead>
+                                          <tr>
+                                            <th class='mdl-data-table__cell--non-numeric'>Block A</th>
+                                          </tr>
+                                        </thead>
+                                        <tbody id='blockA-table-applicant" . $x ."'>
+                                        " . $blockAHTML . "
+                                        </tbody>
+                                      </table>
+                                    </div>
+                                    <div class='mdl-cell mdl-cell--6-col'>
+                                      <table class='mdl-data-table mdl-js-data-table' width='100%'>
+                                        <thead>
+                                          <tr>
+                                            <th class='mdl-data-table__cell--non-numeric'>Block B</th>
+                                          </tr>
+                                        </thead>
+                                        <tbody id='blockB-table-applicant" . $x ."'>
+                                        " . $blockBHTML . "
+                                        </tbody>
+                                      </table>
+                                    </div>
+                                  </div>
+                                  <div class='mdl-grid'>
+                                    <div class='mdl-cell mdl-cell--6-col'>
+                                      <table class='mdl-data-table mdl-js-data-table' width='100%'>
+                                        <thead>
+                                          <tr>
+                                            <th class='mdl-data-table__cell--non-numeric'>Block C</th>
+                                          </tr>
+                                        </thead>
+                                        <tbody id='blockC-table-applicant" . $x ."'>
+                                        " . $blockCHTML . "
+                                        </tbody>
+                                      </table>
+                                    </div>
+                                    <div class='mdl-cell mdl-cell--6-col'>
+                                      <table class='mdl-data-table mdl-js-data-table' width='100%'>
+                                        <thead>
+                                          <tr>
+                                            <th class='mdl-data-table__cell--non-numeric'>Block D</th>
+                                          </tr>
+                                        </thead>
+                                        <tbody id='blockD-table-applicant" . $x ."'>
+                                        " . $blockDHTML . "
+                                        </tbody>
+                                      </table>
+                                    </div>
+                                  </div>
+                                  <div class='mdl-grid'>
+                                    <div class='mdl-cell mdl-cell--6-col'>
+                                      <table class='mdl-data-table mdl-js-data-table' width='100%'>
+                                        <thead>
+                                          <tr>
+                                            <th class='mdl-data-table__cell--non-numeric'>Block E</th>
+                                          </tr>
+                                        </thead>
+                                        <tbody id='blockE-table-applicant" . $x ."'>
+                                        " . $blockEHTML . "
+                                        </tbody>
+                                      </table>
+                                    </div>
+                                    <div class='mdl-cell mdl-cell--6-col'>
+                                      <table class='mdl-data-table mdl-js-data-table' width='100%'>
+                                        <thead>
+                                          <tr>
+                                            <th class='mdl-data-table__cell--non-numeric'>Level 2</th>
+                                          </tr>
+                                        </thead>
+                                        <tbody id='level2-table-applicant" . $x ."'>
+                                        " . $level2HTML . "
+                                        </tbody>
+                                      </table>
+                                    </div>
+                                  </div>
+                                  <div class='mdl-grid'>
+                                    <div class='mdl-cell mdl-cell--12-col'>
+                                      <center>
+                                        <div class='mdl-textfield mdl-js-textfield' style='width:80%;'>
+                                          <textarea class='mdl-textfield__input' type='text' rows='8' id='courses_reasons-input-applicant" . $x . "' name='courses_reasons-input-applicant" . $x . "'></textarea>
+                                          <label class='mdl-textfield__label' for='courses_reasons-input-applicant" . $x . "'>Why do you want to study this course?</label>
+                                        </div>
+                                      </center>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                              <script>
+                              try{
+                                document.getElementById('" . $blockAChoice . "').checked = true;
+                              }catch(err){}
+                              try{
+                                document.getElementById('" . $blockBChoice . "').checked = true;
+                              }catch(err){}
+                              try{
+                                document.getElementById('" . $blockCChoice . "').checked = true;
+                              }catch(err){}
+                              try{
+                                document.getElementById('" . $blockDChoice . "').checked = true;
+                              }catch(err){}
+                              try{
+                                document.getElementById('" . $blockEChoice . "').checked = true;
+                              }catch(err){}
+                              try{
+                                document.getElementById('" . $level2Choice . "').checked = true;
+                              }catch(err){}
+                              </script>
+                              ";
+
+
                                 if ($row["learningneeds"] == 0){
                                     $learningneeds1 = "";
                                     $learningneeds2 = "checked";
@@ -184,29 +492,29 @@ $result = mysqli_query($link, $sql) or die(mysqli_error($link));
                                     $predictedoractualqualifications2 = "";
                                 }
                                 if ($row["studentcourseinterest"] == 0){
-                                    $studentcourseinterest = "";
-                                    $studentcourseinterest= "checked";
+                                    $studentcourseinterest1 = "";
+                                    $studentcourseinterest2 = "checked";
                                 } else {
-                                    $studentcourseinterest = "checked";
-                                    $studentcourseinterest = "";
+                                    $studentcourseinterest1 = "checked";
+                                    $studentcourseinterest2 = "";
                                 }
                                 if ($row["entryrequirementsknown"] == 0){
-                                    $entryrequirementsknown = "";
-                                    $entryrequirementsknown= "checked";
+                                    $entryrequirementsknown1 = "";
+                                    $entryrequirementsknown2 = "checked";
                                 } else {
-                                    $entryrequirementsknown = "checked";
-                                    $entryrequirementsknown = "";
+                                    $entryrequirementsknown1 = "checked";
+                                    $entryrequirementsknown2 = "";
                                 }
                                 if ($row["accepted"] == 0){
-                                    $accepted = "";
-                                    $accepted = "checked";
+                                    $accepted1 = "";
+                                    $accepted2 = "checked";
                                 } else {
-                                    $accepted = "checked";
-                                    $accepted = "";
+                                    $accepted1 = "checked";
+                                    $accepted2 = "";
                                 }
 
                                 $addedHTML .= "
-                                <div class='mdl-grid' id='" . $row['fname'] . " " . $row['sname'] . "'>
+                                <div class='mdl-grid applicantsInfo' id='" . $row['fname'] . " " . $row['sname'] . $x . "'>
                                 <div class='mdl-cell mdl-cell--12-col'>
                                 <button type='button' class='mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab collapsebutton' onclick='switchDisplay(" . $x . ");'>
                                 <i class='material-icons' id='collapsebutton" . $x ."'>add</i>
@@ -215,13 +523,22 @@ $result = mysqli_query($link, $sql) or die(mysqli_error($link));
                                 for($i = 0; $i < count($inputNames); $i++){
                                     if ($inputTypes[$i] == "VARCHAR") { //Check the type of data, depending on the type of data there will be a different display
                                         //If type is varchar then create a textfield
-                                        $addedHTML .= "
-                                        <div class='mdl-cell mdl-cell--6-col'><div class='mdl-textfield mdl-js-textfield  mdl-textfield--floating-label applicationInputs'>
-                                        <input class='mdl-textfield__input input-varchar' value='" . $row[$inputNames[$i]] . "' type='text' name='applicant" . $x . "input" . $i . "' id='applicant" . $x . "input" . $i . "' maxlength='" . $inputLengths[$i] . "'>
-                                        <label class='mdl-textfield__label' for='applicant" . $x . "input" . $i . "'>" . $inputDisplays[$i] . "</label>
-                                        </div></div>";
-                                        //The max length is limited to the length of the VARCHAR field
-                                        //The display is shown in the label
+                                        if ($inputValidates[$i] == "numeric"){
+                                          $addedHTML .= "
+                                          <div class='mdl-cell mdl-cell--6-col'><div class='mdl-textfield mdl-js-textfield  mdl-textfield--floating-label applicationInputs'>
+                                          <input class='mdl-textfield__input input-varchar " . $inputValidates[$i] . " applicant" . $x . "' value='" . $row[$inputNames[$i]] . "' type='text' pattern='[0-9]*(\.[0-9]+)?' name='applicant" . $x . "input" . $i . "'
+                                          id='applicant" . $x . "input" . $i . "' maxlength='" . $inputLengths[$i] . "'>
+                                          <label class='mdl-textfield__label' for='applicant" . $x . "input" . $i . "'>" . $inputDisplays[$i] . "</label>
+                                          <span class='mdl-textfield__error'>Input is not a number!</span>
+                                          </div></div>";
+                                        } else {
+                                          $addedHTML .= "
+                                          <div class='mdl-cell mdl-cell--6-col'><div class='mdl-textfield mdl-js-textfield  mdl-textfield--floating-label applicationInputs'>
+                                          <input class='mdl-textfield__input input-varchar " . $inputValidates[$i] . " applicant" . $x . "' value='" . $row[$inputNames[$i]] . "' type='text' name='applicant" . $x . "input" . $i . "'
+                                          id='applicant" . $x . "input" . $i . "' maxlength='" . $inputLengths[$i] . "'>
+                                          <label class='mdl-textfield__label' for='applicant" . $x . "input" . $i . "'>" . $inputDisplays[$i] . "</label>
+                                          </div></div>";
+                                        }
                                     } else if ($inputTypes[$i] == "ENUM") {
                                         //Split the options variable at the comma to get each option in the table
                                         $options = explode(",", $inputLengths[$i]);
@@ -264,11 +581,12 @@ $result = mysqli_query($link, $sql) or die(mysqli_error($link));
                                     $addedHTML .= "</select></div></div>";
                                     }
                                 }
-
+                                $addedHTML .= $gradesHTML;
+                                $addedHTML .= $selectedcoursesHTML;
                                 $addedHTML .= "
-                        <div id='applicant" . $x . "TutorReference'>
-                          <div class='mdl-grid'>
-                            <div class='mdl-cell mdl-cell--12-col'>
+                                <div id='applicant" . $x . "TutorReference'>
+                                <div class='mdl-grid'>
+                                <div class='mdl-cell mdl-cell--12-col'>
                                 Tutor Reference
                                 <div class='mdl-grid'>
                                     <div class='mdl-cell mdl-cell--12-col'>1. Please comment on the student's achievements to date and the suitability of the student for the courses chosen</div>
@@ -294,13 +612,13 @@ $result = mysqli_query($link, $sql) or die(mysqli_error($link));
                                 <div class='mdl-grid'>
                                     <div class='mdl-cell mdl-cell--4-col'>
                                         <label class='mdl-radio mdl-js-radio mdl-js-ripple-effect' for = 'applicant" . $x . "learningneeds-option-1'>
-                                            <input type='radio' id = 'applicant" . $x . "learningneeds-option-1' class='mdl-radio__button' name = 'applicant" . $x . "options-learningneeds' value='1' checked>
+                                            <input type='radio' id = 'applicant" . $x . "learningneeds-option-1' class='mdl-radio__button' name = 'applicant" . $x . "options-learningneeds' value='1' $learningneeds1>
                                             <span class='mdl-radio__label'>Yes</span>
                                         </label>
                                     </div>
                                     <div class='mdl-cell mdl-cell--4-col'>
                                         <label class='mdl-radio mdl-js-radio mdl-js-ripple-effect' for = 'applicant" . $x . "learningneeds-option-2'>
-                                            <input type='radio' id = 'applicant" . $x . "learningneeds-option-2' class='mdl-radio__button' name = 'applicant" . $x . "options-learningneeds' value='0' >
+                                            <input type='radio' id = 'applicant" . $x . "learningneeds-option-2' class='mdl-radio__button' name = 'applicant" . $x . "options-learningneeds' value='0' $learningneeds2>
                                             <span class='mdl-radio__label'>No</span>
                                         </label>
                                     </div>
@@ -471,13 +789,13 @@ $result = mysqli_query($link, $sql) or die(mysqli_error($link));
                                 <div class='mdl-grid'>
                                     <div class='mdl-cell mdl-cell--4-col'>
                                         <label class='mdl-radio mdl-js-radio mdl-js-ripple-effect' for = 'applicant" . $x . "studentcourseinterest-option-1'>
-                                            <input type='radio' id = 'applicant" . $x . "studentcourseinterest-option-1' class='mdl-radio__button' name = 'applicant" . $x . "options-studentcourseinterest' value='1' $specialconsiderations1>
+                                            <input type='radio' id = 'applicant" . $x . "studentcourseinterest-option-1' class='mdl-radio__button' name = 'applicant" . $x . "options-studentcourseinterest' value='1' $studentcourseinterest1>
                                             <span class='mdl-radio__label'>Yes</span>
                                         </label>
                                     </div>
                                     <div class='mdl-cell mdl-cell--4-col'>
                                         <label class='mdl-radio mdl-js-radio mdl-js-ripple-effect' for = 'applicant" . $x . "studentcourseinterest-option-2'>
-                                            <input type='radio' id = 'applicant" . $x . "studentcourseinterest-option-2' class='mdl-radio__button' name = 'applicant" . $x . "options-studentcourseinterest' value='0' $specialconsiderations2>
+                                            <input type='radio' id = 'applicant" . $x . "studentcourseinterest-option-2' class='mdl-radio__button' name = 'applicant" . $x . "options-studentcourseinterest' value='0' $studentcourseinterest2>
                                             <span class='mdl-radio__label'>No</span>
                                         </label>
                                     </div>
@@ -490,13 +808,13 @@ $result = mysqli_query($link, $sql) or die(mysqli_error($link));
                                 <div class='mdl-grid'>
                                     <div class='mdl-cell mdl-cell--4-col'>
                                         <label class='mdl-radio mdl-js-radio mdl-js-ripple-effect' for = 'applicant" . $x . "entryrequirementsknown-option-1'>
-                                            <input type='radio' id = 'applicant" . $x . "entryrequirementsknown-option-1' class='mdl-radio__button' name = 'applicant" . $x . "options-entryrequirementsknown' value='1' $specialconsiderations1>
+                                            <input type='radio' id = 'applicant" . $x . "entryrequirementsknown-option-1' class='mdl-radio__button' name = 'applicant" . $x . "options-entryrequirementsknown' value='1' $entryrequirementsknown1>
                                             <span class='mdl-radio__label'>Yes</span>
                                         </label>
                                     </div>
                                     <div class='mdl-cell mdl-cell--4-col'>
                                         <label class='mdl-radio mdl-js-radio mdl-js-ripple-effect' for = 'applicant" . $x . "entryrequirementsknown-option-2'>
-                                            <input type='radio' id = 'applicant" . $x . "entryrequirementsknown-option-2' class='mdl-radio__button' name = 'applicant" . $x . "options-entryrequirementsknown' value='0' $specialconsiderations2>
+                                            <input type='radio' id = 'applicant" . $x . "entryrequirementsknown-option-2' class='mdl-radio__button' name = 'applicant" . $x . "options-entryrequirementsknown' value='0' $entryrequirementsknown2>
                                             <span class='mdl-radio__label'>No</span>
                                         </label>
                                     </div>
@@ -533,37 +851,38 @@ $result = mysqli_query($link, $sql) or die(mysqli_error($link));
                                 <div class='mdl-grid'>
                                     <div class='mdl-cell mdl-cell--4-col'>
                                         <label class='mdl-radio mdl-js-radio mdl-js-ripple-effect' for = 'applicant" . $x . "accepted-option-1'>
-                                            <input type='radio' id = 'applicant" . $x . "accepted-option-1' class='mdl-radio__button' name = 'applicant" . $x . "options-accepted' value='1' $specialconsiderations1>
+                                            <input type='radio' id = 'applicant" . $x . "accepted-option-1' class='mdl-radio__button' name = 'applicant" . $x . "options-accepted' value='1' $accepted1>
                                             <span class='mdl-radio__label'>Yes</span>
                                         </label>
                                     </div>
                                     <div class='mdl-cell mdl-cell--4-col'>
                                         <label class='mdl-radio mdl-js-radio mdl-js-ripple-effect' for = 'applicant" . $x . "accepted-option-2'>
-                                            <input type='radio' id = 'applicant" . $x . "accepted-option-2' class='mdl-radio__button' name = 'applicant" . $x . "options-accepted' value='0' $specialconsiderations2>
+                                            <input type='radio' id = 'applicant" . $x . "accepted-option-2' class='mdl-radio__button' name = 'applicant" . $x . "options-accepted' value='0' $accepted2>
                                             <span class='mdl-radio__label'>No</span>
                                         </label>
                                     </div>
                                 </div>
                                 <!-- Input -->
-
-                                <div class='mdl-grid'>
-                                    <div class='mdl-cell mdl-cell--4-col'>
-                                        <!-- Raised button with ripple -->
-                                        <button class='mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect' type='submit'>
-                                            Send Reference
-                                        </button>
-                                    </div>
-                                </div>
                             </div>
-                        </div>
+                              </div>
                                 </div></div></div></div>
                                 <div class='mdl-grid'>
                                     <div class='mdl-cell mdl-cell--4-col'>
-                                        <button class='mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent' onclick='sendApplicantInfoChanges(" . $row['applicant_id'] . ", " . $x . ", " . $count . ");'>
+                                        <button class='mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent' onclick='validateToSendChanges(" . $row['applicant_id'] . ", " . $x . ", " . $count . ");'>
                                             Submit changes
                                         </button>
                                     </div>
+                                    <div class='mdl-cell mdl-cell--4-col'>
+                                        <button class='mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent' onclick='deleteApplication(" . $row['applicant_id'] . ");'>
+                                            Delete Application
+                                        </button>
+                                    </div>
                                 </div>
+                                <div class='mdl-grid'>
+                                    <div class='mdl-cell mdl-cell--12-col' style='color:red;' id='applicationError'>
+
+                                    </div>
+                                    </div>
                                   </div>
                                   </div>
                                 ";
@@ -589,7 +908,6 @@ $result = mysqli_query($link, $sql) or die(mysqli_error($link));
             for (var i = 0; i < elements.length; i++) {
                 elements[i].style.display = "none";
             }
-
             //collapse or expand depending on state
             function switchDisplay(i) {
 
@@ -601,6 +919,26 @@ $result = mysqli_query($link, $sql) or die(mysqli_error($link));
                     document.getElementById("collapsebutton" + i).innerHTML = "add";
                 }
                 return false;
+            }
+
+            function SearchApplicants(){
+              var allApplicants = document.getElementsByClassName("applicantsInfo");
+              var input = document.getElementById("ApplicantSearch").value;
+              var applicantId = [];
+              if (input != ""){
+                for (var x = 0; x < allApplicants.length; x++){
+                  applicantId[x] = allApplicants[x].id;
+                  if (applicantId[x].toLowerCase().includes(input.toLowerCase())){
+                    allApplicants[x].style.display = "block";
+                  }else{
+                      allApplicants[x].style.display = "none";
+                  }
+                }
+              } else {
+                for (var x = 0; x < allApplicants.length; x++){
+                  allApplicants[x].style.display = "block";
+                }
+              }
             }
         </script>
     </body>

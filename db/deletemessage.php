@@ -18,9 +18,9 @@ $result = mysqli_query($link, $sql);
 
 
 while ($row = mysqli_fetch_assoc($result)){
-    
+
     $solution[] = $row["news_id"];
-    
+
 }
 
 $length = sizeof($solution);
@@ -38,5 +38,5 @@ for ($i = 0; $i < $length; $i++){
     mysqli_query($link, $sql) or die(mysqli_error());
     echo $sql;
 }
-
+mysqli_close($link);
 ?>

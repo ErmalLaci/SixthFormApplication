@@ -33,6 +33,7 @@ if(mysqli_affected_rows($link) == 0){
     //send the email
     $mail_sent = @mail( $to, $subject, $message, $headers );
     //if the message is sent successfully print "Mail sent". Otherwise print "Mail failed"
-    echo $mail_sent ? "Mail sent" : "Mail failed";
+    //echo $mail_sent ? "Mail sent" : "Mail failed";
 }
+mysqli_close($link);
 ?>

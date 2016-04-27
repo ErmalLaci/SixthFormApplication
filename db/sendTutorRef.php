@@ -29,4 +29,5 @@ if (mysqli_query($link, $sql)){
 
   //mysqli_error($link);
 }
+mysqli_close($link);
 ?>

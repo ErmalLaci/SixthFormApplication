@@ -1,6 +1,6 @@
 $(document).ready(function () {
     function loadData() {
-        console.log("Retrieving Form Data..");
+        //console.log("Retrieving Form Data..");
 
         var xmlhttp;
 
@@ -25,16 +25,16 @@ $(document).ready(function () {
                     var studentdata = JSON.parse(res);
 
                     var username = studentdata[0].username;
-                    console.log(username);
+                    //console.log(username);
                     var type = studentdata[0].type;
-                    console.log(type);
+                    //console.log(type);
 
                     document.getElementById("display-usertype").innerHTML = type;
                     document.getElementById("displayusername").innerHTML = username;
 
-                    console.log("Retrieved XML successfully");
+                    //console.log("Retrieved XML successfully");
                 } else {
-                    console.log("Check the AJAX Request URL, because it's returning null.");
+                    //console.log("Check the AJAX Request URL, because it's returning null.");
                 }
             }
         }
@@ -43,7 +43,7 @@ $(document).ready(function () {
 
         var apiURL = "http://localhost/SixthFormApplication/db/userservice.php";
         xmlhttp.open("GET", apiURL, true);
-        console.log("Retrieving Data from: ", apiURL);
+        //console.log("Retrieving Data from: ", apiURL);
         xmlhttp.send();
     }
     loadData();

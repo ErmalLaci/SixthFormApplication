@@ -46,4 +46,5 @@ if ($username == ""){
         $display += "The id and username you input do not match, the results for the username you queried are shown.";
     }
 }
+mysqli_close($link);
 ?>

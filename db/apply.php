@@ -9,12 +9,12 @@ require "./connect.php";
 
 if (isset($_POST["blockA-options"])){
     $blockA = $_POST["blockA-options"];
-    $sql = "
-    SELECT `sixthformsubject_id` 
+    $selectCoursesql = "
+    SELECT `sixthformsubject_id`
     FROM `sixth form subject`
     WHERE name = '$blockA' AND block = 'A'
     ";
-    $result = mysqli_query($link, $sql);
+    $result = mysqli_query($link, $selectCoursesql);
     $row = mysqli_fetch_array($result);
     $blockAid = $row[0];
 } else {
@@ -22,12 +22,12 @@ if (isset($_POST["blockA-options"])){
 }
 if (isset($_POST["blockB-options"])){
     $blockB = $_POST["blockB-options"];
-    $sql = "
-    SELECT `sixthformsubject_id` 
+    $selectCoursesql = "
+    SELECT `sixthformsubject_id`
     FROM `sixth form subject`
     WHERE name = '$blockB' AND block = 'B'
     ";
-    $result = mysqli_query($link, $sql);
+    $result = mysqli_query($link, $selectCoursesql);
     $row = mysqli_fetch_array($result);
     $blockBid = $row[0];
 } else {
@@ -35,12 +35,12 @@ if (isset($_POST["blockB-options"])){
 }
 if (isset($_POST["blockC-options"])){
     $blockC = $_POST["blockC-options"];
-    $sql = "
-    SELECT `sixthformsubject_id` 
+    $selectCoursesql = "
+    SELECT `sixthformsubject_id`
     FROM `sixth form subject`
     WHERE name = '$blockC' AND block = 'C'
     ";
-    $result = mysqli_query($link, $sql);
+    $result = mysqli_query($link, $selectCoursesql);
     $row = mysqli_fetch_array($result);
     $blockCid = $row[0];
 } else {
@@ -48,12 +48,12 @@ if (isset($_POST["blockC-options"])){
 }
 if (isset($_POST["blockD-options"])){
     $blockD = $_POST["blockD-options"];
-    $sql = "
-    SELECT `sixthformsubject_id` 
+    $selectCoursesql = "
+    SELECT `sixthformsubject_id`
     FROM `sixth form subject`
     WHERE name = '$blockD' AND block = 'D'
     ";
-    $result = mysqli_query($link, $sql);
+    $result = mysqli_query($link, $selectCoursesql);
     $row = mysqli_fetch_array($result);
     $blockDid = $row[0];
 } else {
@@ -61,12 +61,12 @@ if (isset($_POST["blockD-options"])){
 }
 if (isset($_POST["blockE-options"])){
     $blockE = $_POST["blockE-options"];
-    $sql = "
-    SELECT `sixthformsubject_id` 
+    $selectCoursesql = "
+    SELECT `sixthformsubject_id`
     FROM `sixth form subject`
     WHERE name = '$blockE' AND block = 'E'
     ";
-    $result = mysqli_query($link, $sql);
+    $result = mysqli_query($link, $selectCoursesql);
     $row = mysqli_fetch_array($result);
     $blockEid = $row[0];
 } else {
@@ -74,12 +74,12 @@ if (isset($_POST["blockE-options"])){
 }
 if (isset($_POST["level2-options"])){
     $level2 = $_POST["level2-options"];
-    $sql = "
-    SELECT `sixthformsubject_id` 
+    $selectCoursesql = "
+    SELECT `sixthformsubject_id`
     FROM `sixth form subject`
     WHERE name = '$level2' AND level = 'Level 2'
     ";
-    $result = mysqli_query($link, $sql);
+    $result = mysqli_query($link, $selectCoursesql);
     $row = mysqli_fetch_array($result);
     $level2id = $row[0];
 } else {
@@ -88,26 +88,21 @@ if (isset($_POST["level2-options"])){
 
 $reasons = isset($_POST["courses_reasons-input"]) ? $_POST["courses_reasons-input"] : "";
 
-$sql = "
-INSERT INTO `selected courses`(`block_a`, `block_b`, `block_c`, `block_d`, `block_e`, `level2_block`, `courses_reasons`) 
-VALUES($blockAid, $blockBid, $blockCid, $blockDid, $blockEid, $level2id, '$reasons')
-";
-
-echo $sql;
-
-mysqli_query($link, $sql) or die(mysqli_error($link));
-
-$selectedcourseid = mysqli_insert_id($link);
-
-echo "course id: " . $selectedcourseid;
 
 $sql = "
-INSERT INTO `applicant` (selectedcourses_id) VALUES ($selectedcourseid)
+INSERT INTO `applicant` () VALUES ()
 ";
-echo $sql;
+//echo $sql;
 mysqli_query($link, $sql) or die(mysqli_error($link));
 
 $last_id = mysqli_insert_id($link);
+
+$selectCoursesql = "
+INSERT INTO `selected courses`(`applicant_id`, `block_a`, `block_b`, `block_c`, `block_d`, `block_e`, `level2_block`, `courses_reasons`)
+VALUES($last_id, $blockAid, $blockBid, $blockCid, $blockDid, $blockEid, $level2id, '$reasons')
+";
+
+mysqli_query($link, $selectCoursesql) or die(mysqli_error($link));
 
 for ($readGrades = 0; $readGrades < 13; $readGrades++){
     $inputname = "subject-" . $readGrades . "-input";
@@ -122,36 +117,36 @@ for ($readGrades = 0; $readGrades < 13; $readGrades++){
     $actualresult = isset($_POST[$inputname]) ? $_POST[$inputname] : "";
     $inputname = "year_taken-" . $readGrades . "-input";
     $yeartaken = isset($_POST[$inputname]) ? $_POST[$inputname] : "";
-    if ($subject == ""||$examboard == ""||$predictedgrade == ""||$mockresult == ""||$yeartaken == ""){
-        
+    if ($subject == ""||$examboard == ""||$predictedgrade == ""||$yeartaken == ""){
+
     } else {
         $sql = "
-        SELECT subject_id FROM `subject` 
+        SELECT subject_id FROM `subject`
         WHERE name='$subject' AND exam_board='$examboard'
         ";
 
         $result = mysqli_query($link, $sql);
         $row = mysqli_fetch_assoc($result);
-        //echo $sql;
+        ////echo $sql;
         $subjectidsql = $row["subject_id"];
         $sql = "
         INSERT INTO `grades`(`subject_id`, `predicted_grade`, `mock_result`, `actual_result`, `year_taken`, `applicant_id`)
         VALUES ('$subjectidsql', '$predictedgrade', '$mockresult', '$actualresult', '$yeartaken', '$last_id')
         ";
-    
+
         mysqli_query($link, $sql) or die(mysqli_error($link));
     }
-    
+
 }
 
-echo 'g';
-echo $last_id;
+//echo 'g';
+//echo $last_id;
 
 $sql = "
 SELECT name
 FROM storedinformation
 ";
-//echo $sql;
+////echo $sql;
 
 $result = mysqli_query($link, $sql);
 $readInputs= 0;
@@ -164,7 +159,7 @@ while ($row = mysqli_fetch_assoc($result)){
   SET $name='$input'
   WHERE applicant_id='$last_id';
   ";
-  echo $sql;
+  //echo $sql;
   mysqli_query($link, $sql);
   $readInputs++;
 }
@@ -174,7 +169,7 @@ SELECT fname, sname
 FROM applicant
 WHERE applicant_id = '$last_id'
 ";
-//echo $sql;
+////echo $sql;
 
 $result = mysqli_query($link, $sql) or die(mysql_error());
 $row = mysqli_fetch_assoc($result);
@@ -205,7 +200,7 @@ $sql = "
 INSERT INTO login (username, password, type)
 VALUES ('$username', '$password', 'applicant')
 ";
-//echo $sql;
+////echo $sql;
 
 mysqli_query($link, $sql) or die(mysql_error());
 
@@ -216,14 +211,14 @@ $result = mysqli_query($link, $sql) or die(mysql_error());
 $row = mysqli_fetch_assoc($result);
 $id = $row["login_id"];
 
-//echo $id;
+////echo $id;
 
 $sql = "
 UPDATE applicant
 SET login_id='$id',tutorauthenticator='$tutorAuthenticator'
 WHERE applicant_id='$last_id'
 ";
-//echo $sql;
+////echo $sql;
 
 mysqli_query($link, $sql) or die(mysql_error());
 
@@ -232,28 +227,26 @@ SELECT fname, sname, email, tutoremail
 FROM applicant
 WHERE applicant_id='$last_id'
 ";
-//echo $sql;
+////echo $sql;
 
 $result = mysqli_query($link, $sql) or die(mysql_error());
 $row = mysqli_fetch_assoc($result);
 
 $to = $row["tutoremail"];
-//echo $to;
+////echo $to;
 //define the subject of the email
 $subject = 'Tutor Reference';
 //define the message to be sent. Each line should be separated with \n
-$message = "Hello, " . $fname . " " . $sname . " recently applied to highdown and set this as their tutors email.\n\nYour teacher authenticator code is: $tutorAuthenticator. Please visit the following link to complete your tutor reference: 
-<a href='http://localhost/SixthFormApplication/views/tutorreference.php?id=$lastid'>http://localhost/SixthFormApplication/views/tutorreference.php?id=$lastid</a>";
+$message = "Hello, " . $fname . " " . $sname . " recently applied to highdown and set this as their tutors email.\n\nYour tutor authenticator code is: $tutorAuthenticator. Please visit the following link to complete your tutor reference:
+http://localhost/SixthFormApplication/views/tutorreference.php?id=$last_id";
 //define the headers we want passed. Note that they are separated with \r\n
 $headers = "From: laciermal98@gmail.com\r\n";
 $headers .= "Reply-To: laciermal98@gmail.com\r\n";
 $headers .= "Return-Path: laciermal98@gmail.com\r\n";
-$headers .= "CC: undefinedhawk@live.co.uk\r\n";
-$headers .= "BCC: laciermal98@gmail.com\r\n";
 //send the email
 $mail_sent = mail($to, $subject, $message, $headers);
 
-echo $mail_sent ? "Mail sent" : "Mail failed";
+//echo $mail_sent ? "Mail sent" : "Mail failed";
 
 
 
@@ -266,12 +259,12 @@ INNER JOIN applicant
 ON applicant.login_id=login.login_id
 WHERE applicant_id='$last_id'
 ";
-echo $sql;
+//echo $sql;
 $result = mysqli_query($link, $sql) or die(mysql_error());
 $row = mysqli_fetch_assoc($result);
-echo $row["username"];
+//echo $row["username"];
 
-//echo $to;
+////echo $to;
 //define the subject of the email
 $subject = 'Highdown school application';
 //define the message to be sent. Each line should be separated with \n
@@ -280,13 +273,12 @@ $message = "Hello, " . $fname . " " . $sname . ". We received your application t
 $headers = "From: laciermal98@gmail.com\r\n";
 $headers .= "Reply-To: laciermal98@gmail.com\r\n";
 $headers .= "Return-Path: laciermal98@gmail.com\r\n";
-$headers .= "CC: undefinedhawk@live.co.uk\r\n";
-$headers .= "BCC: laciermal98@gmail.com\r\n";
 //send the email
 $mail_sent = mail($to, $subject, $message, $headers);
 
-echo $mail_sent ? "Mail sent" : "Mail failed";
-
-//echo "account created";
+//echo $mail_sent ? "Mail sent" : "Mail failed";
+mysqli_close($link);
+header ("Location: ../views/index.html");
+////echo "account created";
 
 ?>

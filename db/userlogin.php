@@ -32,4 +32,5 @@ if ($count == 1){
 }else{
     header ("Location: ../views/loginfail.html");
 }
+mysqli_close($link);
 ?>
