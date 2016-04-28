@@ -1,11 +1,13 @@
 <?php
 require "./connect.php";
 session_start();
-$sql = "SELECT department FROM teacher WHERE login_id = $_SESSION['id']";
+
+$sql = "SELECT department FROM teacher WHERE login_id = " . $_SESSION['id'];
 
 $result = mysqli_query($link, $sql);
 $row = mysqli_fetch_array($result);
 $department = $row[0];
+//echo json_encode($department);
 
 $sql = "
 SELECT applicant_id FROM `selected courses`
@@ -15,21 +17,34 @@ OR sixthformsubject_id = block_b
 OR sixthformsubject_id = block_c
 OR sixthformsubject_id = block_d
 OR sixthformsubject_id = block_e
-WHERE name = '$department'
+WHERE INSTR(name, '$department')
+ORDER BY applicant_id ASC
 ";
+
 $result = mysqli_query($link, $sql);
 $applicants = [];
-$i = 0;
+$applicants[0] = "";
+$i = 1;
 while ($row = mysqli_fetch_array($result)){
-  $applicant[$i] = $row[0];
-  $i++;
+  if (!($applicants[($i - 1)] == $row[0])){
+    $applicants[$i] = $row[0];
+    $i++;
+  }
 }
 
-$department = $row[0];
+$sql = "";
+for ($i = 1; $i < count($applicants); $i++){
+  $sql .= "
+  SELECT grades.predicted_grade, grades.mock_result, grades.actual_result, grades.year_taken, subject.name, subject.exam_board, applicant.fname, applicant.sname, applicant.applicant_id
+  FROM grades
+  INNER JOIN subject
+  ON grades.subject_id = subject.subject_id
+  INNER JOIN applicant
+  ON grades.applicant_id = applicant.applicant_id
+  WHERE grades.applicant_id = $applicants[$i];
+  ";
+}
 
-$sql .= "SELECT * FROM subject;";
-$sql .= "SELECT * FROM `sixth form subject`";
-// Check if there are results
 if ($result = mysqli_multi_query($link, $sql)){
         // If so, then create a results array and a temporary one
         // to hold the data
@@ -50,7 +65,6 @@ if ($result = mysqli_multi_query($link, $sql)){
         mysqli_free_result($result);
 
       }
-      array_push($resultArray, "End");
     }while (mysqli_next_result($link));
     echo json_encode($resultArray);
 
@@ -58,4 +72,5 @@ if ($result = mysqli_multi_query($link, $sql)){
 
 // Close connections
 mysqli_close($link);
+
 ?>

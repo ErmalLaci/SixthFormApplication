@@ -3,6 +3,7 @@
 $length = 20;
 $tutorAuthenticator = substr(str_shuffle("0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"), 0, $length);
 $password = substr(str_shuffle("0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"), 0, $length);
+$password = password_hash($password, PASSWORD_BCRYPT);
 $errorcheck = "";
 require "./connect.php";
 

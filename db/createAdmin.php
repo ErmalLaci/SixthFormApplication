@@ -2,7 +2,7 @@
 
 $username = isset($_POST['username']) ? $_POST['username'] : '';
 $password = isset($_POST['password']) ? $_POST['password'] : '';
-
+$password = password_hash($password, PASSWORD_BCRYPT);
 require "./connect.php";
 
 $sql = "

@@ -209,22 +209,22 @@
       <div class="mdl-layout__tab-panel" id="login">
 
         <section class="section--center mdl-grid mdl-grid--no-spacing mdl-shadow--2dp formsection">
-          <form name="UserLogin" action="../db/userlogin.php" method="post" style="width: 100%;">
+          <div class="mdl-cell mdl-cell--8-col">
             <div class="mdl-grid">
               <div class="mdl-cell mdl-cell--2-col">Username:</div>
               <div class="mdl-cell mdl-cell--4-col">
-                <input type="text" name="usernamelogin" class="forminput">
+                <input type="text" name="usernamelogin" id="usernamelogin" class="forminput">
               </div>
             </div>
             <div class="mdl-grid">
               <div class="mdl-cell mdl-cell--2-col">Password:</div>
               <div class="mdl-cell mdl-cell--4-col">
-                <input type="password" name="passwordlogin" class="forminput">
+                <input type="password" name="passwordlogin" id="passwordlogin" class="forminput">
               </div>
             </div>
             <div class="mdl-grid">
               <div class="mdl-cell mdl-cell--2-col">
-                <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" type="submit">
+                <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" type="submit" onclick="apply();">
                   Login
                 </button>
               </div>
@@ -236,7 +236,6 @@
                 </div>
               </div>
             </div>
-          </form>
           <div class="mdl-grid" style="width: 100%; display: none;" id="resetPasswordDiv">
             <div class="mdl-cell mdl-cell--2-col">
               <div>
@@ -248,6 +247,11 @@
               </div>
             </div>
           </div>
+          <div class="mdl-grid">
+            <div class="mdl-cell mdl-cell--8-col error" id="showLoginError">
+            </div>
+          </div>
+        </div>
         </section>
 
       </div>
@@ -259,6 +263,7 @@
   <script src="../scripts/sendEmail.js"></script>
   <script src="../scripts/loadApplicationForm.js"></script>
   <script src="../scripts/applicationFormValidation.js"></script>
+  <script src="../scripts/sendApplication.js"></script>
   <script type="text/javascript">
     var elements = document.getElementsByClassName("collapse");
     // collapse all sections

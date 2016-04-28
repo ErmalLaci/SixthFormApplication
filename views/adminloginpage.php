@@ -715,7 +715,6 @@ $result = mysqli_query($link, $sql) or die(mysqli_error($link));
                                 </div>
                                 <div class='mdl-grid'>
                                     <div class='mdl-cell--12-col'>
-                                        <!-- Floating Multiline Textfield -->
                                         <div class='mdl-textfield mdl-js-textfield' style='width: 100%;'>
                                             <textarea class='mdl-textfield__input' type='text' rows='3' id = 'applicant" . $x . "specialconsideration-details' name = 'applicant" . $x . "specialConsiderationDetails'></textarea>
                                             <label class='mdl-textfield__label' for = 'applicant" . $x . "specialconsideration-details'>Extra time, scribe, transcript, reader, word processor etc. - please provide as much detail as possible</label>

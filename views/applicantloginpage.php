@@ -16,6 +16,8 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="../style/loginpage/material.min.css">
     <link rel="stylesheet" href="../style/loginpage/styles.css">
+    <link rel="stylesheet" href="../style/stylesheet.css">
+
 </head>
 
 <body>
@@ -50,37 +52,27 @@
             </nav>
         </div>
         <main class="mdl-layout__content mdl-color--grey-100">
-            <div class="mdl-grid">
-                <!-- Student Info -->
-                <div class="mdl-textfield mdl-js-textfield">
-                    First Name:
-                    <textarea class="mdl-textfield__input" type="text" rows="1" id="fnamedisplay"></textarea>
-                </div>
-                <div class="mdl-textfield mdl-js-textfield">
-                    Surname:
-                    <textarea class="mdl-textfield__input" type="text" rows="1" id="snamedisplay"></textarea>
-                </div>
-                <div class="mdl-textfield mdl-js-textfield">
-                    Date of Birth:
-                    <textarea class="mdl-textfield__input" type="text" rows="1" id="dobdisplay"></textarea>
-                </div>
-                <div class="mdl-textfield mdl-js-textfield">
-                    Mobile Number:
-                    <textarea class="mdl-textfield__input" type="text" rows="1" id="mobiledisplay"></textarea>
-                </div>
-                <div class="mdl-textfield mdl-js-textfield">
-                    Telephone Number:
-                    <textarea class="mdl-textfield__input" type="text" rows="1" id="telephonedisplay"></textarea>
-                </div>
-                <div class="mdl-textfield mdl-js-textfield">
-                    Address:
-                    <textarea class="mdl-textfield__input" type="text" rows="1" id="addressdisplay"></textarea>
-                </div>
+          <div class="mdl-grid">
+            <div class="mdl-cell mdl-cell--8-col">
+              <div id="displayMyInfo"></div>
             </div>
+            <div class="mdl-cell mdl-cell--4-col">
+              <form name="changePassword" action="../db/changeApplicantPassword.php" method="POST">
+                <div class="mdl-textfield mdl-js-textfield">
+                  <input class="mdl-textfield__input" type="text" id="newPasswordInput" name="newPasswordInput">
+                  <label class="mdl-textfield__label" for="newPasswordInput">New Password</label>
+                </div>
+                <button class="mdl-button mdl-js-button mdl-button--raised" type="submit">
+                  Change Password
+                </button>
+              </form>
+            </div>
+          </div>
         </main>
     </div>
     <script src="../scripts/loginpage/material.min.js"></script>
     <script src="../scripts/loadUserData.js"></script>
+    <script src="../scripts/loadApplicantInfo.js"></script>
 </body>
 
 </html>

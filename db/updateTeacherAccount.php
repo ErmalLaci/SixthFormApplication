@@ -3,6 +3,7 @@ $error = "";
 $id = isset($_POST['id']) ? $_POST['id'] : '';
 $username = isset($_POST['username']) ? $_POST['username'] : '';
 $password = isset($_POST['password']) ? $_POST['password'] : '';
+$password = password_hash($password, PASSWORD_BCRYPT);
 $fname = isset($_POST['fname']) ? $_POST['fname'] : '';
 $sname = isset($_POST['sname']) ? $_POST['sname'] : '';
 $department = isset($_POST['department']) ? $_POST['department'] : '';

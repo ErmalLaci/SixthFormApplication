@@ -3,6 +3,8 @@ require "./connect.php";
 
 $length = 10;
 $randomPassword = substr(str_shuffle("0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"), 0, $length);
+$randomhashedpassword = password_hash($randompassword, PASSWORD_BCRYPT);
+
 //echo $randomPassword;
 $email = isset($_POST["email"]) ? $_POST["email"] : "";
 //echo $email;
@@ -10,7 +12,7 @@ $sql = "
 UPDATE login
 INNER JOIN applicant
 ON applicant.login_id=login.login_id
-SET password = '$randomPassword'
+SET password = '$randomhashedPassword'
 WHERE applicant.email='$email'
 ;";
 

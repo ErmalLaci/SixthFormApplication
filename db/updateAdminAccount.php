@@ -3,6 +3,7 @@ $error = "";
 $id = isset($_POST['id']) ? $_POST['id'] : '';
 $username = isset($_POST['username']) ? $_POST['username'] : '';
 $password = isset($_POST['password']) ? $_POST['password'] : '';
+$password = password_hash($password, PASSWORD_BCRYPT);
 $usernameChanged = isset($_POST['usernameChanged']) ? $_POST['usernameChanged'] : '';
 
 require "./connect.php";

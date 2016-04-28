@@ -23,40 +23,35 @@ $(document).ready(function () {
                     //var fixedResponse = res.replace(/\\'/g, "'");
 
                     var data = JSON.parse(res);
-                    console.log(data);
-                    /*var amountofoptions = studentdata.indexOf("End");
-                    //console.log(amountofoptions);
-                    var amountofsubjects = studentdata.indexOf("End", amountofoptions + 1);
-                    var amountofdata = studentdata.length;
-                    //console.log(amountofsubjects);
-                    var nameofinfo = ''
-                    var lengthofinfo = '';
-                    var validationofinfo = '';
-                    var displayinfo = '';
-                    var typeofinfo = '';
-                    var addInputHTML = '';
-                    var optionNumber = 0;
-                    var currentType = '';
-                    var currentValidation = '';
-
-                    //Creates the inputs and remove option buttons
-                    //It does this in a loop so it creates as many inputs as there are options
-                    for (i = 0; i < amountofoptions; i++) {
-
+                    //console.log(data);
+                    var amountofdata = data.length;
+                    var addedHTML = "";
+                    var collapseNumber = 0;
+                    for (i = 0; i < amountofdata; i++) {
+                      if (i < 1){
+                        name = data[i].fname + " " + data[i].sname;
+                        addedHTML += "<div class='funky-table'><div class='mdl-grid'><div class='mdl-cell mdl-cell--6-col'><button type='button' class='mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab collapsebutton' onclick='switchDisplay(" + collapseNumber + ");'><i class='material-icons' id='collapsebutton" + collapseNumber + "'>add</i></button>" + name + "</div></div>  <div class='mdl-grid'><div class='mdl-cell mdl-cell--10-col collapse'><table class='displayStudentsTable'>";
+                        addedHTML += "<thead><tr><th>Subject</th><th>Exam Board</th><th>Predicted Grade</th><th>Mock Result</th><th>Actual Result</th><th>Year Taken</th></tr></thead>";
+                        addedHTML += "<tbody><tr><td>" + data[i].name + "</td><td>" + data[i].exam_board + "</td><td>" + data[i].predicted_grade + "</td><td>" + data[i].mock_result + "</td><td>" + data[i].actual_result + "</td><td>" + data[i].year_taken + "</td></tr>";
+                        collapseNumber += 1;
+                      } else {
+                        if(data[i].applicant_id != data[i-1].applicant_id){
+                          name = data[i].fname + " " + data[i].sname;
+                          addedHTML += "</tbody></table></div></div></div>";
+                          addedHTML += "<div class='funky-table'><div class='mdl-grid'><div class='mdl-cell mdl-cell--6-col'><button type='button' class='mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab collapsebutton' onclick='switchDisplay(" + collapseNumber + ");'><i class='material-icons' id='collapsebutton" + collapseNumber + "'>add</i></button>" + name + "</div></div>  <div class='mdl-grid'><div class='mdl-cell mdl-cell--10-col collapse'><table class='displayStudentsTable'>";
+                          //console.log(i);
+                          addedHTML += "<thead><tr><th>Subject</th><th>Exam Board</th><th>Predicted Grade</th><th>Mock Result</th><th>Actual Result</th><th>Year Taken</th></tr></thead>";
+                          addedHTML += "<tbody><tr><td>" + data[i].name + "</td><td>" + data[i].exam_board + "</td><td>" + data[i].predicted_grade + "</td><td>" + data[i].mock_result + "</td><td>" + data[i].actual_result + "</td><td>" + data[i].year_taken + "</td></tr>";
+                          collapseNumber += 1;
+                        }else{
+                          addedHTML += "<tr><td>" + data[i].name + "</td><td>" + data[i].exam_board + "</td><td>" + data[i].predicted_grade + "</td><td>" +  data[i].mock_result + "</td><td>" + data[i].actual_result + "</td><td>" + data[i].year_taken + "</td></tr>";
+                        }
+                      }
                     }
-                    document.getElementById("displayformoptions").innerHTML = addInputHTML;
+                    addedHTML += "</tbody></table></div></div></div>";
 
-                    for (i = (amountofoptions + 1); i < amountofsubjects; i++) {
-
-                    }
-                    document.getElementById("Subjects").innerHTML = addSubjectHTML;
-
-                    for (i = (amountofsubjects + 1); i < (amountofdata - 1); i++) {
-
-                    }
-                    addsixthformsubjectHTML += "</table>";
-                    document.getElementById("SixthFormSubjects").innerHTML = addsixthformsubjectHTML;
-                    */
+                    document.getElementById("students").innerHTML = addedHTML;
+                    hide();
                     //console.log("Retrieved XML successfully");
                 } else {
                     //console.log("Check the AJAX Request URL, because it's returning null.");

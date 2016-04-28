@@ -15,6 +15,8 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="../style/loginpage/material.min.css">
     <link rel="stylesheet" href="../style/loginpage/styles.css">
+    <link rel="stylesheet" href="../style/stylesheet.css">
+
 </head>
 
 <body>
@@ -50,14 +52,37 @@
         </div>
         <main class="mdl-layout__content mdl-color--grey-100">
             <div class="mdl-grid">
+              <div class="mdl-cell mdl-cell--10-col">
                 <!-- Info -->
-
-
+                <div id="students"></div>
+              </div>
             </div>
         </main>
     </div>
     <script src="../scripts/loginpage/material.min.js"></script>
     <script src="../scripts/loadUserData.js"></script>
+    <script src="../scripts/loadTeacherDisplay.js"></script>
+    <script>
+    var elements = document.getElementsByClassName("collapse");
+    // collapse all sections
+    function hide(){
+      for (var i = 0; i < elements.length; i++){
+        elements[i].style.display = "none";
+        console.log(i);
+      }
+    }
+    //collapse or expand depending on state
+    function switchDisplay(i) {
+      if (elements[i].style.display == "none"){
+        elements[i].style.display = "block";
+        document.getElementById("collapsebutton" + i).innerHTML = "remove";
+      } else {
+        elements[i].style.display = "none";
+        document.getElementById("collapsebutton" + i).innerHTML = "add";
+      }
+      return false;
+    }
+    </script>
 </body>
 
 </html>
