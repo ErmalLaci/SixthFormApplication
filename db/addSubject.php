@@ -1,15 +1,21 @@
 <?php
-$tbl_name = "subject";
 
 //Connect to the server
 require "./connect.php";
 
 //Gets the values in the form
 $addSubjectName = isset($_POST['addSubjectName']) ? $_POST['addSubjectName'] : '';
+$addSubjectName = stripslashes($addSubjectName);
+$addSubjectName = mysqli_real_escape_string($link, $addSubjectName);  //protect against sql injection
 $addSubjectExamboard = isset($_POST['addSubjectExamboard']) ? $_POST['addSubjectExamboard'] : '';
+$addSubjectExamboard = stripslashes($addSubjectExamboard);
+$addSubjectExamboard = mysqli_real_escape_string($link, $addSubjectExamboard);  //protect against sql injection
+$addSubjectName = strtoupper($addSubjectName);  //protect against sql injection
+$addSubjectExamboard = strtoupper($addSubjectExamboard);  //protect against sql injection
 
+//sql for adding subject
 $sql = "
-INSERT INTO `$tbl_name` (`name`, `exam_board`)
+INSERT INTO `subject` (`name`, `exam_board`)
 VALUES ('$addSubjectName', '$addSubjectExamboard')
 ";
 //echo $sql;

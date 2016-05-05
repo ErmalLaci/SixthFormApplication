@@ -51,7 +51,6 @@
       <div class="mdl-layout__tab-panel" id="apply">
         <section class="section--center mdl-grid mdl-grid--no-spacing mdl-shadow--2dp formsection">
           <form name="ApplicationForm" action="../db/apply.php" method="post" id="ApplicationForm" style="width: 100%">
-            <!-- Collapsible form -->
             <div class="mdl-grid">
               <div class="mdl-cell mdl-cell--4-col">
                 <button type="button" class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab collapsebutton" onclick="switchDisplay('0');">
@@ -207,7 +206,6 @@
         </section>
       </div>
       <div class="mdl-layout__tab-panel" id="login">
-
         <section class="section--center mdl-grid mdl-grid--no-spacing mdl-shadow--2dp formsection">
           <div class="mdl-cell mdl-cell--8-col">
             <div class="mdl-grid">
@@ -224,7 +222,7 @@
             </div>
             <div class="mdl-grid">
               <div class="mdl-cell mdl-cell--2-col">
-                <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" type="submit" onclick="apply();">
+                <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" type="submit" onclick="login();">
                   Login
                 </button>
               </div>
@@ -265,30 +263,28 @@
   <script src="../scripts/applicationFormValidation.js"></script>
   <script src="../scripts/sendApplication.js"></script>
   <script type="text/javascript">
-    var elements = document.getElementsByClassName("collapse");
-    // collapse all sections
-    for (var i = 0; i < elements.length; i++) {
-      elements[i].style.display = "none";
-    }
-
-    //collapse or expand depending on state
-    function switchDisplay(i) {
-
-      if (elements[i].style.display == "none") {
-        elements[i].style.display = "block";
-        document.getElementById("collapsebutton" + i).innerHTML = "remove";
+  var elements = document.getElementsByClassName("collapse");
+  // collapse all sections
+  for (var i = 0; i < elements.length; i++) { //loop through all collapse divs
+      elements[i].style.display = "none"; //hide all the divs
+  }
+  //collapse or expand depending on state
+  function switchDisplay(i) { //create function to switch display
+      if (elements[i].style.display == "none") {  //if div is hidden, make it visible and change the icon
+          elements[i].style.display = "block";
+          document.getElementById("collapsebutton" + i).innerHTML = "remove";
       } else {
-        elements[i].style.display = "none";
-        document.getElementById("collapsebutton" + i).innerHTML = "add";
+          elements[i].style.display = "none"; //div is visible hide it and change the icon
+          document.getElementById("collapsebutton" + i).innerHTML = "add";
       }
       return false;
-    }
+  }
 
-    function showResetPassword() {
+    function showResetPassword() {  //activate when button clicked
       var Reset = document.getElementById("resetPasswordDiv");
-      if (Reset.style.display == "none") {
+      if (Reset.style.display == "none") {  //if reset password div is hidden then show it
         Reset.style.display = "block";
-      } else {
+      } else {  //if reset password div is visible then hide it
         Reset.style.display = "none";
       }
       return false;
@@ -303,7 +299,7 @@
         "-input'></div></td><td class='mdl-data-table__cell--non-numeric'><div class='mdl-textfield mdl-js-textfield'><input class='mdl-textfield__input' type='text' id='mock_result-" + z + "-input' name='mock_result-" + z +
         "-input'></div></td><td class='mdl-data-table__cell--non-numeric'><div class='mdl-textfield mdl-js-textfield gcse_inputs'><input class='mdl-textfield__input' type='text' id='actual_result-" + z + "-input' name='actual_result-" + z +
         "-input'></div></td><td class='mdl-data-table__cell--non-numeric'><div class='mdl-textfield mdl-js-textfield gcse_inputs'><input class='mdl-textfield__input' type='text' id='year_taken-" + z + "-input' name='year_taken-" + z +
-        "-input'></div></td></tr>"
+        "-input'></div></td></tr>";
     }
     document.getElementById("gradesTable").innerHTML = addHTML;
   </script>

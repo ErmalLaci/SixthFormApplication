@@ -1,37 +1,36 @@
 <?php
-$tbl_name = "sixth form subject";
+$tblName = "sixth form subject";
 
 require "./connect.php";
 
-//Get the name of the option the user wants to remove
+//Get the id of the subject the user wants to update
 $id = isset($_POST['id']) ? $_POST['id'] : '';
 $name = isset($_POST['name']) ? $_POST['name'] : '';
+$name = stripslashes($name);
+$name = mysqli_real_escape_string($link, $name);  //protect against sql injection
 $level = $_POST['level'];
 $block = $_POST['block'];
-
-if ($level = "A Level"){
-  $sql ="
-  UPDATE `$tbl_name`
+echo $level;
+if ($level == "A Level"){  //check if the level is 'A level'
+  $sql = "
+  UPDATE `$tblName`
   SET
   name = '$name',
   level = '$level',
   block = '$block'
   WHERE `sixthformsubject_id` = '$id'
   ";
-} else {
+} else {  //check if the level is 'level 2'
   $sql ="
-  UPDATE `$tbl_name`
+  UPDATE `$tblName`
   SET
   name = '$name',
   level = '$level',
   block = NULL
   WHERE `sixthformsubject_id` = '$id'
-  ";
+  ";  //block is NULL if level is level 2
 }
-
-echo $sql;
-
+//sql updates sixth form subject
 mysqli_query($link, $sql) or die(mysqli_error($link));
-
 mysqli_close($link);
  ?>

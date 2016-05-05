@@ -1,7 +1,6 @@
-var departments = [];
-$(document).ready(function () {
-    function loadData() {
-        //console.log("Retrieving Form Data..");
+var departments = []; //declare global array
+$(document).ready(function () { //check if document is ready
+    function loadData() { //function to load data
 
         var xmlhttp;
 
@@ -20,34 +19,32 @@ $(document).ready(function () {
                 if (retreivedDoc) {
                     //Response
                     var res = '';
-                    res = retreivedDoc;
-                    //var fixedResponse = res.replace(/\\'/g, "'");
+                    res = retreivedDoc; //get objects in json from php
 
-                    var inputData = JSON.parse(res);
-                    inputData[0].Type = inputData[0].Type.replace("enum","");
+                    var inputData = JSON.parse(res);  //turn json string into array
+                    inputData[0].Type = inputData[0].Type.replace("enum",""); //get string into appropriate form
                     inputData[0].Type = inputData[0].Type.replace("(", "");
                     inputData[0].Type = inputData[0].Type.replace(")", "");
                     inputData[0].Type = inputData[0].Type.split("'").join("");
-                    departments = inputData[0].Type.split(",");
+                    departments = inputData[0].Type.split(","); //split into separate departments
 
-                    var amountofteachers = inputData.indexOf("End", 3);
-                    var amountofsubjects = inputData.indexOf("End", amountofteachers + 1);
+                    var amountOfTeachers = inputData.indexOf("End", 3); //get value for end of display teachers loop
+                    var amountOfSubjects = inputData.indexOf("End", amountOfTeachers + 1);  //get value for end of display admins loop
 
-                    var amountofdata = inputData.length;
                     var options = "";
                     var departmentOptionsHTML = ""; //Create a variable to hold the HTML to add to the form
 
-                    for (i = 0; i < departments.length; i++){
-                      departmentOptionsHTML += "<option value='" + departments[i] + "'>" + departments[i] + "</option>";
+                    for (i = 0; i < departments.length; i++){ //loop through all departments
+                      departmentOptionsHTML += "<option value='" + departments[i] + "'>" + departments[i] + "</option>";  //add departments to html
                     }
-                    document.getElementById("createTeacherDepartment").innerHTML = departmentOptionsHTML;
+                    document.getElementById("createTeacherDepartment").innerHTML = departmentOptionsHTML; //display departments
 
 
-                    var displayTeachersHTML = "";
+                    var displayTeachersHTML = ""; //create variable to store teacher display html
                     var currentTeacher = "";
-                    for(i = 2; i < amountofteachers; i++){
-                      currentTeacher = inputData[i];
-                      displayTeachersHTML += "<table class='funky-table'>";
+                    for(i = 2; i < amountOfTeachers; i++){  //loop through all teachers
+                      currentTeacher = inputData[i];  //store value of current teacher
+                      displayTeachersHTML += "<table class='funky-table'>"; //add html to display teacher with appropriate information
                       displayTeachersHTML += "<tr>";
                       displayTeachersHTML += "<td><div style='width:100%' class='mdl-textfield mdl-js-textfield mdl-textfield--floating-label'><input class='mdl-textfield__input' type='text' value='" + currentTeacher.username + "' id='teacherusername" + currentTeacher.login_id + "'><label class='mdl-textfield__label' for='teacherusername" + currentTeacher.login_id + "'>Username</label></td>";
                       displayTeachersHTML += "<td><div style='width:100%' class='mdl-textfield mdl-js-textfield mdl-textfield--floating-label'><input class='mdl-textfield__input' type='text' value='" + currentTeacher.password + "' id='teacherpassword" + currentTeacher.login_id + "'><label class='mdl-textfield__label' for='teacherpassword" + currentTeacher.login_id + "'>Password</label></td>";
@@ -58,11 +55,11 @@ $(document).ready(function () {
                       displayTeachersHTML += "</tr>";
                       displayTeachersHTML += "<tr>";
                       displayTeachersHTML += "<td><select id='teacherdepartment" + currentTeacher.login_id + "'>";
-                      for (x = 0; x < departments.length; x++){
-                        if (currentTeacher.department == departments[x]){
-                          displayTeachersHTML += "<option value='" + departments[x] + "' selected>" + departments[x] + "</option>";
+                      for (x = 0; x < departments.length; x++){ //loop through all departments
+                        if (currentTeacher.department == departments[x]){ //check if current teacher belongs to department
+                          displayTeachersHTML += "<option value='" + departments[x] + "' selected>" + departments[x] + "</option>"; //if teacher belongs to department make this option selected
                         } else {
-                          displayTeachersHTML += "<option value='" + departments[x] + "'>" + departments[x] + "</option>";
+                          displayTeachersHTML += "<option value='" + departments[x] + "'>" + departments[x] + "</option>";  //add unselected option
                         }
                       }
                       displayTeachersHTML +="</select></td>";
@@ -71,12 +68,12 @@ $(document).ready(function () {
                       displayTeachersHTML += "</table>";
 
                     }
-                    document.getElementById("showTeachers").innerHTML = displayTeachersHTML;
+                    document.getElementById("showTeachers").innerHTML = displayTeachersHTML;  //display teacher account
 
                     var displayAdminHTML = "";
-                    for(i = (amountofteachers + 1); i < amountofsubjects; i++){
-                      currentAdmin = inputData[i];
-                      displayAdminHTML += "<table class='funky-table'>";
+                    for(i = (amountOfTeachers + 1); i < amountOfSubjects; i++){ //loop through all admins
+                      currentAdmin = inputData[i];  //store value of current admin
+                      displayAdminHTML += "<table class='funky-table'>";  //add html to display admin with appropriate information
                       displayAdminHTML += "<tr>";
                       displayAdminHTML += "<td><div style='width:100%' class='mdl-textfield mdl-js-textfield mdl-textfield--floating-label'><input class='mdl-textfield__input' type='text' value='" + currentAdmin.username + "' id='adminusername" + currentAdmin.login_id + "'><label class='mdl-textfield__label' for='adminusername" + currentAdmin.login_id + "'>Username</label></td>";
                       displayAdminHTML += "<td><div style='width:100%' class='mdl-textfield mdl-js-textfield mdl-textfield--floating-label'><input class='mdl-textfield__input' type='text' value='" + currentAdmin.password + "' id='adminpassword" + currentAdmin.login_id + "'><label class='mdl-textfield__label' for='adminpassword" + currentAdmin.login_id + "'>Password</label></td>";
@@ -86,7 +83,7 @@ $(document).ready(function () {
                       displayAdminHTML += "</tr>";
 
                     }
-                    document.getElementById("showAdmins").innerHTML = displayAdminHTML;
+                    document.getElementById("showAdmins").innerHTML = displayAdminHTML; //display admin accounts
 
                     //console.log("Retrieved XML successfully");
 
@@ -100,7 +97,6 @@ $(document).ready(function () {
 
         var apiURL = "http://localhost/SixthFormApplication/db/loadAccountsService.php";
         xmlhttp.open("GET", apiURL, true);
-        //console.log("Retrieving Data from: ", apiURL);
         xmlhttp.send();
     }
 

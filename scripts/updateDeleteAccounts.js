@@ -1,83 +1,105 @@
-function deleteAccount(id){
-  $.post("../db/deleteAccount.php", {
-      id: id
-  }, function (result) {
-      //console.log(result);
-      location.reload();
+function deleteAccount(id) { //function to delete teacher and admin accounts, login id passed to function
+  $.post("../db/deleteAccount.php", { //post id to php
+    id: id
+  }, function(result) {
+    location.reload(); //refresh page
   });
 }
-function updateTeacherAccount(id, ogusername){
-  var username = document.getElementById("teacherusername" + id).value;
+
+function updateTeacherAccount(id, ogUsername) { //function updates teacher account, passes id and original username
+  var username = document.getElementById("teacherusername" + id).value; //get input values
   var password = document.getElementById("teacherpassword" + id).value;
-  var fname = document.getElementById("teacherfname" + id).value;
-  var sname = document.getElementById("teachersname" + id).value;
+  var fName = document.getElementById("teacherfname" + id).value;
+  var sName = document.getElementById("teachersname" + id).value;
   var department = document.getElementById("teacherdepartment" + id).value;
-  var usernameChanged = "false";
+  var usernameChanged = "false"; //create var to check if username was changed, string so there are no error passing to php
 
-  if (ogusername != username){
-    usernameChanged = "true"
+  if (ogUsername != username) { //check if username has changed
+    usernameChanged = "true"; //if username change make this true
   }
-
-  $.post("../db/updateTeacherAccount.php", {
+  if (username == "" || password == "" || fName == "" || sName == "" || department == "") { //check if any inputs are empty
+    if (username == "") { //check which input is empty and display appropriate error message
+      document.getElementById("updateTeacherError").innerHTML = "You must enter a username.";
+    } else if (password == "") {
+      document.getElementById("updateTeacherError").innerHTML = "You must enter a password.";
+    } else if (fName == "") {
+      document.getElementById("updateTeacherError").innerHTML = "You must enter a first name.";
+    } else if (sName == "") {
+      document.getElementById("updateTeacherError").innerHTML = "You must enter a surname.";
+    } else if (department == "") {
+      document.getElementById("updateTeacherError").innerHTML = "You must enter a department.";
+    }
+    document.getElementById("displayTeacherCreationError").innerHTML = errorMsg; //display error
+  } else {
+    $.post("../db/updateTeacherAccount.php", { //post values to php
       id: id,
       username: username,
       password: password,
-      fname: fname,
-      sname: sname,
+      fName: fName,
+      sName: sName,
       department: department,
       usernameChanged: usernameChanged
-  }, function (result) {
-    if (result == ""){
-      location.reload();
-    } else {
-      document.getElementById("updateTeacherError").innerHTML = result;
-    }
-  });
+    }, function(result) {
+      if (result == "") { //check if result is empty, if not there is an error
+        location.reload(); //refresh the page
+      } else {
+        document.getElementById("updateTeacherError").innerHTML = result; //display error
+      }
+    });
+  }
 }
-function updateAdminAccount(id, ogusername){
-  var username = document.getElementById("adminusername" + id).value;
+
+function updateAdminAccount(id, ogUsername) { //function updates admin account, passes id and original username
+  var username = document.getElementById("adminusername" + id).value; //get input values
   var password = document.getElementById("adminpassword" + id).value;
-  var usernameChanged = "false";
+  var usernameChanged = "false"; //create var to check if username was changed, string so there are no error passing to php
 
-  if (ogusername != username){
-    usernameChanged = "true"
+  if (ogUsername != username) { //check if username has changed
+    usernameChanged = "true"; //if username change make this true
   }
-
-  $.post("../db/updateAdminAccount.php", {
+  if (username == "" || password == "") {
+    //if username or password wasn't set check which one wasn't set
+    if (username == ""){
+      document.getElementById("updateAdminError").innerHTML = "You must enter a username."; //display error if username wasn't set
+    } else {
+      document.getElementById("updateAdminError").innerHTML = "You must enter a password."; //display error if password wasn't set
+    }
+  } else {
+    $.post("../db/updateAdminAccount.php", { //post values to php
       id: id,
       username: username,
       password: password,
       usernameChanged: usernameChanged
-  }, function (result) {
-    if (result == ""){
-      location.reload();
-    } else {
-      document.getElementById("updateAdminError").innerHTML = result;
-    }
-  });
+    }, function(result) {
+      if (result == "") { //check if result is empty, if not there is an error
+        location.reload(); //refresh the page
+      } else {
+        document.getElementById("updateAdminError").innerHTML = result; //display error
+      }
+    });
+  }
 }
-function addDepartment(){
-  var errorMsg = "";
-  var department = document.getElementById("addDepartment").value;
 
-  for (i = 0; i < departments.length; i++){
-    if (department == departments[i]){
-      errorMsg = "This department already exists.";
+function addDepartment() { //function to add department
+  var errorMsg = "";
+  var department = document.getElementById("addDepartment").value; //get input value
+
+  for (i = 0; i < departments.length; i++) { //loop through global variable departments
+    if (department == departments[i]) { //checks if any existing departments are equal to the input
+      errorMsg = "This department already exists."; //create error
     }
   }
 
-  if (errorMsg == ""){
-    var departmentjson = JSON.stringify(departments);
-
-    $.post("../db/addDepartment.php", {
+  if (errorMsg == "") { //check if there is no error
+    var departmentJson = JSON.stringify(departments); //turn array into json string
+    $.post("../db/addDepartment.php", { //post values to php
       department: department,
-      departmentjson: departmentjson
-    }, function (result) {
-      console.log(result);
-      location.reload();
+      departmentJson: departmentJson
+    }, function(result) {
+      location.reload(); //refresh the page
     });
   } else {
-    document.getElementById("addDepartmentError").innerHTML = errorMsg;
+    document.getElementById("addDepartmentError").innerHTML = errorMsg; //display error
 
   }
 }

@@ -1,7 +1,7 @@
 <?php
     session_start();
-    $type = "teacher";
-    require "../db/checklogin.php";
+    $type = "teacher";  //set type as teacher
+    require "../db/checkLogin.php";
 ?>
     <!doctype html>
 <html lang="en">
@@ -33,7 +33,6 @@
         </header>
         <div class="demo-drawer mdl-layout__drawer mdl-color--blue-grey-900 mdl-color-text--blue-grey-50">
             <header class="demo-drawer-header">
-                <img src="" class="demo-avatar">
                 <div class="demo-avatar-dropdown">
                     <span>
                             <span id="displayusername"></span>
@@ -68,19 +67,19 @@
     function hide(){
       for (var i = 0; i < elements.length; i++){
         elements[i].style.display = "none";
-        console.log(i);
       }
     }
+
     //collapse or expand depending on state
-    function switchDisplay(i) {
-      if (elements[i].style.display == "none"){
-        elements[i].style.display = "block";
-        document.getElementById("collapsebutton" + i).innerHTML = "remove";
-      } else {
-        elements[i].style.display = "none";
-        document.getElementById("collapsebutton" + i).innerHTML = "add";
-      }
-      return false;
+    function switchDisplay(i) { //create function to switch display
+        if (elements[i].style.display == "none") {  //if div is hidden, make it visible and change the icon
+            elements[i].style.display = "block";
+            document.getElementById("collapsebutton" + i).innerHTML = "remove";
+        } else {
+            elements[i].style.display = "none"; //div is visible hide it and change the icon
+            document.getElementById("collapsebutton" + i).innerHTML = "add";
+        }
+        return false;
     }
     </script>
 </body>

@@ -2,9 +2,9 @@
 require "./connect.php";
 
 session_start();
-$id = $_SESSION["id"];
+$id = $_SESSION["id"];  //get current user id
 
-// This SQL statement selects ALL from the table
+// This SQL statement selects information and nameofinformation from news
 $sql = "
 SELECT information, nameofinformation
 FROM `news`

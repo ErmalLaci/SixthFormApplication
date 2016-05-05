@@ -1,8 +1,8 @@
 <?php
 
-session_start();
+session_start();  //start session
 
-session_destroy();
+session_destroy();  //delete all variables in session
 
-header("Location: ../views/index.html");
+header("Location: ../views/index.html");  //go to homepage
 ?>

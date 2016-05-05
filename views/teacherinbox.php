@@ -1,7 +1,7 @@
 <?php
 session_start();
-$type = "teacher";
-require "../db/checklogin.php";
+$type = "teacher";  //set type as teacher
+require "../db/checkLogin.php";
 ?>
     <!doctype html>
     <html lang="en">
@@ -32,7 +32,6 @@ require "../db/checklogin.php";
             </header>
             <div class="demo-drawer mdl-layout__drawer mdl-color--blue-grey-900 mdl-color-text--blue-grey-50">
                 <header class="demo-drawer-header">
-                    <img src="" class="demo-avatar">
                     <div class="demo-avatar-dropdown">
                          <span>
                              <span id="displayusername"></span>
@@ -71,7 +70,7 @@ require "../db/checklogin.php";
                             <div class="mdl-grid" style="height: 10%">
                                 <div class="mdl-cell mdl-cell--4-col">
                                     <div class="mdl-textfield mdl-js-textfield">
-                                        <input class="mdl-textfield__input" type="text" id="messageRecipientInput" onkeydown="addRecipientsFunction(this.value)">
+                                        <input class="mdl-textfield__input" type="text" id="messageRecipientInput" onkeyup="addRecipientsFunction(this.value)">
                                         <label class="mdl-textfield__label" for="messageRecipientInput">Send to...</label>
                                     </div>
                                 </div>

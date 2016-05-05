@@ -1,11 +1,11 @@
 <?php
 session_start();
 require "./connect.php";
-$tbl_name = "sixth form subject";
-// This SQL statement selects ALL from the table
+$tblName = "sixth form subject";
+// This SQL statement selects name, level and block from the table
 $sql = "
 SELECT `name`,`level`,`block`
-FROM `$tbl_name`
+FROM `$tblName`
 ";
 
 // Check if there are results

@@ -1,14 +1,14 @@
 <?php
-    $tbl_name = "subject";
+    $tblName = "subject";
 
     require "./connect.php";
 
-    //Get the name of the option the user wants to remove
+    //Get the id of the subject the user wants to remove
     $id = isset($_POST['id']) ? $_POST['id'] : '';
 
     //SQL to delete the option
     $sql ="
-    DELETE FROM $tbl_name
+    DELETE FROM $tblName
     WHERE `subject_id` = '$id'
     ";
 

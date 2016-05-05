@@ -19,18 +19,17 @@ $(document).ready(function () {
                 if (retreivedDoc) {
                     //Response
                     var res = '';
-                    res = retreivedDoc;
-                    //var fixedResponse = res.replace(/\\'/g, "'");
+                    res = retreivedDoc; //get result from php
 
-                    var inputData = JSON.parse(res);
-                    var amountofdata = inputData.length;
+                    var inputData = JSON.parse(res);  //turn json string into array
+                    var amountOfData = inputData.length;
                     var options = "";
                     var addedHTML = ""; //Create a variable to hold the HTML to add to the form
-                    for (i = 0; i < amountofdata; i++) { //Loop for every row selected
+                    for (i = 0; i < amountOfData; i++) { //Loop for every row selected
                         if (inputData[i].type == "VARCHAR") { //Check the type of data, depending on the type of data there will be a different display
                             //If type is varchar then create a textfield
                             if (inputData[i].validate == "numeric"){
-                              addedHTML += "<div class='mdl-grid'><div class='mdl-cell mdl-cell--8-col'><div class='mdl-textfield mdl-js-textfield applicationInputs'><input class='mdl-textfield__input input-varchar " + inputData[i].validate + "' type='text' pattern='[0-9]*(\.[0-9]+)?' name='input" + i + "' id='input" + i + "' maxlength='" + inputData[i].length + "'><label class='mdl-textfield__label' for=''input" + i + "'>" + inputData[i].display + "</label><span class='mdl-textfield__error'>Input is not a number!</span></div></div></div>";
+                              addedHTML += "<div class='mdl-grid'><div class='mdl-cell mdl-cell--8-col'><div class='mdl-textfield mdl-js-textfield applicationInputs'><input class='mdl-textfield__input input-varchar " + inputData[i].validate + "' type='text' pattern='[0-9]*(\.[0-9]+)?' name='input" + i + "' id='input" + i + "' maxlength='" + inputData[i].length + "' minlength='" + inputData[i].length + "'><label class='mdl-textfield__label' for=''input" + i + "'>" + inputData[i].display + "</label><span class='mdl-textfield__error'>Input is not a valid number!</span></div></div></div>";
                             } else {
                               addedHTML += "<div class='mdl-grid'><div class='mdl-cell mdl-cell--8-col'><div class='mdl-textfield mdl-js-textfield applicationInputs'><input class='mdl-textfield__input input-varchar " + inputData[i].validate + "' type='text' name='input" + i + "' id='input" + i + "' maxlength='" + inputData[i].length + "'><label class='mdl-textfield__label' for=''input" + i + "'>" + inputData[i].display + "</label></div></div></div>";
                             }
@@ -107,7 +106,7 @@ $(document).ready(function () {
                     //var fixedResponse = res.replace(/\\'/g, "'");
 
                     var inputData = JSON.parse(res);
-                    var amountofdata = inputData.length;
+                    var amountOfData = inputData.length;
 
                     var blockAHTML = "";
                     var blockBHTML = "";
@@ -117,7 +116,7 @@ $(document).ready(function () {
                     var level2HTML = "";
 
 
-                    for (i = 0; i < amountofdata; i++) { //Loop for every row selected
+                    for (i = 0; i < amountOfData; i++) { //Loop for every row selected
 
                         if (inputData[i].level == "A Level") {
                             if (inputData[i].block == "A") {
@@ -152,7 +151,7 @@ $(document).ready(function () {
 
         //GET requests could return a cached result, so to avoid this we use ?t=" + Math.random() after the url (random id)
 
-        var apiURL = "http://localhost/SixthFormApplication/db/selectcoursesservice.php";
+        var apiURL = "http://localhost/SixthFormApplication/db/selectCoursesService.php";
         xmlhttp.open("GET", apiURL, true);
         //console.log("Retrieving Data from: ", apiURL);
         xmlhttp.send();

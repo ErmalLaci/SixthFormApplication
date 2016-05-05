@@ -19,17 +19,14 @@ $(document).ready(function () {
                 if (retreivedDoc) {
                     //Response
                     var res = '';
-                    res = retreivedDoc;
-                    //var fixedResponse = res.replace(/\\'/g, "'");
+                    res = retreivedDoc; //get result from php
 
-                    var studentdata = JSON.parse(res);
+                    var userData = JSON.parse(res);  //turn json string into array
 
-                    var username = studentdata[0].username;
-                    //console.log(username);
-                    var type = studentdata[0].type;
-                    //console.log(type);
+                    var username = userData[0].username; //get username and type of user
+                    var type = userData[0].type;
 
-                    document.getElementById("display-usertype").innerHTML = type;
+                    document.getElementById("display-usertype").innerHTML = type.toUpperCase(); //display username and type
                     document.getElementById("displayusername").innerHTML = username;
 
                     //console.log("Retrieved XML successfully");
@@ -41,7 +38,7 @@ $(document).ready(function () {
 
         //GET requests could return a cached result, so to avoid this we use ?t=" + Math.random() after the url (random id)
 
-        var apiURL = "http://localhost/SixthFormApplication/db/userservice.php";
+        var apiURL = "http://localhost/SixthFormApplication/db/userService.php";
         xmlhttp.open("GET", apiURL, true);
         //console.log("Retrieving Data from: ", apiURL);
         xmlhttp.send();

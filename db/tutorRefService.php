@@ -3,14 +3,7 @@ session_start();
 
 require "./connect.php";
 
-$id = $_SESSION["studentid"];
-
-
-/*
-SELECT fname, sname
-FROM applicant
-WHERE applicant_id = '$id';
-*/
+$id = $_SESSION["studentid"]; //get students id
 
 // This SQL statement selects the students' name and gcse's from the table
 $sql = "

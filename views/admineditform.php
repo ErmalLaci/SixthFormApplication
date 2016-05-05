@@ -1,7 +1,7 @@
 <?php
 session_start();
-    $type = "admin";
-    require "../db/checklogin.php";
+    $type = "admin";  //set type as admin
+    require "../db/checkLogin.php";
 ?>
     <!doctype html>
     <html lang="en">
@@ -15,6 +15,7 @@ session_start();
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
         <link rel="stylesheet" href="../style/loginpage/material.min.css">
         <link rel="stylesheet" href="../style/loginpage/styles.css">
+        <link rel="stylesheet" href="../style/stylesheet.css">
     </head>
 
     <body>
@@ -27,7 +28,6 @@ session_start();
             </header>
             <div class="demo-drawer mdl-layout__drawer mdl-color--blue-grey-900 mdl-color-text--blue-grey-50">
                 <header class="demo-drawer-header">
-                    <img src="" class="demo-avatar">
                     <div class="demo-avatar-dropdown">
                         <span>
                         <span id="displayusername"></span>
@@ -60,9 +60,10 @@ session_start();
                                 </button>
                             </center>
                         </div>
+                        <div id="displayUpdateError" class="error"></div>
                     </div>
                     <div class="mdl-cell mdl-cell--3-col">
-                        <form id="displayaddformoptions" method="post" action="../db/updateform/addoption.php" onsubmit="return ValidateInput(this)">
+                        <form id="displayaddformoptions" method="post" action="../db/updateform/addOption.php" onsubmit="return validateInput(this)">
                             <!-- Add an option  -->
                             <span style="font-size:25px">Add Input</span>
                             <br>
@@ -125,14 +126,14 @@ session_start();
                                 </tr>
                                 <tr>
                                     <td>
-                                        <div id="errorDisplay" style="color:red;">
+                                        <div id="errorInputDisplay" class="error">
                                         </div>
                                     </td>
                                 </tr>
                             </table>
                         </form>
                         <br>
-                        <form id="displayaddsubjects" method="post" action="../db/addSubject.php">
+                        <form id="displayaddsubjects" method="post" action="../db/addSubject.php" onsubmit="return validateSubject(this)">
                             <!-- Add an option  -->
                             <span style="font-size:25px">Add Subject</span>
                             <br>
@@ -162,10 +163,16 @@ session_start();
                                         </button>
                                     </td>
                                 </tr>
+                                <tr>
+                                    <td>
+                                        <div id="errorSubjectDisplay" class="error">
+                                        </div>
+                                    </td>
+                                </tr>
                             </table>
                         </form>
                         <br>
-                        <form id="displayaddsixthformsubjects" method="post" action="../db/addSixthFormSubject.php">
+                        <form id="displayaddsixthformsubjects" method="post" action="../db/addSixthFormSubject.php" onsubmit="return validateSixthFormSubject()">
                             <!-- Add an option  -->
                             <span style="font-size:25px">Add Sixth Form Subject</span>
                             <br>
@@ -206,59 +213,60 @@ session_start();
                                         </button>
                                     </td>
                                 </tr>
+                                <tr>
+                                    <td>
+                                        <div id="errorSixthFormSubjectDisplay" class="error">
+                                        </div>
+                                    </td>
+                                </tr>
                             </table>
                         </form>
                     </div>
                     <div class="mdl-cell mdl-cell--5-col">
+                      <div id="updateSubjectError" class="error"></div>
                       <button type="button" class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab collapsebutton" onclick="switchDisplay('0');">
                         <i class="material-icons" id="collapsebutton0">add</i>
                       </button>
                       <span style="font-size: 15px">Acceptable GCSE Subjects</span>
                       <br>
                       <div id="Subjects" class="collapse">
-
                       </div>
-
                       <br>
-
+                      <div id="updateSixthFormSubjectError" class="error"></div>
                       <button type="button" class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab collapsebutton" onclick="switchDisplay('1');">
                         <i class="material-icons" id="collapsebutton1">add</i>
                       </button>
-
                       <span style="font-size: 15px">Sixth Form Subjects</span>
                       <br>
                       <div id="SixthFormSubjects" class="collapse">
-
                       </div>
-
                     </div>
                 </div>
             </main>
         </div>
-        <script src="../scripts/AddInputValidation.js"></script>
+        <script src="../scripts/addInputValidation.js"></script>
         <script src="../scripts/loadFormData.js"></script>
         <script src="../scripts/loadUserData.js"></script>
         <script src="../scripts/updateForm.js"></script>
         <script src="../scripts/editOptionsSubjects.js"></script>
         <script src="../scripts/loginpage/material.min.js"></script>
         <script type="text/javascript">
-            var elements = document.getElementsByClassName("collapse");
-            // collapse all sections
-            for (var i = 0; i < elements.length; i++) {
-                elements[i].style.display = "none";
+        var elements = document.getElementsByClassName("collapse");
+        // collapse all sections
+        for (var i = 0; i < elements.length; i++) { //loop through all collapse divs
+            elements[i].style.display = "none"; //hide all the divs
+        }
+        //collapse or expand depending on state
+        function switchDisplay(i) { //create function to switch display
+            if (elements[i].style.display == "none") {  //if div is hidden, make it visible and change the icon
+                elements[i].style.display = "block";
+                document.getElementById("collapsebutton" + i).innerHTML = "remove";
+            } else {
+                elements[i].style.display = "none"; //div is visible hide it and change the icon
+                document.getElementById("collapsebutton" + i).innerHTML = "add";
             }
-            //collapse or expand depending on state
-            function switchDisplay(i) {
-
-                if (elements[i].style.display == "none") {
-                    elements[i].style.display = "block";
-                    document.getElementById("collapsebutton" + i).innerHTML = "remove";
-                } else {
-                    elements[i].style.display = "none";
-                    document.getElementById("collapsebutton" + i).innerHTML = "add";
-                }
-                return false;
-            }
+            return false;
+        }
         </script>
     </body>
 

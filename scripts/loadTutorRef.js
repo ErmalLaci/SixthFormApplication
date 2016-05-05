@@ -19,17 +19,14 @@ $(document).ready(function () {
                 if (retreivedDoc) {
                     //Response
                     var res = '';
-                    res = retreivedDoc;
-                    //var fixedResponse = res.replace(/\\'/g, "'");
+                    res = retreivedDoc; //get result from php
 
-                    var GCSEdata = JSON.parse(res);
+                    var gcseData = JSON.parse(res); //turn json string into array
 
-                    console.log(GCSEdata[0].name);
-
-                    for (i = 0; i < GCSEdata.length; i++) {
-                        document.getElementById("displayStudentsGrades").innerHTML += "<div class='mdl-grid'><div class='mdl-cell mdl-cell--8-col'>Subject: " + GCSEdata[i].name + " | Exam board: " + GCSEdata[i].exam_board + " | Predicted Grade: " + GCSEdata[i].predicted_grade + " | Mock result: " + GCSEdata[i].mock_result + " | Actual result: " + GCSEdata[i].actual_result + " | Year exam was taken: " + GCSEdata[i].year_taken + "</div>";
+                    //loop through all gcse's ,displaying them
+                    for (i = 0; i < gcseData.length; i++) {
+                        document.getElementById("displayStudentsGrades").innerHTML += "<div class='mdl-grid'><div class='mdl-cell mdl-cell--8-col'>Subject: " + gcseData[i].name + " | Exam board: " + gcseData[i].exam_board + " | Predicted Grade: " + gcseData[i].predicted_grade + " | Mock result: " + gcseData[i].mock_result + " | Actual result: " + gcseData[i].actual_result + " | Year exam was taken: " + gcseData[i].year_taken + "</div>";
                     }
-                    //console.log(studentdata[0]);
 
                     //console.log("Retrieved XML successfully");
                 } else {

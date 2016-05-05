@@ -2,13 +2,14 @@
 require "./connect.php";
 session_start();
 
+//sql selects department for teacher
 $sql = "SELECT department FROM teacher WHERE login_id = " . $_SESSION['id'];
 
 $result = mysqli_query($link, $sql);
 $row = mysqli_fetch_array($result);
-$department = $row[0];
-//echo json_encode($department);
+$department = $row[0];  //gets value of department for teacher
 
+//sql selects applicant id from selected courses where the applicant has selected a sixth form subject like the teachers department
 $sql = "
 SELECT applicant_id FROM `selected courses`
 INNER JOIN `sixth form subject`
@@ -25,15 +26,16 @@ $result = mysqli_query($link, $sql);
 $applicants = [];
 $applicants[0] = "";
 $i = 1;
-while ($row = mysqli_fetch_array($result)){
-  if (!($applicants[($i - 1)] == $row[0])){
-    $applicants[$i] = $row[0];
+while ($row = mysqli_fetch_array($result)){ //loop through all arrays
+  if (!($applicants[($i - 1)] == $row[0])){ //if applicant hasn't been previously selected
+    $applicants[$i] = $row[0];  //assign new applicant id
     $i++;
   }
 }
 
 $sql = "";
-for ($i = 1; $i < count($applicants); $i++){
+for ($i = 1; $i < count($applicants); $i++){  //loop through all applicants
+  //sql selects applicants grades, first name, surname and id
   $sql .= "
   SELECT grades.predicted_grade, grades.mock_result, grades.actual_result, grades.year_taken, subject.name, subject.exam_board, applicant.fname, applicant.sname, applicant.applicant_id
   FROM grades
@@ -45,7 +47,7 @@ for ($i = 1; $i < count($applicants); $i++){
   ";
 }
 
-if ($result = mysqli_multi_query($link, $sql)){
+if ($result = mysqli_multi_query($link, $sql)){ //run all sql queries
         // If so, then create a results array and a temporary one
         // to hold the data
         $resultArray = array();
@@ -60,12 +62,12 @@ if ($result = mysqli_multi_query($link, $sql)){
                 $tempArray = $row;
             array_push($resultArray, $tempArray);
         }
-
-        // Finally, encode the array to JSON and output the results
         mysqli_free_result($result);
 
       }
     }while (mysqli_next_result($link));
+    // Finally, encode the array to JSON and output the results
+
     echo json_encode($resultArray);
 
 }

@@ -2,23 +2,20 @@
 session_start();
 require "../db/connect.php";
 
-$id = isset($_GET["id"]) ? $_GET["id"] : "";
+$id = isset($_GET["id"]) ? $_GET["id"] : "";  //get id from url
 
-if (!is_numeric($id)){
-  header ("Location: ./index.html");
+if (!is_numeric($id)){  //check if id is not a number
+  header ("Location: ./index.html");  //go to homepage
 }
 
-
-//echo $sql;
-
 $sql = "
-SELECT applicant.fname, applicant.sname
+SELECT applicant.applicant_id
 FROM applicant
 WHERE applicant.applicant_id = '$id'
 ";
 $result = mysqli_query($link, $sql);
 $count = mysqli_num_rows($result);
-if ($count == 0){
+if ($count == 0){ //if there are no rows with the
   header ("Location: ./index.html");
 }
 
@@ -55,7 +52,7 @@ $_SESSION["studentid"] = $id;
             <main class="mdl-layout__content" style="background-color: white;">
                 <br>
                 <section class="section--center mdl-grid mdl-grid--no-spacing mdl-shadow--2dp formsection">
-                    <form name="TutorReferenceForm" action="../db/sendTutorRef.php" method="post" style="width: 100%">
+                    <form name="TutorReferenceForm" id="TutorReferenceForm" action="../db/sendTutorRef.php" method="post" style="width: 100%">
                         <div class="mdl-grid">
                             <div class="mdl-cell mdl-cell--6-col">
                                 <button type="button" class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab collapsebutton" onclick="switchDisplay();">
@@ -73,7 +70,6 @@ $_SESSION["studentid"] = $id;
                                 </div>
                                 <div class="mdl-grid">
                                     <div class="mdl-cell mdl-cell--12-col" style="margin-top: 0;">
-                                        <!-- Floating Multiline Textfield -->
                                         <div class="mdl-textfield mdl-js-textfield" style="width: 100%;">
                                             <textarea class="mdl-textfield__input" type="text" rows="8" id="studentsAchievements" name="studentsAchievements"></textarea>
                                             <label class="mdl-textfield__label" for="studentsAchievements">Text lines...</label>
@@ -262,13 +258,25 @@ $_SESSION["studentid"] = $id;
                                     </div>
                                 </div>
                                 <!-- Input -->
-
+                                <div class="mdl-grid">
+                                  <div class="mdl-cell mdl-cell--4-col">
+                                    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                                      <input class="mdl-textfield__input" type="text" id="tutorAuthenticatorInput">
+                                      <label class="mdl-textfield__label" for="tutorAuthenticatorInput">Tutor Authenticator</label>
+                                    </div>
+                                  </div>
+                                </div>
                                 <div class="mdl-grid">
                                     <div class="mdl-cell mdl-cell--4-col">
                                         <!-- Raised button with ripple -->
                                         <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" type="submit">
                                             Send Reference
                                         </button>
+                                    </div>
+                                </div>
+                                <div class="mdl-grid">
+                                    <div class="mdl-cell mdl-cell--4-col">
+                                        <div id="errorDisplayDiv" class="error"></div>
                                     </div>
                                 </div>
                             </div>
@@ -280,6 +288,7 @@ $_SESSION["studentid"] = $id;
         </div>
         <script src="../scripts/loginpage/material.min.js"></script>
         <script src="../scripts/loadTutorRef.js"></script>
+        <script src="../scripts/authenticateTutorRef.js"></script>
         <script type="text/javascript">
             //collapse or expand depending on state
             function switchDisplay() {

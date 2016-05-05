@@ -1,11 +1,11 @@
 <?php
 session_start();
-$type = "admin";
-require "../db/checklogin.php";
+$type = "admin";  //set type as admin
+require "../db/checkLogin.php";
 require "../db/connect.php";
 
 $sql = "
-SELECT name, type, length, display, validate
+SELECT *
 FROM storedinformation
 ";
 
@@ -17,11 +17,11 @@ $inputValidates= [];
 
 $i = 0;
 
-$result = mysqli_query($link, $sql) or die(mysqli_error($link));
+$result = mysqli_query($link, $sql) or die(mysqli_error($link));  //get custom input details from stored information
 
 $count = mysqli_num_rows($result);
 
-while ($row = mysqli_fetch_assoc($result)){
+while ($row = mysqli_fetch_assoc($result)){ //assign all rows values
     $inputNames[$i] = $row["name"];
     $inputTypes[$i] = $row["type"];
     $inputLengths[$i] = $row["length"];
@@ -30,13 +30,11 @@ while ($row = mysqli_fetch_assoc($result)){
     $i++;
 }
 
-$sql = "SELECT ";
+$sql = "SELECT "; //loop through custom inputs and add to sql statement
 $sql .= $inputNames[0];
 for ($x = 1; $x < count($inputNames); $x++){
     $sql .= ", `" . $inputNames[$x] . "`";
 }
-
-
 
 $sql .= ", `studentcourseinterest`, `entryrequirementsknown`, `specialrequirements`, `interviewnotes`, `enrichment`, `studentachievements`, `learningneeds`, `learningneedsdetails`, `learningsupport`, `learningsupportdetails`, `statemented`, `statementeddetails`, `specialconsiderations`, `specialconsiderationsdetails`, `freeschoolmeals`, `fnameoftutor`, `snameoftutor`, `predictedoractualqualifications`, `entryrequirementsknown`, `specialrequirements`, `interviewnotes`, `enrichment`, `accepted`, `applicant_id`  From applicant";
 $result = mysqli_query($link, $sql) or die(mysqli_error($link));
@@ -69,7 +67,6 @@ $result = mysqli_query($link, $sql) or die(mysqli_error($link));
             </header>
             <div class="demo-drawer mdl-layout__drawer mdl-color--blue-grey-900 mdl-color-text--blue-grey-50">
                 <header class="demo-drawer-header">
-                    <img src="" class="demo-avatar">
                     <div class="demo-avatar-dropdown">
                         <span>
                             <span id="displayusername"></span>
@@ -90,45 +87,6 @@ $result = mysqli_query($link, $sql) or die(mysqli_error($link));
             </div>
             <main class="mdl-layout__content mdl-color--grey-100">
                 <!-- Admin Controls -->
-                <!-- User search -->
-                <div class="mdl-grid">
-                    <div class="mdl-cell mdl-cell--12-col">
-                        <div class="mdl-grid" id="user-search">
-                            <div class="mdl-cell mdl-cell--4-col" style="padding-top: 20px;">Search for a user:</div>
-                            <div class="mdl-cell mdl-cell--2-col">
-                                <div class="mdl-textfield mdl-js-textfield">
-                                    <input class="mdl-textfield__input" type="text" pattern="-?[0-9]*(\.[0-9]+)?" id="search-id-input">
-                                    <label class="mdl-textfield__label" for="search-id-input">Enter ID</label>
-                                    <span class="mdl-textfield__error">Input is not a number!</span>
-                                </div>
-                            </div>
-                            <div class="mdl-cell mdl-cell--4-col">
-                                <div class="mdl-textfield mdl-js-textfield">
-                                    <input class="mdl-textfield__input" type="text" id="search-username-input">
-                                    <label class="mdl-textfield__label" for="search-username-input">Enter username</label>
-                                </div>
-                            </div>
-                            <div class="mdl-cell mdl-cell--2-col">
-                                <button class="mdl-button mdl-js-button mdl-button--raised" id="searchUserBtn">
-                                    Search
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="mdl-grid">
-                    <div class="mdl-cell mdl-cell--12-col" style="border-style: outset;">
-                        <div class="mdl-grid">
-                            <div class="mdl-cell mdl-cell--4-col">Display User</div>
-                        </div>
-                        <div class="mdl-grid">
-                            <div class="mdl-cell mdl-cell--4-col" id="displayLoginId"></div>
-                            <div class="mdl-cell mdl-cell--4-col" id="displayUsername"></div>
-                            <div class="mdl-cell mdl-cell--4-col" id="displayType"></div>
-                        </div>
-                    </div>
-                </div>
-                <!-- User search -->
                 <!-- Applicant search -->
                 <div class="mdl-grid">
                     <div class="mdl-cell mdl-cell--12-col" style="border-style: outset;">
@@ -138,7 +96,7 @@ $result = mysqli_query($link, $sql) or die(mysqli_error($link));
                             </div>
                             <div class="mdl-cell mdl-cell--8-col">
                               <div class="mdl-textfield mdl-js-textfield">
-                                <input class="mdl-textfield__input" type="text" id="ApplicantSearch" onkeyup="SearchApplicants();">
+                                <input class="mdl-textfield__input" type="text" id="ApplicantSearch" onkeyup="searchApplicants();">
                                 <label class="mdl-textfield__label" for="ApplicantSearch">Search for an applicant</label>
                               </div>
                             </div>
@@ -147,14 +105,14 @@ $result = mysqli_query($link, $sql) or die(mysqli_error($link));
                             <?php
                             $addedHTML = "";
                             $x = 0;
-                            while($row = mysqli_fetch_array($result)){
+                            while($row = mysqli_fetch_array($result)){  //loop through for each each applicant
                               $getGrades = "
                               SELECT subject.name, subject.exam_board, grades.predicted_grade, grades.mock_result, grades.actual_result, grades.year_taken
                               FROM `grades`
                               INNER JOIN subject ON grades.subject_id = subject.subject_id
                               WHERE grades.applicant_id = '" . $row['applicant_id'] . "'
                               ";
-                              $gotGrades = mysqli_query($link, $getGrades);
+                              $gotGrades = mysqli_query($link, $getGrades); //get applicants grades
                               $gradesHTML = "
                               <div class='mdl-grid'>
                                   <div class='mdl-cell mdl-cell--12-col'>
@@ -172,14 +130,7 @@ $result = mysqli_query($link, $sql) or die(mysqli_error($link));
                                           <tbody>";
 
                               $z = 0;
-                              while($gotGradesArray = mysqli_fetch_array($gotGrades)){
-                                /*echo $gotGradesArray["name"];
-                                echo $gotGradesArray["exam_board"];
-                                echo $gotGradesArray["predicted_grade"];
-                                echo $gotGradesArray["mock_result"];
-                                echo $gotGradesArray["actual_result"];
-                                echo $gotGradesArray["year_taken"];*/
-
+                              while($gotGradesArray = mysqli_fetch_array($gotGrades)){  //create display for grades
                                 $gradesHTML .= "
                                 <tr>
                                 <td class='mdl-data-table__cell--non-numeric'>
@@ -205,7 +156,7 @@ $result = mysqli_query($link, $sql) or die(mysqli_error($link));
                                 $z++;
                               }
 
-                              for ($emptyRowCreation = mysqli_num_rows($gotGrades); $emptyRowCreation < 13; $emptyRowCreation++){
+                              for ($emptyRowCreation = mysqli_num_rows($gotGrades); $emptyRowCreation < 13; $emptyRowCreation++){ //create empty rows if the applicant didnt fill out all 13 rows
                                 $gradesHTML .= "
                                 <tr>
                                 <td class='mdl-data-table__cell--non-numeric'>
@@ -226,7 +177,7 @@ $result = mysqli_query($link, $sql) or die(mysqli_error($link));
                               $gradesHTML .= "</tbody></table></div></div>";
                               //echo htmlentities($gradesHTML);
 
-                              $selectedcoursesHTML = "";
+                              $selectedCoursesHTML = "";  //
                               $showCourses = "
                               SELECT `sixthformsubject_id`, `name`,`level`,`block`
                               FROM `sixth form subject`
@@ -240,7 +191,7 @@ $result = mysqli_query($link, $sql) or die(mysqli_error($link));
                               $blockEHTML = "";
                               $level2HTML = "";
 
-                              while ($shownCoursesArray = mysqli_fetch_array($shownCourses)){
+                              while ($shownCoursesArray = mysqli_fetch_array($shownCourses)){ //create sixth form subject display blocks tables
                                   if ($shownCoursesArray["level"] == "A Level") {
                                       if ($shownCoursesArray["block"] == "A") {
                                           $blockAHTML .= "<tr><td class='mdl-data-table__cell--non-numeric'><input type='radio' id='" . $shownCoursesArray["name"] . $shownCoursesArray["block"] . $x . "' name='blockA-options-applicant" . $x . "' value='" . $shownCoursesArray["sixthformsubject_id"] . "'>" . $shownCoursesArray["name"] . "</td></tr>";
@@ -307,7 +258,7 @@ $result = mysqli_query($link, $sql) or die(mysqli_error($link));
                               ON `selected courses`.applicant_id = applicant.applicant_id
                               WHERE applicant.applicant_id = " . $row['applicant_id'] . "
                               ";
-                              //echo $applicantsChoice;
+                              //get applicants selected sixth form subjects
                               $applicantsChoiceResult = mysqli_query($link, $applicantsChoice);
                               $blockAChoice = "";
                               $blockBChoice = "";
@@ -315,7 +266,7 @@ $result = mysqli_query($link, $sql) or die(mysqli_error($link));
                               $blockDChoice = "";
                               $blockEChoice = "";
                               $level2Choice = "";
-
+                              //
                               while ($applicantsChoiceArray = mysqli_fetch_array($applicantsChoiceResult)){
                                 if ($applicantsChoiceArray["level"] == "Level 2"){
                                   $level2Choice = $applicantsChoiceArray["name"] . "level2";
@@ -333,7 +284,7 @@ $result = mysqli_query($link, $sql) or die(mysqli_error($link));
                                   }
                                 }
                               }
-                              $selectedcoursesHTML = "
+                              $selectedCoursesHTML = "
                               <div class='mdl-grid'>
                                 <div class='mdl-cell mdl-cell--12-col'>
                                   <div class='mdl-grid'>
@@ -447,8 +398,9 @@ $result = mysqli_query($link, $sql) or die(mysqli_error($link));
                               }catch(err){}
                               </script>
                               ";
+                              //js checks block choices, use try catch because one of them might not be set
 
-
+                              //decide which radio buttons is checked in radio button groups
                                 if ($row["learningneeds"] == 0){
                                     $learningneeds1 = "";
                                     $learningneeds2 = "checked";
@@ -520,10 +472,10 @@ $result = mysqli_query($link, $sql) or die(mysqli_error($link));
                                 <i class='material-icons' id='collapsebutton" . $x ."'>add</i>
                                 </button> " . $row["fname"] . " " . $row["sname"] . " ID: <span id='" . $x . "'>" . $row["applicant_id"] . "</span>
                                 <div class='mdl-grid collapse'>";
-                                for($i = 0; $i < count($inputNames); $i++){
+                                for($i = 0; $i < count($inputNames); $i++){ //loop through all the custom inputs
                                     if ($inputTypes[$i] == "VARCHAR") { //Check the type of data, depending on the type of data there will be a different display
                                         //If type is varchar then create a textfield
-                                        if ($inputValidates[$i] == "numeric"){
+                                        if ($inputValidates[$i] == "numeric"){  //if validates is numeric then create a number textfield
                                           $addedHTML .= "
                                           <div class='mdl-cell mdl-cell--6-col'><div class='mdl-textfield mdl-js-textfield  mdl-textfield--floating-label applicationInputs'>
                                           <input class='mdl-textfield__input input-varchar " . $inputValidates[$i] . " applicant" . $x . "' value='" . $row[$inputNames[$i]] . "' type='text' pattern='[0-9]*(\.[0-9]+)?' name='applicant" . $x . "input" . $i . "'
@@ -539,7 +491,7 @@ $result = mysqli_query($link, $sql) or die(mysqli_error($link));
                                           <label class='mdl-textfield__label' for='applicant" . $x . "input" . $i . "'>" . $inputDisplays[$i] . "</label>
                                           </div></div>";
                                         }
-                                    } else if ($inputTypes[$i] == "ENUM") {
+                                    } else if ($inputTypes[$i] == "ENUM") { //create select input
                                         //Split the options variable at the comma to get each option in the table
                                         $options = explode(",", $inputLengths[$i]);
                                         //If the type is enum then create a dropdown mdl-textfield__input
@@ -582,7 +534,8 @@ $result = mysqli_query($link, $sql) or die(mysqli_error($link));
                                     }
                                 }
                                 $addedHTML .= $gradesHTML;
-                                $addedHTML .= $selectedcoursesHTML;
+                                $addedHTML .= $selectedCoursesHTML;
+                                //add tutor reference inputs to html
                                 $addedHTML .= "
                                 <div id='applicant" . $x . "TutorReference'>
                                 <div class='mdl-grid'>
@@ -885,6 +838,7 @@ $result = mysqli_query($link, $sql) or die(mysqli_error($link));
                                   </div>
                                   </div>
                                 ";
+                                //add buttons for each applicant to update and delete
                                 $x++;
                             }
 
@@ -899,42 +853,40 @@ $result = mysqli_query($link, $sql) or die(mysqli_error($link));
         </div>
         <script src="../scripts/loginpage/material.min.js"></script>
         <script src="../scripts/loadUserData.js"></script>
-        <script src="../scripts/searchUser.js"></script>
         <script src="../scripts/changeApplicantInfo.js"></script>
         <script type="text/javascript">
             var elements = document.getElementsByClassName("collapse");
             // collapse all sections
-            for (var i = 0; i < elements.length; i++) {
-                elements[i].style.display = "none";
+            for (var i = 0; i < elements.length; i++) { //loop through all collapse divs
+                elements[i].style.display = "none"; //hide all the divs
             }
             //collapse or expand depending on state
-            function switchDisplay(i) {
-
-                if (elements[i].style.display == "none") {
+            function switchDisplay(i) { //create function to switch display
+                if (elements[i].style.display == "none") {  //if div is hidden, make it visible and change the icon
                     elements[i].style.display = "block";
                     document.getElementById("collapsebutton" + i).innerHTML = "remove";
                 } else {
-                    elements[i].style.display = "none";
+                    elements[i].style.display = "none"; //div is visible hide it and change the icon
                     document.getElementById("collapsebutton" + i).innerHTML = "add";
                 }
                 return false;
             }
 
-            function SearchApplicants(){
+            function searchApplicants(){  //activate on keyup in search bar
               var allApplicants = document.getElementsByClassName("applicantsInfo");
               var input = document.getElementById("ApplicantSearch").value;
               var applicantId = [];
-              if (input != ""){
-                for (var x = 0; x < allApplicants.length; x++){
+              if (input != ""){ //check if input isnt empty
+                for (var x = 0; x < allApplicants.length; x++){ //loop through applicant classes
                   applicantId[x] = allApplicants[x].id;
-                  if (applicantId[x].toLowerCase().includes(input.toLowerCase())){
-                    allApplicants[x].style.display = "block";
+                  if (applicantId[x].toLowerCase().includes(input.toLowerCase())){  //check if class includes input, should be case insensitive
+                    allApplicants[x].style.display = "block"; //if yes then show
                   }else{
-                      allApplicants[x].style.display = "none";
+                      allApplicants[x].style.display = "none"; //if no then hide
                   }
                 }
               } else {
-                for (var x = 0; x < allApplicants.length; x++){
+                for (var x = 0; x < allApplicants.length; x++){ //if input is empty loop through all classes and make them visible
                   allApplicants[x].style.display = "block";
                 }
               }

@@ -1,7 +1,7 @@
 <?php
     session_start();
-    $type = "applicant";
-    require "../db/checklogin.php";
+    $type = "applicant";  //set type as applicant
+    require "../db/checkLogin.php";
 
 ?>
 <!doctype html>
@@ -35,7 +35,6 @@
         </header>
         <div class="demo-drawer mdl-layout__drawer mdl-color--blue-grey-900 mdl-color-text--blue-grey-50">
             <header class="demo-drawer-header">
-                <img src="" class="demo-avatar">
                 <div class="demo-avatar-dropdown">
                     <span>
                         <span id="displayusername"></span>
@@ -57,15 +56,26 @@
               <div id="displayMyInfo"></div>
             </div>
             <div class="mdl-cell mdl-cell--4-col">
-              <form name="changePassword" action="../db/changeApplicantPassword.php" method="POST">
-                <div class="mdl-textfield mdl-js-textfield">
-                  <input class="mdl-textfield__input" type="text" id="newPasswordInput" name="newPasswordInput">
-                  <label class="mdl-textfield__label" for="newPasswordInput">New Password</label>
+              <div class="mdl-grid">
+                <div class="mdl-cell mdl-cell--12-col funky-table">
+                  <div>Accepted?</div>
+                  <br>
+                  <div id="displayAccepted"></div>
                 </div>
-                <button class="mdl-button mdl-js-button mdl-button--raised" type="submit">
-                  Change Password
-                </button>
-              </form>
+              </div>
+              <div class="mdl-grid">
+                <div class="mdl-cell mdl-cell--12-col">
+                  <form name="changePassword" action="../db/changeApplicantPassword.php" method="POST">
+                    <div class="mdl-textfield mdl-js-textfield">
+                      <input class="mdl-textfield__input" type="text" id="newPasswordInput" name="newPasswordInput">
+                      <label class="mdl-textfield__label" for="newPasswordInput">New Password</label>
+                    </div>
+                    <button class="mdl-button mdl-js-button mdl-button--raised" type="submit">
+                      Change Password
+                    </button>
+                  </form>
+                </div>
+              </div>
             </div>
           </div>
         </main>

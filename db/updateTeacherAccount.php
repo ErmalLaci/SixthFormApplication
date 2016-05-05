@@ -1,29 +1,39 @@
 <?php
-$error = "";
-$id = isset($_POST['id']) ? $_POST['id'] : '';
-$username = isset($_POST['username']) ? $_POST['username'] : '';
-$password = isset($_POST['password']) ? $_POST['password'] : '';
-$password = password_hash($password, PASSWORD_BCRYPT);
-$fname = isset($_POST['fname']) ? $_POST['fname'] : '';
-$sname = isset($_POST['sname']) ? $_POST['sname'] : '';
-$department = isset($_POST['department']) ? $_POST['department'] : '';
-$usernameChanged = isset($_POST['usernameChanged']) ? $_POST['usernameChanged'] : '';
 
 require "./connect.php";
 
-if ($usernameChanged == "true"){
+$error = "";
+$id = isset($_POST['id']) ? $_POST['id'] : '';  //get username, password, fName, sName, department and username changed input
+$username = isset($_POST['username']) ? $_POST['username'] : '';
+$username = stripslashes($username);
+$username = mysqli_real_escape_string($link, $username);  //protect against sql injection
+$password = isset($_POST['password']) ? $_POST['password'] : '';
+$password = stripslashes($password);
+$password = mysqli_real_escape_string($link, $password);  //protect against sql injection
+$password = password_hash($password, PASSWORD_BCRYPT);
+$fName = isset($_POST['fName']) ? $_POST['fName'] : '';
+$fName = stripslashes($fName);
+$fName = mysqli_real_escape_string($link, $fName);  //protect against sql injection
+$sName = isset($_POST['sName']) ? $_POST['sName'] : '';
+$sName = stripslashes($sName);
+$sName = mysqli_real_escape_string($link, $sName);  //protect against sql injection
+$department = isset($_POST['department']) ? $_POST['department'] : '';
+$usernameChanged = isset($_POST['usernameChanged']) ? $_POST['usernameChanged'] : '';
+
+
+if ($usernameChanged == "true"){  //check if username was changed
   $sql = "
   SELECT login_id
   FROM login
-  WHERE login_id = '$username'
+  WHERE username = '$username'
   ";
   $result = mysqli_query($link, $sql);
-  if (mysqli_num_rows($result) > 0){
+  if (mysqli_num_rows($result) > 0){  //if new username is taken store error
     $error .= "Username already exists. ";
   }
 }
 
-if ($error == ""){
+if ($error == ""){  //check there is no error
   $sql = "
   UPDATE login
   INNER JOIN teacher
@@ -31,15 +41,15 @@ if ($error == ""){
   SET
   username = '$username',
   password = '$password',
-  fname = '$fname',
-  sname = '$sname',
+  fName = '$fName',
+  sName = '$sName',
   department = '$department'
   WHERE login.login_id = '$id'
   ";
-  //echo $sql;
+  //update teacher with new information
   mysqli_query($link, $sql);
 }
 
-echo $error;
+echo $error;  //return error
 mysqli_close($link);
 ?>

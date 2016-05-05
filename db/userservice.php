@@ -1,12 +1,13 @@
 <?php
 session_start();
 require "./connect.php";
-$tbl_name = "login";
-$id = $_SESSION["id"];
-// This SQL statement selects ALL from the table
+$tblName = "login";
+$id = $_SESSION["id"];  //get id of user
+
+// This SQL statement selects username and type of the logged in user
 $sql = "
 SELECT `username`,`type`
-FROM $tbl_name
+FROM $tblName
 WHERE login_id='$id'
 ";
 

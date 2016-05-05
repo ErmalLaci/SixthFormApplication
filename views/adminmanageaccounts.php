@@ -1,7 +1,7 @@
 <?php
 session_start();
-    $type = "admin";
-    require "../db/checklogin.php";
+    $type = "admin";  //set type as admin
+    require "../db/checkLogin.php";
 ?>
     <!doctype html>
 <html lang="en">
@@ -32,7 +32,6 @@ session_start();
         </header>
         <div class="demo-drawer mdl-layout__drawer mdl-color--blue-grey-900 mdl-color-text--blue-grey-50">
             <header class="demo-drawer-header">
-                <img src="" class="demo-avatar">
                 <div class="demo-avatar-dropdown">
                     <span>
                     <span id="displayusername"></span>

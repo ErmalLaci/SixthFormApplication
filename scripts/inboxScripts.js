@@ -1,55 +1,53 @@
-function displayNewsFunction(name, news) {
-    console.log(name);
-    console.log(news);
-    
-    var displaybox = document.getElementById("messagesdisplaydivs");
-    var composebox = document.getElementById("messagescomposedivs");
-    
-    var msgname = document.getElementById("nameOfMessageDiv");
+function displayNewsFunction(name, news) {  //function to display message, name of message and contents passed to function
+
+    var displayBox = document.getElementById("messagesdisplaydivs");
+    var composeBox = document.getElementById("messagescomposedivs");
+
+    var msgName = document.getElementById("nameOfMessageDiv");
     var msg = document.getElementById("contentOfNews");
-    
-    
-        msgname.innerHTML = name;
-        msg.innerHTML = news;
-    
-    if (displaybox.style.display == "block"){
-        if (msgname.innerHTML == name && msg.innerHTML == msg){
-            displaybox.style.display = "none";
+
+
+        msgName.innerHTML = name; //display name in name div
+        msg.innerHTML = news; //display message in message div
+
+    if (displayBox.style.display == "block"){ //check if div is visible
+        if (msgName.innerHTML == name && msg.innerHTML == msg){
+            displayBox.style.display = "none";  //stop div from being visible
         }
     } else {
-        displaybox.style.display = "block";
-        if (composebox.style.display == "block"){
-            composebox.style.display = "none"
+        displayBox.style.display = "block"; //make div visible
+        if (composeBox.style.display == "block"){ //check if display for sending messages is visible
+            composeBox.style.display = "none";  //hide compose message display
         }
     }
 }
 
-function composeMessageFunction() {
-    var displaybox = document.getElementById("messagesdisplaydivs");
-    var composebox = document.getElementById("messagescomposedivs");
-    
-    if (composebox.style.display == "block"){
-        composebox.style.display = "none";
+function composeMessageFunction() { //function for displaying send message box
+    var displayBox = document.getElementById("messagesdisplaydivs");
+    var composeBox = document.getElementById("messagescomposedivs");
+
+    if (composeBox.style.display == "block"){ //check if compose message display is visible
+        composeBox.style.display = "none";  //hide compose message display
     } else {
-        if (displaybox.style.display == "block"){
-            displaybox.style.display = "none";
+        if (displayBox.style.display == "block"){ //check if dispay message box is visible
+            displayBox.style.display = "none";  //hide display message box
         }
-        composebox.style.display = "block";
+        composeBox.style.display = "block"; //make compose box display visible
     }
-    
+
 }
 
-function addRecipientsFunction(newRecipient) {
-    if (event.keyCode == 32) {
+function addRecipientsFunction(newRecipient) {  //function for adding recipients to message
+    if (event.keyCode == 32) {  //check if spacebar is pressed
         previousRecipients = document.getElementById('displayAllRecipients').innerHTML;
 
-        allRecipients = previousRecipients;
-        if (allRecipients.length === 0) {
-            allRecipients = newRecipient;
+        allRecipients = previousRecipients;   //store all recipients entered before
+        if (allRecipients.length === 0) { //check if no recipients have been entered
+            allRecipients = newRecipient; //store value of new recipient
         } else {
-            allRecipients = previousRecipients + "," + newRecipient;
+            allRecipients = previousRecipients + "," + newRecipient;  //store string displaying previous recipients and new recipient
         }
-        document.getElementById('displayAllRecipients').innerHTML = allRecipients;
-        document.getElementById('messageRecipientInput').value = "";
+        document.getElementById('displayAllRecipients').innerHTML = allRecipients;  //display recipients
+        document.getElementById('messageRecipientInput').value = "";  //reset input for recipients
     }
 }

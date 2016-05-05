@@ -1,25 +1,24 @@
 <?php
-    $tbl_name = "subject";
+$tblName = "subject";
+require "./connect.php";
 
-    require "./connect.php";
+//Get the name of the option the user wants to remove
+$id = isset($_POST['id']) ? $_POST['id'] : '';
+$name = isset($_POST['name']) ? $_POST['name'] : '';
+$name = stripslashes($name);
+$name = mysqli_real_escape_string($link, $name);  //protect against sql injection
+$examBoard = isset($_POST['examBoard']) ? $_POST['examBoard'] : '';
 
-    //Get the name of the option the user wants to remove
-    $id = isset($_POST['id']) ? $_POST['id'] : '';
-    $name = isset($_POST['name']) ? $_POST['name'] : '';
-    $examboard = isset($_POST['examboard']) ? $_POST['examboard'] : '';
+//SQL to update subject
+$sql ="
+UPDATE $tblName
+SET
+name = '$name',
+exam_board = '$examBoard'
+WHERE `subject_id` = '$id'
+";
 
-    //SQL to delete the option
-    $sql ="
-    UPDATE $tbl_name
-    SET
-    name = '$name',
-    exam_board = '$examboard'
-    WHERE `subject_id` = '$id'
-    ";
-
-    echo $sql;
-    mysqli_query($link, $sql) or die(mysqli_error($link));
-
-    mysqli_close($link);
+mysqli_query($link, $sql) or die(mysqli_error($link));
+mysqli_close($link);
 
 ?>
